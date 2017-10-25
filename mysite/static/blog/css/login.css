@@ -119,3 +119,8 @@ body.login {
 {
     background:#458B74;
 }
+
+#forget-link{
+    text-align:right;
+    margin-right:30px;
+}

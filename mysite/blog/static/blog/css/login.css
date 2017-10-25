@@ -120,7 +120,7 @@ body.login {
     background:#458B74;
 }
 
-p #forget-link{
-
-    margin-right:5px;
+#forget-link{
+    text-align:right;
+    margin-right:30px;
 }

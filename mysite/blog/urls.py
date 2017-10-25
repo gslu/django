@@ -1,8 +1,12 @@
 # -*- coding:utf-8 -*-
 from django.conf.urls import url
+from django.views.generic.base import RedirectView
 from . import views
 
 urlpatterns = [
+
+    #　暂时充当网站主页
+    url(r'^$',RedirectView.as_view(url='user/1/'),name="index"),
 
     url(r'^login/$', views.userLogin, name="user_login"),
     url(r'^logout/$', views.userLogout, name="user_logout"),
