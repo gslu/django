@@ -411,7 +411,7 @@ div.body{
     float:bottom;
     width:1020px;
     height:auto;
-    min-height:300px;
+    min-height:800px;
     margin:40px auto;
     border:0px solid;
     border-radius:12px;
@@ -598,7 +598,7 @@ div.introduce p{
     padding:20px;
     margin: 0px auto;
     position: relative;
-    background:#DBDBDB;
+    background:#EEE9BF;
     text-align: center;
 
 }
