@@ -1,0 +1,73 @@
+{% load blog_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href='{% static "blog/img/icon-title.ico" %}' type="image/x-icon"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv=”X-UA-Compatible” content=”IE=edge,chrome=1″/>
+
+        <title>
+        {% ifequal send_type "register" %}
+        注册激活-浮文掠影
+        {% else %}
+        修改密码-浮文掠影
+        {% endifequal %}
+        </title>
+        <link href= '{% static "blog/css/login.css" %}' rel="stylesheet">
+        <link href= '{% static "blog/css/base.css" %}' rel="stylesheet">
+    </head>
+
+    <body class="verify">
+        <div id="text">
+            <a id="tohome" href=''>浮文掠影</a>
+        </div>
+
+        {% ifequal send_type "register" %}
+        <div id="register-active">
+            {% ifequal status "error "%}
+            <p>系统错误，请稍后激活</p>
+            {% else %}
+                {% if status %}
+                <p>帐号成功激活,请登录</p>
+                {% else %}
+                <p>尊敬的用户{{ username }}</p>
+                <p>激活邮件已经发至您邮箱{{ email }}，请登录邮箱激活帐号,谢谢</p>
+            {% endif %}
+            {% endifequal %}
+        </div>
+        {% else %}
+        <div id="forget">
+            <div id="form-desc">
+                <p>密码找回</p>
+            </div>
+            {% if status %}
+            <p>找回邮件已经发至邮箱，请查收</p>
+            {% else %}
+
+            <div id="form-row">
+                <form action="." method="post">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+
+                    {% if error %}
+                        <p id="verify-error">帐号或邮箱不存在</p>
+                    {% endif %}
+
+                    <p><input id="get-password" type="submit" value="提交"></p>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        {% endifequal %}
+
+    <div id="footer">
+        <div class=”page-tail”>
+
+        　　© Ｇuang博客<br/>
+        　　For Django learning
+
+        </div>
+    </div>
+    </body>
+</html>

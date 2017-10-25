@@ -1,0 +1,702 @@
+/*
+    DJANGO Admin styles
+*/
+
+@import url(fonts.css);
+
+body {
+    margin: 0;
+    padding: 0;
+    min-width:1050px;
+    font-size: 14px;
+    font-family: "Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
+    color: #333;
+    background-color: #EEE9BF;
+}
+
+/*去除点击后虚线框*/
+
+:focus {outline:none;} /*for IE*/
+::-moz-focus-inner {border:none;} /*for mozilla*/
+
+/* LINKS */
+
+a:link, a:visited {
+    color: #447e9b;
+    text-decoration: none;
+}
+
+a:focus, a:hover {
+    color: #036;
+    outline: none; /* 不显示点击时的虚线框　*/
+}
+
+a:focus {
+    text-decoration: none;
+}
+
+a img {
+    border: none;
+    outline: none;
+}
+
+a.section:link, a.section:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+a.section:focus, a.section:hover {
+    text-decoration: underline;
+}
+
+/* GLOBAL DEFAULTS */
+
+p, ol, ul, dl {
+    margin: .2em 0 .8em 0;
+}
+
+p {
+    padding: 0;
+    line-height: 140%;
+}
+
+
+h1,h2,h3,h4,h5 {
+    font-weight: bold;
+}
+
+h1 {
+    font-weight: 500;
+    font-size: 40px;
+    color: #666;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h2.post-access-cm {
+    font-weight: 500;
+    font-size: 13px;
+    font-family:PMingLiU;
+    color:#949494;
+}
+
+h2.simglelable {
+    font-weight: bold;
+    font-size: 15px;
+    font-family:PMingLiU;
+}
+
+h3 {
+    font-size: 14px;
+    margin: .8em 0 .3em 0;
+    color: #666;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: 12px;
+    margin: 1em 0 .8em 0;
+    padding-bottom: 3px;
+}
+
+h5 {
+    font-size: 10px;
+    margin: 1.5em 0 .5em 0;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+div.header-nav ul
+{
+    list-style:none; /* 去掉ul前面的符号 */
+    margin:0 0 0 5%;
+    padding: 0px; /* 与内部元素的距离为0 */
+    width: auto; /* 宽度根据元素内容调整 */
+}
+
+
+div.header-nav ul li
+{
+    border-style: none;
+    float:left; /* 向左漂移，将竖排变为横排 */
+    font-size: 16px;
+    margin:0px 18px;
+    padding: 0px; /* 与内部元素的距离为0 */
+    width: auto; /* 宽度根据元素内容调整 */
+
+}
+
+div.header-nav ul li a, div.header-nav ul li a:visited
+{
+    display: block; /* 此元素将显示为块级元素，此元素前后会带有换行符 */
+    line-height: 1.35em; /* 行高 */
+    padding: 4px 10px; /* 内部填充的距离 */
+    text-decoration: none;
+    white-space: nowrap; /* 对于文本内的空白处，不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
+}
+
+div.post-detail #post-body{
+    font-size:16px;
+}
+
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+fieldset {
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-top: 1px solid #eee;
+}
+
+blockquote {
+    font-size: 11px;
+    color: #777;
+    margin-left: 2px;
+    padding-left: 10px;
+    border-left: 5px solid #ddd;
+}
+
+code, pre {
+    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+    color: #666;
+    font-size: 12px;
+}
+
+pre.literal-block {
+    margin: 10px;
+    background: #eee;
+    padding: 6px 8px;
+}
+
+code strong {
+    color: #930;
+}
+
+hr {
+    clear: both;
+    color: #CDAA7D;
+    background-color: #CDBA96;
+    height: 1px;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font-size: 2px;
+    line-height: 1px;
+}
+
+/* TEXT STYLES & MODIFIERS */
+
+p img, h1 img, h2 img, h3 img, h4 img, td img {
+    vertical-align: middle;
+}
+
+
+/* TABLES */
+
+table {
+    border-collapse: collapse;
+    border-color: #ccc;
+}
+
+td, th {
+    font-size: 13px;
+    line-height: 16px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+    padding: 8px;
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+th {
+    font-weight: 600;
+    text-align: left;
+}
+
+thead th,
+tfoot td {
+    color: #666;
+    padding: 5px 10px;
+    font-size: 11px;
+    background: #fff;
+    border: none;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+tfoot td {
+    border-bottom: none;
+    border-top: 1px solid #eee;
+}
+
+/* SORTABLE TABLES */
+
+thead th {
+    padding: 5px 10px;
+    line-height: normal;
+    text-transform: uppercase;
+    background: #f6f6f6;
+}
+
+thead th a:link, thead th a:visited {
+    color: #666;
+}
+
+/* FORM DEFAULTS */
+
+input, textarea, select, .form-row p, form .button {
+    margin: 2px 0;
+    padding: 2px 3px;
+    vertical-align: middle;
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+textarea {
+    vertical-align: top;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=url],
+input[type=number], textarea, select, .vTextField {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 6px;
+    margin-top: 0;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus,
+input[type=url]:focus, input[type=number]:focus, textarea:focus, select:focus,
+.vTextField:focus {
+    border-color: #999;
+}
+
+select {
+    height: 30px;
+}
+
+select[multiple] {
+    min-height: 150px;
+}
+
+/* FORM BUTTONS */
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #79aec8;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.login input[type=submit]{
+    line-height:25px;
+    font-size:20px;
+    padding-left: 60px;
+    padding-right: 45px;
+    letter-spacing:15px;
+    border-radius: 20px;
+}
+
+a.button {
+    padding: 4px 5px;
+}
+
+.button:active, input[type=submit]:active, input[type=button]:active,
+.button:focus, input[type=submit]:focus, input[type=button]:focus,
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #609ab6;
+}
+
+.button[disabled], input[type=submit][disabled], input[type=button][disabled] {
+    opacity: 0.4;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    float: right;
+    border: none;
+    font-weight: 400;
+    background: #417690;
+}
+
+.button.default:active, input[type=submit].default:active,
+.button.default:focus, input[type=submit].default:focus,
+.button.default:hover, input[type=submit].default:hover {
+    background: #205067;
+}
+
+.button[disabled].default,
+input[type=submit][disabled].default,
+input[type=button][disabled].default {
+    opacity: 0.4;
+}
+
+.description {
+    font-size: 12px;
+    padding: 5px 0 0 12px;
+}
+
+div.body{
+    float:top;
+    width:1010px;
+    margin:65px auto;
+}
+
+/* HEADER */
+
+#header {
+    float:top;
+    width:1020px;
+    height:230px;
+    margin:0px auto;
+    padding-bottom:10px;
+    line-height:100px;
+    overflow: hidden;
+    border:0px solid;
+    border-radius:12px;
+    background: #BEBEBE;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+#header h1{
+    margin:0% 0% 0% 5%;
+    padding:0px;
+    font-family:PMingLiU;
+    color:#8B4C39;
+}
+
+#header h2{
+    margin:0% 0% 0% 5%;
+    font-family:PMingLiU;
+    font-weight:500;
+    color:#363636;
+}
+
+#header a{
+    color: #5E5E5E;
+    font-weight:bold;
+    font-family:PMingLiU;
+}
+
+#header a:link,#header a:visited {
+    color: #5E5E5E;
+}
+
+#header a:focus , #header a:hover {
+    text-decoration: none;
+    color: #8B2500
+}
+
+.home-page #header .nav-w0,
+.detail-page #header .nav-w1,
+.share-page #header .nav-w1,
+.music-page #header .nav-w2,
+.Album-page #header .nav-w3,
+.about-page #header .nav-w4
+{
+    text-decoration: none;
+    color: #8B2500
+}
+
+
+#tail{
+    float:bottom;
+    width:1020px;
+    height:auto;
+    min-height:300px;
+    margin:40px auto;
+    border:0px solid;
+    border-radius:12px;
+}
+
+#content {
+    float:left;
+    width:690px;
+    background-color:#EEE9BF;
+    border-radius:12px;
+
+}
+
+#content p{
+    color:#4F4F4F;
+    font-family:Tahoma;
+}
+
+#content #music{
+    float:left;
+    width:1020px;
+    margin-bottom:20px;
+    background-color:#FFFAFA;
+    border:0px solid;
+    border-radius:12px;
+
+}
+#content #music #skplayer
+{
+    float:left;
+    width:310px;
+    margin:5px;
+    background-color:#F0F0F0;
+    border:0px solid;
+    border-color:#FFFAFA;
+    border-radius:12px;
+}
+
+#audio
+{
+    margin-top:100%;
+    margin-left:5px;
+}
+
+
+#sidebar {
+    float:right;
+    width:240px;
+    padding:1.5em;
+    color:#5C5C5C;
+    background-color:#E0E0E0;
+    border-radius:12px;
+}
+
+#sidebar #blogger{
+    text-align:center;
+    font-family:SimSun;
+}
+
+div.introduce{
+    margin-top:10px;
+    margin-bottom:20px;
+    color:#262626;
+}
+
+div.introduce p{
+    color:gray;
+}
+
+
+#nav {
+    width:100%;
+    min-width:700px;
+    height:50px;
+    background:#FAFAFA;
+    position:fixed;
+    border:1px solid;
+    border-color:#EED5D2;
+    top:0;
+
+}
+
+#nav #logo{
+    float:left;
+    width:160px;
+    height:40px;
+    margin-top:5px;
+    margin-left:10px;
+}
+
+#nav img{
+
+    width:100%;
+    height:100%;
+}
+
+
+#nav #nav-user{
+    float:right;
+    height:50px;
+    line-height:50px;
+    overflow:hidden;
+    margin-right:50px;
+    /*vertical-align:middle;*/
+}
+
+#nav-user #user-center{
+    float:left;
+    height:50px;
+    line-height:50px;
+    overflow:hidden;
+    margin-right:30px;
+    /*vertical-align:middle;*/
+}
+
+#user-center a{
+    margin-right:20px;
+}
+
+/*vertical-align:middle;*/
+
+#nav-user #login,
+#nav-user #logout,
+#nav-user #register
+{
+    height:40px;
+    line-height:40px;
+    width:auto;
+    padding-left:20px;
+    padding-right:20px;
+    font-size:15px;
+    margin-top:5px;
+    border-radius:15px;
+    background: #FAFAFA;
+    color:#104E8B;
+}
+
+#nav-user #register
+{
+    float:right;
+    border:1px solid;
+    border-color: #EE9572;
+    background:#F0FFF0;
+}
+
+#nav-user #login
+{
+    float:left;
+    margin-right:30px;
+}
+
+#nav-user #logout
+{
+    float:right;
+}
+
+
+#nav-user #logout:focus,#nav-user #logout:hover,
+#nav-user #login:focus,#nav-user #login:hover
+{
+    background: #87CEFF;
+    color:#2F4F4F;
+}
+
+#nav-user #register:focus,
+#nav-user #register:hover
+{
+    background: #9AFF9A;
+    color:#2F4F4F;
+}
+
+
+#nav #register:active,
+#nav login:active,
+#nav logout:active
+{
+    background: #6CA6CD;
+    color:#2F4F4F;
+}
+
+#footer {
+    clear: both;
+    display: block;
+    padding:20px;
+    margin: 0px auto;
+    position: relative;
+    background:#DBDBDB;
+    text-align: center;
+
+}
+
+#footer div.page-tail{
+    margin:0px auto;
+}
+
+div.post-list, div.post-detail, div.post-share {
+    margin-bottom:30px;
+    padding:2em;
+    padding-top:5px;
+    background-color:#FCFCFC;
+    border-radius:8px;
+}
+
+#empty-page{
+    height:200px;
+    text-align:center;
+}
+
+.pagination
+{
+    text-align:center;
+}
+
+.previous a,.next a{
+    color:#FF4500;
+}
+
+div.comment-form{
+    background-color:#F5F5DC;
+    border: 12px solid;
+    border-radius:8px;
+    border-color:#F5F5DC;
+    }
+
+div.comment-form h2{
+    margin:0px;
+}
+
+div.owner-img{
+    margin:0px auto;
+    width: 240px;
+    height: 240px;
+    border: 0px solid;
+    }
+
+div.owner-img img {
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
+    border-radius:20px;
+}
+
+div.pagination{
+    margin:0 0 20px 0;
+    font-size:16px;
+}
+
+
+p.info{
+    font-weight: bold;
+}
+
+.tags {
+    margin: 5px 0 5px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #666;
+}
+
+div.comment-form label{
+    float:left;
+    width:40px;
+    text-align:left;
+    padding:4px;
+    margin:1px;
+}
+
+div.post-share label{
+    float:left;
+    width:70px;
+    text-align:left;
+    padding:4px;
+    margin:1px;
+}
+
+#tag-name {
+    margin-bottom:15px;
+    background-color:#D1EEEE;
+    border-radius:10px;
+    border:1px solid;
+    border-color:#CDC673;
+}
+
+#tag-name h2{
+    margin-left:15px;
+    color:#CD6839;
+    font-size:16px;
+}

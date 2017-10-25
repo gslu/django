@@ -1,0 +1,70 @@
+{% load blog_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href='{% static "blog/img/icon-title.ico" %}' type="image/x-icon"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv=”X-UA-Compatible” content=”IE=edge,chrome=1″/>
+
+        <title>
+        {% ifequal type "login" %}
+        登录-浮文掠影
+        {% else %}
+        注册-浮文掠影
+        {% endifequal %}
+        </title>
+        <link href= '{% static "blog/css/login.css" %}' rel="stylesheet">
+        <link href= '{% static "blog/css/base.css" %}' rel="stylesheet">
+    </head>
+
+    <body class="login">
+        <div id="text">
+            <a id="tohome" href=''>浮文掠影</a>
+        </div>
+
+        {% ifequal type "login" %}
+        <div id="login-form">
+        {% else %}
+        <div id="register-form">
+        {% endifequal %}
+            <div id="form-desc">
+                <a id="type-login" href='{% url "blog:user_login" %}'>登录</a>
+                <b>&nbsp;·&nbsp;</b>
+                <a id="type-reg" href='{% url "blog:user_register" %}'>注册</a>
+            </div>
+            <div id="form-row">
+                <form action="." method="post">
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <p id="forget-link"><a href="">忘记密码</a></p>
+                    {% ifequal login_status 400 %}
+                        <p id="login-error">帐号或密码错误</p>
+                    {% endifequal %}
+
+                    {% ifequal login_status 200 %}
+                        <p id="login-success">登录成功　正在跳转.</p>
+                    {% endifequal %}
+
+                    {% if register_msg %}
+                        <p id="register_msg">{{ register_msg }}</p>
+                    {% endif %}
+
+                    {% ifequal type "login" %}
+                    <p><input id="login-submit" type="submit" value="登录"></p>
+                    {% else %}
+                    <p><input id="reg-submit" type="submit" value="注册"></p>
+                    {% endifequal %}
+                </form>
+            </div>
+        </div>
+    <div id="footer">
+        <div class=”page-tail”>
+
+        　　© Ｇuang博客<br/>
+        　　For Django learning
+
+        </div>
+    </div>
+    </body>
+</html>

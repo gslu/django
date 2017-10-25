@@ -1,0 +1,58 @@
+{% load blog_tags %}
+{% load static %}
+<div id="sidebar">
+    <div class="owner-img">
+        <a href='{% url "blog:post_list" user.id %}'>
+    {% if user.profile.image %}
+        <img src="{{ MEDIA_URL }}{{ user.profile.image }}">
+    {% else %}
+        <img src='{% static "blog/img/user_default.jpeg" %}'>
+    {% endif %}
+        </a>
+    </div>
+
+    <h2 id="blogger">{{ user.profile.nickname }}</h2>
+
+    <hr/>
+
+    <div class="introduce">
+        <p>个人简介<p>
+        <div id="irdtext">
+        {{ user.profile.introduce }}
+        </div>
+    </div>
+
+    <hr/><br/>
+    <p>已发布的文章 {% total_posts user %} </p>
+
+    <h3>最新文章</h3>
+    {% get_latest_posts user 4 as latest_posts %}
+    <ul>
+        {% for post in latest_posts %}
+        <li>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+<!--
+    <h3>按浏览</h3>
+    {% get_most_access_posts user 3 as most_access_posts %}
+    <ul>
+        {% for post in most_access_posts %}
+        <li>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h3>按评论</h3>
+    {% get_most_commented_posts user 3 as most_commented_posts %}
+    <ul>
+        {% for post in most_commented_posts %}
+        <li>
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+-->
+</div>

@@ -1,0 +1,22 @@
+{% extends "blog/base.html" %}
+{% block title %}{{ user.profile.nickname }} 音乐-浮文掠影{% endblock %}
+
+{% block header %}
+<div class="music-page">
+    {% include "blog/header.html" %}
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div id="content">
+    <div id="music">
+        {% include "blog/music/skPlayer.html" %}
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+

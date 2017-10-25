@@ -1,0 +1,126 @@
+/* LOGIN FORM */
+
+body.login {
+    background: #F2F2F2;
+}
+
+.login #text {
+    float:top;
+    margin:0px auto;
+    width:350px;
+    background-color:#F2F2F2;
+    text-align:center;
+}
+
+.login #login-form,
+.login #register-form
+ {
+    margin:15px auto;
+    padding-top:30px;
+    padding-bottom:170px;
+    text-align:center;
+    width:350px;
+    height:350px;
+    background-color:#FFFFF0;
+    border-radius:8px;
+}
+
+
+.login #footer {
+    clear: both;
+    display: block;
+    padding:15px;
+    text-align: center;
+    margin: 0px auto;
+    position: relative;
+    background-color:#F2F2F2;
+}
+
+
+.login #form-desc
+ {
+    line-height:100px;
+    font-size:20px;
+}
+
+
+.login #login-error,
+.login #register_msg
+{
+    font-size:13px;
+    color:red;
+}
+
+
+.login #login-success{
+    font-size:13px;
+    color:green;
+}
+
+
+.login input[type="text"],
+.login input[type="password"],
+.login input[type="email"]
+{
+    padding: 10px 15px;
+    font-size:15px;
+    margin:4px;
+}
+
+
+#login-form label,
+#register-form label
+{
+    font-size:16px;
+}
+
+#form-desc a
+{
+    color:gray;
+}
+
+#login-form #type-login
+{
+    color:#B22222
+}
+
+#register-form #type-reg{
+    color:#B22222
+}
+
+#form-desc a:focus,
+#form-desc a:hover
+{
+    color:#B22222
+}
+
+
+#text a{
+    font-size:50px;
+    color:#FF6347;
+}
+
+
+#register-form #reg-submit
+{
+    background:#43CD80;
+    color:#FFFFFF;
+}
+
+
+#register-form #reg-submit:focus,
+#register-form #reg-submit:hover
+{
+    background:#3CB371;
+}
+
+
+#register-form #reg-submit:active
+{
+    background:#458B74;
+}
+
+p #forget-link{
+
+    margin-right:5px;
+}

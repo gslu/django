@@ -1,0 +1,62 @@
+{% extends "blog/post/base.html" %}
+
+{% block title %}
+    {% if tag %}
+        {{ user.profile.nickname }} {{ tag.name }}-专题-浮文掠影
+    {% else %}
+        {{ user.profile.nickname }}-浮文掠影
+    {% endif %}
+{% endblock %}
+
+{% block header %}
+<div class="home-page">
+    {% include "blog/header.html"　%}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content">
+    {% if tag %}
+        <div id="tag-name">
+            <h2>{{ tag.name }}-专题</h2>
+        </div>
+    {% endif %}
+
+
+    {% if posts %}
+        {% for post in posts %}
+        <div class="post-list">
+            <h2 class="posttitle">
+                <a href="{{ post.get_absolute_url }}">
+                {{ post.title }}
+                </a>
+            </h2>
+            <p class="tags">
+                Tags:
+                {% for tag in post.tags.all %}
+                    <a href="{% url "blog:post_list_by_tag" user.id tag.slug %}">
+                    {{ tag.name }}
+                    </a>
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            <p class="date">
+                Published {{ post.publish }} by {{ post.author }} 　阅读{{ post.accesstimes }}
+            </p>
+            <hr/>
+            <p class="post_body">
+            {{ post.body | slice:"100" | linebreaks }}
+            </p>
+            <a href="{{ post.get_absolute_url }}">阅读全文>></a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="post-list" id="empty-page">
+            <h1>空空如也</h1>
+        </div>
+    {% endif %}
+    <!--include　里的变量名称如果跟外面的一样　就不用with 否则就要传递一下-->
+    {% include "blog/post/pagination.html" with page=posts %}
+</div>
+{% endblock %}
+
