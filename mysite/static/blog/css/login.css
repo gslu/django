@@ -1,10 +1,11 @@
 /* LOGIN FORM */
 
-body.login {
+body.login,body.verify{
     background: #F2F2F2;
 }
 
-.login #text {
+.login #text,
+.verify #text{
     float:top;
     margin:0px auto;
     width:350px;
@@ -13,20 +14,36 @@ body.login {
 }
 
 .login #login-form,
-.login #register-form
+.login #register-form,
+.verify #forget-form
  {
-    margin:15px auto;
-    padding-top:30px;
-    padding-bottom:170px;
-    text-align:center;
     width:350px;
-    height:350px;
+    height:550px;
+    margin:15px auto;
+    padding-top:20px;
+    text-align:center;
     background-color:#FFFFF0;
     border-radius:8px;
 }
 
+#register-active,
+#send-verify,
+#success-reset
+{
+    min-height:500px;
+    width:800px;
+    margin:100px auto;
+    font-size:18px;
+    text-align:left;
+}
 
-.login #footer {
+#success-reset
+{
+    font-size:22px;
+    text-align:center;
+}
+
+.login #footer,.verify #footer{
     clear: both;
     display: block;
     padding:15px;
@@ -37,7 +54,8 @@ body.login {
 }
 
 
-.login #form-desc
+.login #form-desc,
+.verify #form-desc
  {
     line-height:100px;
     font-size:20px;
@@ -45,7 +63,10 @@ body.login {
 
 
 .login #login-error,
-.login #register_msg
+.login #register_msg,
+.verify #verify-error,
+.login .errorlist,
+.verify .errorlist
 {
     font-size:13px;
     color:red;
@@ -58,23 +79,37 @@ body.login {
 }
 
 
-.login input[type="text"],
-.login input[type="password"],
-.login input[type="email"]
+.login input[type="text"],.login input[type="password"],.login input[type="email"],
+.verify input[type="text"],.verify input[type="password"],.verify input[type="email"]
 {
     padding: 10px 15px;
     font-size:15px;
     margin:4px;
 }
 
-
-#login-form label,
-#register-form label
+.verify #get-password
 {
+
+    width:160px;
     font-size:16px;
+    border-radius:20px;
 }
 
-#form-desc a
+
+#login-form label,
+#register-form label,
+#forget-form label
+{
+    font-size:15px;
+}
+
+#forget-form #form-desc{
+    padding-top:30px;
+    padding-bottom:22px;
+}
+
+
+#form-desc,#form-desc a
 {
     color:gray;
 }
@@ -121,6 +156,5 @@ body.login {
 }
 
 #forget-link{
-    text-align:right;
-    margin-right:30px;
+    margin-left:180px;
 }
