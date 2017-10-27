@@ -96,7 +96,7 @@ class EmailVerifyRecord(models.Model):
     send_time = models.DateTimeField(verbose_name=u"发送时间", auto_now_add=True)
 
     class Meta:
-        verbose_name = u"邮箱验证码"
+        verbose_name = u"VerifyRecord"
         verbose_name_plural = verbose_name
     def __unicode__(self):
         return '{0}({1})'.format(self.code, self.email)

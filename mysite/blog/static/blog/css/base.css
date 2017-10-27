@@ -687,16 +687,50 @@ div.post-share label{
     margin:1px;
 }
 
-#tag-name {
+#tag-bar {
+    height:auto;
+    min-height:50px;
     margin-bottom:15px;
+    padding:1px;
     background-color:#D1EEEE;
     border-radius:10px;
-    border:1px solid;
-    border-color:#CDC673;
+    border:1px solid #D1EEEE;
+    /*border-color:#CDC673;*/
 }
 
-#tag-name h2{
-    margin-left:15px;
+#tag-bar #tag,#tag-bar #select-tag{
+    display:inline-block;
+    margin-bottom:2px;
+    padding-left:10px;
+    padding-right:10px;
+    border-radius:10px;
+    background:#E0FFFF;
+}
+
+#tag-bar #select-tag
+{
+    background:#FFD39B;
+}
+
+#tag-bar h2{
     color:#CD6839;
     font-size:16px;
+}
+
+#tag-bar #tag:focus,
+#tag-bar #tag:hover,
+#tag-bar #select-tag:focus,
+#tag-bar #select-tag:hover
+{
+    background:#FFF68F;
+}
+
+#tag-bar #tag:active,#tag-bar #select-tag:active
+{
+    background:#FFD39B;
+}
+
+div.select-tag
+{
+    background:#FFD39B;
 }

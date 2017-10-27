@@ -1,0 +1,53 @@
+{% load blog_tags %}
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="icon" href='{% static "blog/img/icon-title.ico" %}' type="image/x-icon"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta http-equiv=”X-UA-Compatible” content=”IE=edge,chrome=1″/>
+
+        <title>
+        密码重置-浮文掠影
+        </title>
+        <link href= '{% static "blog/css/login.css" %}' rel="stylesheet">
+        <link href= '{% static "blog/css/base.css" %}' rel="stylesheet">
+    </head>
+
+    <body class="verify">
+        <div id="text">
+            <a id="tohome" href=''>浮文掠影</a>
+        </div>
+
+        <div id="reset">
+            {% if form %}
+            <div id="forget-form">
+                <div id="form-desc">
+                    <p>密码重置</p>
+                </div>
+                <div id="form-row">
+                    <form action="." method="post">
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        <p><input id="get-password" type="submit" value="提交"></p>
+                    </form>
+                </div>
+            </div>
+
+            {% else %}
+                <div id="success-reset">
+                <p>密码已重置</p>
+                </div>
+            {% endif %}
+        </div>
+
+    <div id="footer">
+        <div class=”page-tail”>
+
+        　　© Ｇuang博客<br/>
+        　　For Django learning
+
+        </div>
+    </div>
+    </body>
+</html>

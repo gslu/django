@@ -1,6 +1,6 @@
 {% load blog_tags %}
 {% load static %}
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
     <head>
         <link rel="icon" href='{% static "blog/img/icon-title.ico" %}' type="image/x-icon"/>
@@ -11,7 +11,7 @@
         {% ifequal send_type "register" %}
         注册激活-浮文掠影
         {% else %}
-        修改密码-浮文掠影
+        密码找回-浮文掠影
         {% endifequal %}
         </title>
         <link href= '{% static "blog/css/login.css" %}' rel="stylesheet">
@@ -29,7 +29,7 @@
             <p>系统错误，请稍后激活</p>
             {% else %}
                 {% if status %}
-                <p>帐号成功激活,请登录</p>
+                <p>{{ username }}用户帐号成功激活</p>
                 {% else %}
                 <p>尊敬的用户{{ username }}</p>
                 <p>激活邮件已经发至您邮箱{{ email }}，请登录邮箱激活帐号,谢谢</p>
@@ -38,24 +38,28 @@
         </div>
         {% else %}
         <div id="forget">
-            <div id="form-desc">
-                <p>密码找回</p>
-            </div>
             {% if status %}
-            <p>找回邮件已经发至邮箱，请查收</p>
+            <div id="send-verify"></div>
+            <p>尊敬的用户{{ username }}</p>
+            <p>找回邮件已经发至邮箱{{ email }}，请查收</p>
+            </div>
             {% else %}
+            <div id="forget-form">
+                <div id="form-desc">
+                    <p>密码找回</p>
+                </div>
+                <div id="form-row">
+                    <form action="." method="post">
+                        {{ form.as_p }}
+                        {% csrf_token %}
 
-            <div id="form-row">
-                <form action="." method="post">
-                    {{ form.as_p }}
-                    {% csrf_token %}
+                        {% if error %}
+                            <p id="verify-error">帐号或邮箱不匹配</p>
+                        {% endif %}
 
-                    {% if error %}
-                        <p id="verify-error">帐号或邮箱不存在</p>
-                    {% endif %}
-
-                    <p><input id="get-password" type="submit" value="提交"></p>
-                </form>
+                        <p><input id="get-password" type="submit" value="提交"></p>
+                    </form>
+                </div>
             </div>
             {% endif %}
         </div>

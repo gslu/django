@@ -1,6 +1,6 @@
 {% load blog_tags %}
 {% load static %}
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
     <head>
         <link rel="icon" href='{% static "blog/img/icon-title.ico" %}' type="image/x-icon"/>
@@ -38,7 +38,7 @@
                     {{ form.as_p }}
                     {% csrf_token %}
                     {% ifequal type "login" %}
-                        <p id="forget-link"><a href='{% url "blog:forget" %}'>忘记密码</a></p>
+                        <p id="forget-link"><a href='{% url "blog:pswd_forget" %}'>忘记密码</a></p>
                     {% endifequal %}
                     {% ifequal login_status 400 %}
                         <p id="login-error">帐号或密码错误</p>

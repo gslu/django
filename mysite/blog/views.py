@@ -7,18 +7,16 @@ from django.shortcuts import render, get_object_or_404
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password
-from django.views.generic import ListView
+from django.views.generic import ListView,View
 from django.db.models import Count
 from taggit.models import Tag
 from .models import Post,Comment,EmailVerifyRecord
-from .forms import EmailPostForm,CommentForm,LoginForm,RegisterForm,ForgetForm
-
+from .forms import *
 from utils import email_send
-
+from django.db.models import Q
 
 # Create your views here.
 
@@ -35,8 +33,11 @@ def userLogin(request):
             if user is not None:
                 login(request, user)
                 login_status = 200
-
-                return HttpResponseRedirect(request.session['login_from'])
+                try:
+                    return HttpResponseRedirect(request.session['login_from'])
+                except:
+                    #跳转错误，跳到网站主页，由number1个人主页暂时充当
+                    return HttpResponseRedirect(request.session['login_from'])
             else:
                 login_status = 400
                 form = LoginForm(initial={"username": cd["username"],
@@ -44,15 +45,15 @@ def userLogin(request):
 
     else:
         # 获取不到,则跳转到个人中心，用/user/1/暂时充当
-        referer = request.META.get('HTTP_REFERER','/user/1')
-        if 'register' not in referer:
-            request.session['login_from'] = referer
+        referer = request.META.get('HTTP_REFERER','/')
+        print referer
+        if 'register' in referer or 'login' in referer:
+            request.session['login_from'] = '/'
         else:
-            request.session['login_from'] = '/user/1'
+            request.session['login_from'] = referer
 
         form = LoginForm()
-
-    return render(request,"blog/login.html",{"form":form,
+    return render(request,"blog/user/login.html",{"form":form,
                                              "login_status":login_status,
                                              "type":"login"})
 
@@ -61,53 +62,144 @@ def userLogout(request):
     logout(request)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
-
 def userRegister(request):
     register_msg = None
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
+            username = cd["username"]
+            email = cd["email"]
+            password = cd["password"]
             try:
-                user = User.objects.get(username=cd["username"])
+                user = User.objects.get(username=username)
             except:
                 user = None
 
             if user is None:
                 try:
-                    User.objects.create(username=cd["username"],
-                                        password=make_password(cd["password"],None,"pbkdf2_sha256"),
-                                        email=cd["email"],
+                    user = User.objects.create(username=username,
+                                        password=password,
+                                        email=email,
                                         is_active=0)
+                    user.set_password(password)
+                    user.save()
                 except Exception as e:
                     if settings.DEBUG:
                         register_msg = e.message
                     else:
                         register_msg = "Server error"
                 else:
-                    return HttpResponseRedirect(reverse("verify_register_before",
-                                                        kwargs={"username":cd["username"],
-                                                                "email":cd["email"]}))
+                    email_send.sendVerifyEmail(email, username,
+                                               send_type="register", request=request)
+                    return HttpResponseRedirect(reverse("blog:verify_register_before",
+                                                        kwargs={"email":email,
+                                                                "username":username}))
             else:
                 register_msg="该帐号已被注册"
                 form = RegisterForm(initial={"username": cd["username"],
-                                                "password": cd["password"],
-                                                 "email":cd["email"]})
+                                                "email":cd["email"],
+                                                "password":""})
 
     else:
         form = RegisterForm()
 
-    return render(request,"blog/login.html",{"form":form,
+    return render(request,"blog/user/login.html",{"form":form,
                                              "register_msg":register_msg,
                                              "type": "register"})
 
-def postList(request,user_id,tag_slug=None):
+
+def verifyRegister(request,email=None,username=None,code=None):
+
+    import datetime
+    #验证链接一天过期
+    now = datetime.datetime.now()
+    one_day_ago = now - datetime.timedelta(days=1)
+
+    # False表示激活前,True表示激活后 error错误页
+    status = "error"
+    if email is not None and username is not None:
+        status = False
+
+    if code is not None:
+        record = get_object_or_404(EmailVerifyRecord,code=code,send_time__gte=one_day_ago)
+        user = get_object_or_404(User,email=record.email,username=username)
+        user.is_active = True
+        user.save()
+        record.delete()
+        status = True
+        email = record.email
+        username = user.username
+    return render(request,"blog/user/verify.html",{"send_type":"register",
+                                              "status":status,
+                                              "username":username,
+                                              "email":email})
+
+
+def pswdForget(request):
+    # False/True 重置邮件发送前后
+    status = False
+    query_error = False
+    if request.method == 'POST':
+        form = ForgetForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            username = cd["username"]
+            email = cd["email"]
+            try:
+                user = User.objects.get(username=username,email=email)
+            except:
+                query_error = True
+
+            if query_error:
+                form = ForgetForm(initial={"username":username,
+                                           "email":email})
+            else:
+                email_send.sendVerifyEmail(email, username, send_type="forget",request=request)
+                status = True
+    else:
+        form = ForgetForm()
+        email = None
+        username = None
+    return render(request,"blog/user/verify.html",{"send_type":"forget",
+                                              "status":status,"email":email,
+                                              "form":form,"username":username,
+                                              "error":query_error})
+
+
+def pswdReset(request,username,code):
+    import datetime
+    #重置密码链接一天过期
+    now = datetime.datetime.now()
+    one_day_ago = now - datetime.timedelta(days=1)
+    record = get_object_or_404(EmailVerifyRecord,code=code,send_time__gte=one_day_ago)
+    if request.method == 'POST':
+        form = ResetForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            if username == cd["username"]:
+                user = get_object_or_404(User, username=username, email=record.email)
+                user.set_password(cd["password"])
+                user.save()
+                record.delete()
+                form = None
+            else:
+                form = ResetForm(initial={"username": username})
+    else:
+        form = ResetForm(initial={"username":username})
+    return render(request,"blog/user/reset.html",{"form":form})
+
+
+def postList(request,user_id, tag_name=None):
 
     user = get_object_or_404(User,id=user_id)
     object_list = Post.published.filter(author=user)
     tag = None
-    if tag_slug:
-        tag = get_object_or_404(Tag,slug=tag_slug)
+    tags = Tag.objects.filter(post__in=object_list).distinct()
+
+    if tag_name:
+        tag = get_object_or_404(Tag,name=tag_name)
+        tags = tags.filter(~Q(name=tag))
         object_list = object_list.filter(tags__in=[tag])
 
     paginator = Paginator(object_list, 10)  # 10 posts in each page
@@ -123,6 +215,7 @@ def postList(request,user_id,tag_slug=None):
     return render(request,'blog/post/list.html',{'posts': posts,
                                                  'page':page,
                                                  'tag':tag,
+                                                 'tags':tags,
                                                  'user':user,
                                                  'auth_user':request.user})
 
@@ -137,18 +230,13 @@ def postDetail(request,year,month,day,slug,id):
         post.accesstimes += 1
         post.save()
 
-    # List of active comments for this post
     comments = post.comments.filter(active=True)
     new_comment = None
     if request.method == 'POST':
-        #A comment was post
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
-            # Create Comment object but don't save to database yet
             new_comment = comment_form.save(commit=False)
-            # Assign the current post to the comment
             new_comment.post = post
-            # Save the comment to database
             new_comment.save()
     else:
         comment_form = CommentForm()
@@ -200,7 +288,6 @@ def postShare(request,post_id):
                                                   'auth_user': request.user
                                                   })
 
-
 def music(request,user_id):
     user = get_object_or_404(User, id=user_id)
     return render(request,'blog/music/music.html',{'user': user,
@@ -211,54 +298,4 @@ def about(request,user_id):
     user = get_object_or_404(User, id=user_id)
     return render(request,'blog/about/about.html',{'user': user,
                                                    'auth_user': request.user})
-
-def verifyRegister(request,email=None,username=None,code=None):
-    # False表示激活前,True表示激活后
-    status = "error"
-    if email is not None and username is not None:
-        email_send.sendVerifyEmail(email,username,send_type="register")
-        status = False
-
-    if code is not None:
-        record = get_object_or_404(EmailVerifyRecord,code=code)
-        user = get_object_or_404(User,email=record.email)
-        user.is_active = True
-        user.save()
-        EmailVerifyRecord.objects.get(code=code).delete()
-        status = True
-    return render(request,"blog/verify.html",{"send_type":"register",
-                                              "status":status,
-                                              "username":username,
-                                              "email":email})
-
-def forget(request):
-    # False表示找回前,True表示找回后
-    status = False
-    error = False
-    if request.method == 'POST':
-        form = ForgetForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            try:
-                user = User.objects.get(username=cd["username"])
-            except:
-                error = True
-            else:
-                if user.email<>cd["email"]:
-                    error = True
-
-            if error:
-                form = ForgetForm(initial={"username":cd["username"],
-                                           "email":cd["email"]})
-            else:
-                status = True
-
-    else:
-        form = ForgetForm()
-    return render(request,"blog/verify.html",{"send_type":"forget",
-                                              "status":status,
-                                              "form":form,
-                                              "error":error})
-
-
 

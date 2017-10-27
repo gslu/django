@@ -16,13 +16,33 @@
 
 {% block content %}
 <div id="content">
+
     {% if tag %}
-        <div id="tag-name">
-            <h2>{{ tag.name }}-专题</h2>
+        <div id="tag-bar">
+            <a href="{% url "blog:post_list_by_tag" user.id tag.name %}">
+                <div id="select-tag">
+                <h2>{{ tag.name }}-专题</h2>
+                </div>
+            </a>
+            {% for a_tag in tags %}
+                <a href="{% url "blog:post_list_by_tag" user.id a_tag.name %}">
+                    <div id="tag">
+                    <h2>{{ a_tag.name }}</h2>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div id="tag-bar">
+            {% for a_tag in tags %}
+             <a href="{% url "blog:post_list_by_tag" user.id a_tag.name %}">
+                <div id="tag">
+                <h2>{{ a_tag.name }}</h2>
+                </div>
+            </a>
+            {% endfor %}
         </div>
     {% endif %}
-
-
     {% if posts %}
         {% for post in posts %}
         <div class="post-list">
@@ -32,9 +52,9 @@
                 </a>
             </h2>
             <p class="tags">
-                Tags:
+                标签:
                 {% for tag in post.tags.all %}
-                    <a href="{% url "blog:post_list_by_tag" user.id tag.slug %}">
+                    <a href="{% url "blog:post_list_by_tag" user.id tag.name %}">
                     {{ tag.name }}
                     </a>
                     {% if not forloop.last %}, {% endif %}
