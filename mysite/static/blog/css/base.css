@@ -647,12 +647,14 @@ div.owner-img{
     border: 0px solid;
     }
 
+
 div.owner-img img {
     background-size: 100%;
     width: 100%;
     height: 100%;
     border-radius:20px;
 }
+
 
 div.pagination{
     margin:0 0 20px 0;

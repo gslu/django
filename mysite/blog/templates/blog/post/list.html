@@ -1,4 +1,5 @@
 {% extends "blog/post/base.html" %}
+{% load static %}
 
 {% block title %}
     {% if tag %}
@@ -46,11 +47,32 @@
     {% if posts %}
         {% for post in posts %}
         <div class="post-list">
+            <div class="post-author">
+                <div class="author-img">
+                    <a href='{% url "blog:post_list" post.author.id %}'>
+                    {% if post.author.profile.image %}
+                        <img src="{{ MEDIA_URL }}{{ post.author.profile.image }}">
+                    {% else %}
+                        <img src='{% static "blog/img/user_default.jpeg" %}'>
+                    {% endif %}
+                    </a>
+                </div>
+                <div class="post-author-nickname">
+                    <a href='{% url "blog:post_list" post.author.id %}'>
+                    {{ post.author.profile.nickname }}　
+                    </a>
+                    <span class="date">{{ post.publish }}</span>
+                </div>
+            </div>
             <h2 class="posttitle">
                 <a href="{{ post.get_absolute_url }}">
                 {{ post.title }}
                 </a>
             </h2>
+            <hr/>
+            <p class="post_body">
+            {{ post.body | slice:"100" | linebreaks}}...
+            </p>
             <p class="tags">
                 标签:
                 {% for tag in post.tags.all %}
@@ -59,15 +81,8 @@
                     </a>
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}
+                &nbsp;&nbsp;阅读({{ post.accesstimes }})
             </p>
-            <p class="date">
-                Published {{ post.publish }} by {{ post.author }} 　阅读{{ post.accesstimes }}
-            </p>
-            <hr/>
-            <p class="post_body">
-            {{ post.body | slice:"100" | linebreaks }}
-            </p>
-            <a href="{{ post.get_absolute_url }}">阅读全文>></a>
         </div>
         {% endfor %}
     {% else %}

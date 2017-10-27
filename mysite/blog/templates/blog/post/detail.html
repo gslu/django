@@ -1,5 +1,5 @@
 {% extends "blog/post/base.html" %}
-
+{% load static %}
 {% block title %}{{ post.title }}-浮文掠影{% endblock %}
 
 {% block header %}
@@ -12,9 +12,24 @@
 <div id="content">
     <div class="post-detail">
         <h1>{{ post.title }}</h1>
-        <p class="date">
-            Published {{ post.publish }} by {{ post.author }}
-        </p>
+
+        <div class="post-author">
+            <div class="author-img">
+                <a href='{% url "blog:post_list" post.author.id %}'>
+                    {% if post.author.profile.image %}
+                        <img src="{{ MEDIA_URL }}{{ post.author.profile.image }}">
+                    {% else %}
+                        <img src='{% static "blog/img/user_default.jpeg" %}'>
+                    {% endif %}
+                </a>
+            </div>
+            <div class="post-author-nickname">
+                <a href='{% url "blog:post_list" post.author.id %}'>
+                    {{ post.author.profile.nickname }}　
+                </a>
+                <span class="date">{{ post.publish }}</span>
+            </div>
+        </div>
 
         <div id="post-body">
             {{ post.body|linebreaks }}

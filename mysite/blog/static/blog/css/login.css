@@ -44,12 +44,7 @@ body.login,body.verify{
 }
 
 .login #footer,.verify #footer{
-    clear: both;
-    display: block;
-    padding:15px;
-    text-align: center;
-    margin: 0px auto;
-    position: relative;
+
     background-color:#F2F2F2;
 }
 

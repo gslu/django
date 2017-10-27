@@ -109,35 +109,6 @@ h5 {
     letter-spacing: 1px;
 }
 
-div.header-nav ul
-{
-    list-style:none; /* 去掉ul前面的符号 */
-    margin:0 0 0 5%;
-    padding: 0px; /* 与内部元素的距离为0 */
-    width: auto; /* 宽度根据元素内容调整 */
-}
-
-
-div.header-nav ul li
-{
-    border-style: none;
-    float:left; /* 向左漂移，将竖排变为横排 */
-    font-size: 16px;
-    margin:0px 18px;
-    padding: 0px; /* 与内部元素的距离为0 */
-    width: auto; /* 宽度根据元素内容调整 */
-
-}
-
-div.header-nav ul li a, div.header-nav ul li a:visited
-{
-    display: block; /* 此元素将显示为块级元素，此元素前后会带有换行符 */
-    line-height: 1.35em; /* 行高 */
-    padding: 4px 10px; /* 内部填充的距离 */
-    text-decoration: none;
-    white-space: nowrap; /* 对于文本内的空白处，不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
-}
-
 div.post-detail #post-body{
     font-size:16px;
 }
@@ -367,17 +338,19 @@ div.body{
 }
 
 #header h1{
-    margin:0% 0% 0% 5%;
+    margin:1% 0% 0% 5%;
     padding:0px;
     font-family:PMingLiU;
     color:#8B4C39;
 }
 
 #header h2{
+    line-height:85px;
     margin:0% 0% 0% 5%;
     font-family:PMingLiU;
     font-weight:500;
     color:#363636;
+
 }
 
 #header a{
@@ -394,6 +367,40 @@ div.body{
     text-decoration: none;
     color: #8B2500
 }
+
+div.header-nav{
+    height:35px;
+}
+
+div.header-nav ul
+{
+    list-style:none; /* 去掉ul前面的符号 */
+    margin:0 0 0 5%;
+    padding: 0px; /* 与内部元素的距离为0 */
+    width: auto; /* 宽度根据元素内容调整 */
+}
+
+
+div.header-nav ul li
+{
+    border-style: none;
+    float:left; /* 向左漂移，将竖排变为横排 */
+    font-size: 16px;
+    margin:0px 18px;
+    padding: 0px; /* 与内部元素的距离为0 */
+    width: auto; /* 宽度根据元素内容调整 */
+
+}
+
+div.header-nav ul li a, div.header-nav ul li a:visited
+{
+    display: block; /* 此元素将显示为块级元素，此元素前后会带有换行符 */
+    line-height: 1.35em; /* 行高 */
+    padding: 4px 10px; /* 内部填充的距离 */
+    text-decoration: none;
+    white-space: nowrap; /* 对于文本内的空白处，不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
+}
+
 
 .home-page #header .nav-w0,
 .detail-page #header .nav-w1,
@@ -419,7 +426,7 @@ div.body{
 
 #content {
     float:left;
-    width:690px;
+    width:700px;
     background-color:#EEE9BF;
     border-radius:12px;
 
@@ -594,10 +601,8 @@ div.introduce p{
 
 #footer {
     clear: both;
-    display: block;
+    bottom:0px;
     padding:20px;
-    margin: 0px auto;
-    position: relative;
     background:#EEE9BF;
     text-align: center;
 
@@ -609,10 +614,68 @@ div.introduce p{
 
 div.post-list, div.post-detail, div.post-share {
     margin-bottom:30px;
-    padding:2em;
-    padding-top:5px;
+    padding:1em;
     background-color:#FCFCFC;
     border-radius:8px;
+}
+div.post-detail{
+    padding:2em;
+    padding-top:1em;
+}
+
+
+div.post-list a{
+    color:#262626;
+}
+
+div.post-list a:focus,
+div.post-list a:hover
+{
+    color:#458B74;
+}
+
+div.post-list h2, div.post-detail h2, div.post-share h2
+{
+    line-height:25px;
+    color:#262626;
+}
+
+div.post-detail h1, div.post-share h1
+{
+    line-height:30px;
+    color:#262626;
+}
+
+div.post-author
+{
+    height:45px;
+}
+
+div.post-detail div.post-author
+{
+    margin-bottom:25px;
+}
+
+div.author-img,div.post-author-nickname{
+    display:inline-block;
+    margin-right:10px;
+    vertical-align:middle;
+    width: 45px;
+    height: 45px;
+    border: 0px solid;
+}
+
+div.author-img img{
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
+    border-radius:10px;
+}
+
+div.post-author-nickname
+{
+    height:auto;
+    width:auto;
 }
 
 #empty-page{
@@ -654,6 +717,7 @@ div.owner-img img {
     border-radius:20px;
 }
 
+
 div.pagination{
     margin:0 0 20px 0;
     font-size:16px;
@@ -691,20 +755,17 @@ div.post-share label{
     height:auto;
     min-height:50px;
     margin-bottom:15px;
-    padding:1px;
     background-color:#D1EEEE;
-    border-radius:10px;
-    border:1px solid #D1EEEE;
-    /*border-color:#CDC673;*/
+    font-size: 0;
 }
 
 #tag-bar #tag,#tag-bar #select-tag{
+    line-height:25px;
     display:inline-block;
-    margin-bottom:2px;
     padding-left:10px;
     padding-right:10px;
-    border-radius:10px;
     background:#E0FFFF;
+    border-right:1px solid #B8860B;
 }
 
 #tag-bar #select-tag
