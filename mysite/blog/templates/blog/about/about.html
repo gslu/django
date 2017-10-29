@@ -1,4 +1,7 @@
 {% extends "blog/base.html" %}
+{% load blog_tags %}
+{% load static %}
+
 {% block title %}{{ user.profile.nickname }} 关于-浮文掠影{% endblock %}
 
 {% block header %}
@@ -9,12 +12,93 @@
 
 {% block content %}
 
-<div id="content">
+<div id="about-content">
     <div id="about">
+        <h2>个人资料</h2>
         <div id="vbar">
-
+            <div class="owner-img">
+                <a href='{% url "blog:post_list" user.id %}'>
+                {% if user.profile.image %}
+                    <img src="{{ MEDIA_URL }}{{ user.profile.image }}">
+                {% else %}
+                    <img src='{% static "blog/img/user_default.jpeg" %}'>
+                {% endif %}
+                </a>
+            </div>
+            <div id="time-info">
+                <h3>建立时间:{{ user.date_joined | date:"Y-m-d H:i" }}</h3>
+                <h3>最近登录:{{ user.last_login | date:"Y-m-d H:i" }}</h3>
+                <br/>
+                <hr/>
+            </div>
+            <a href="">
+            <div id="recent-access">
+                <h2>最近访问</h2>
+            </div>
+            </a>
+            <a href="">
+            <div id="recent-comment">
+                <h2>最近评论</h2>
+            </div>
+            </a>
+            <a href="">
+            <div id="message">
+                <h2>留言</h2>
+            </div>
+            </a>
         </div>
         <div id="about-row">
+
+            <h2>基本资料</h2>
+            <p>昵称：{{ user.profile.nickname }}</p>
+            <p>性别：{% ifequal user.profile.gender "F" %}
+                        男
+                    {% else %}
+                        {% ifequal user.profile.gender "M" %}
+                            女
+                        {% else %}
+                            保密
+                        {%　endifequal %}
+                    {%　endifequal %}
+            </p>
+            <p>说说：{{ user.profile.motto }}</p>
+            <div>
+                <div id="lable">简介：</div>
+                <div id="text-area">
+                    <span>{{ user.profile.introduce }}</span>
+                </div>
+            </div>
+            <hr/>
+
+            <h2>个人信息</h2>
+            <p>家乡：{{ user.profile.hometown }}</p>
+            <p>现住：{{ user.profile.address }}</p>
+            <p>职业：{{ user.profile.occupation }}</p>
+            <div>
+                <div id="lable">爱好：</div>
+                <div id="text-area">
+                    <span>{{ user.profile.hobby }}</span>
+                </div>
+            </div>
+            <hr/>
+
+            <h2>联系方式</h2>
+            <p>Phone：{{ user.profile.phone }}</p>
+            <p>Email：{{ user.email }}</p>
+            <hr/>
+
+            <h2>关注主题</h2>
+                {% get_all_tag user as tags %}
+                <div id="care-topic">
+                {% for tag in tags %}
+                    <a href="{% url "blog:post_list_by_tag" user.id tag.name %}">
+                        <div id="tag">
+                        <h3>{{ tag.name }}</h3>
+                        </div>
+                    </a>
+                {% endfor %}
+                </div>
+            <hr/>
 
         </div>
     </div>

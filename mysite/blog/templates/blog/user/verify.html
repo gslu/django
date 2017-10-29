@@ -19,59 +19,54 @@
     </head>
 
     <body class="verify">
-        <div id="text">
-            <a id="tohome" href=''>浮文掠影</a>
-        </div>
+        <div id="content">
+            <div id="text">
+                <a id="tohome" href=''>浮文掠影</a>
+            </div>
 
-        {% ifequal send_type "register" %}
-        <div id="register-active">
-            {% ifequal status "error "%}
-            <p>系统错误，请稍后激活</p>
-            {% else %}
-                {% if status %}
-                <p>{{ username }}用户帐号成功激活</p>
+            {% ifequal send_type "register" %}
+            <div id="register-active">
+                {% ifequal status "error "%}
+                <p>系统错误，请稍后激活</p>
                 {% else %}
+                    {% if status %}
+                    <p>{{ username }}用户帐号成功激活</p>
+                    {% else %}
+                    <p>尊敬的用户{{ username }}</p>
+                    <p>激活邮件已经发至您邮箱{{ email }}，请登录邮箱激活帐号,谢谢</p>
+                {% endif %}
+                {% endifequal %}
+            </div>
+            {% else %}
+            <div id="forget">
+                {% if status %}
+                <div id="send-verify">
                 <p>尊敬的用户{{ username }}</p>
-                <p>激活邮件已经发至您邮箱{{ email }}，请登录邮箱激活帐号,谢谢</p>
-            {% endif %}
+                <p>找回邮件已经发至邮箱{{ email }}，请查收</p>
+                </div>
+                {% else %}
+                <div id="forget-form">
+                    <div id="form-desc">
+                        <p>密码找回</p>
+                    </div>
+                    <div id="form-row">
+                        <form action="." method="post">
+                            {{ form.as_p }}
+                            {% csrf_token %}
+
+                            {% if error %}
+                                <p id="verify-error">帐号或邮箱不匹配</p>
+                            {% endif %}
+
+                            <p><input id="get-password" type="submit" value="提交"></p>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
             {% endifequal %}
         </div>
-        {% else %}
-        <div id="forget">
-            {% if status %}
-            <div id="send-verify"></div>
-            <p>尊敬的用户{{ username }}</p>
-            <p>找回邮件已经发至邮箱{{ email }}，请查收</p>
-            </div>
-            {% else %}
-            <div id="forget-form">
-                <div id="form-desc">
-                    <p>密码找回</p>
-                </div>
-                <div id="form-row">
-                    <form action="." method="post">
-                        {{ form.as_p }}
-                        {% csrf_token %}
 
-                        {% if error %}
-                            <p id="verify-error">帐号或邮箱不匹配</p>
-                        {% endif %}
-
-                        <p><input id="get-password" type="submit" value="提交"></p>
-                    </form>
-                </div>
-            </div>
-            {% endif %}
-        </div>
-        {% endifequal %}
-
-    <div id="footer">
-        <div class=”page-tail”>
-
-        　　© Ｇuang博客<br/>
-        　　For Django learning
-
-        </div>
-    </div>
+        {% include "blog/footer.html" %}
     </body>
 </html>

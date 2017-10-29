@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8j%d%#b^ijs$g#t^71(2ubzz6g23-lh9tpu!b5gs!d@s2gsq31'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -141,7 +141,7 @@ EMAIL_HOST = "smtp.qq.com"
 EMAIL_HOST_USER = '706715203@qq.com'
 # QQ email use auth string not user password,you can get the string from QQ Email setting
 EMAIL_HOST_PASSWORD = "ygzhfoljrwqcbcgg"
-EMAIL_POST = 578
+EMAIL_POST = 465
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_USE_TLS = True
 

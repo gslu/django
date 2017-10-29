@@ -1,0 +1,29 @@
+{% load static %}
+    {% if tag %}
+        <div id="tag-bar">
+            <a href="{% url "blog:post_list_by_tag" user.id tag.name %}">
+                <div id="select-tag">
+                <h2>{{ tag.name }}-专题</h2>
+                </div>
+            </a>
+            {% for a_tag in tags %}
+                <a href="{% url "blog:post_list_by_tag" user.id a_tag.name %}">
+                    <div id="tag">
+                    <h2>{{ a_tag.name }}</h2>
+                    </div>
+                </a>
+            {% endfor %}
+
+        </div>
+    {% else %}
+        <div id="tag-bar">
+            {% for a_tag in tags %}
+             <a href="{% url "blog:post_list_by_tag" user.id a_tag.name %}">
+                <div id="tag">
+                <h2>{{ a_tag.name }}</h2>
+                </div>
+            </a>
+            {% endfor %}
+
+        </div>
+    {% endif %}

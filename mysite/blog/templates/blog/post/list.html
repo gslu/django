@@ -1,4 +1,5 @@
 {% extends "blog/post/base.html" %}
+{% load blog_tags %}
 {% load static %}
 
 {% block title %}
@@ -17,53 +18,13 @@
 
 {% block content %}
 <div id="content">
-
-    {% if tag %}
-        <div id="tag-bar">
-            <a href="{% url "blog:post_list_by_tag" user.id tag.name %}">
-                <div id="select-tag">
-                <h2>{{ tag.name }}-专题</h2>
-                </div>
-            </a>
-            {% for a_tag in tags %}
-                <a href="{% url "blog:post_list_by_tag" user.id a_tag.name %}">
-                    <div id="tag">
-                    <h2>{{ a_tag.name }}</h2>
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div id="tag-bar">
-            {% for a_tag in tags %}
-             <a href="{% url "blog:post_list_by_tag" user.id a_tag.name %}">
-                <div id="tag">
-                <h2>{{ a_tag.name }}</h2>
-                </div>
-            </a>
-            {% endfor %}
-        </div>
+    {% if tags or tag %}
+        {% include "blog/post/tags.html" %}
     {% endif %}
     {% if posts %}
         {% for post in posts %}
         <div class="post-list">
-            <div class="post-author">
-                <div class="author-img">
-                    <a href='{% url "blog:post_list" post.author.id %}'>
-                    {% if post.author.profile.image %}
-                        <img src="{{ MEDIA_URL }}{{ post.author.profile.image }}">
-                    {% else %}
-                        <img src='{% static "blog/img/user_default.jpeg" %}'>
-                    {% endif %}
-                    </a>
-                </div>
-                <div class="post-author-nickname">
-                    <a href='{% url "blog:post_list" post.author.id %}'>
-                    {{ post.author.profile.nickname }}　
-                    </a>
-                    <span class="date">{{ post.publish }}</span>
-                </div>
-            </div>
+            {% include "blog/post/author.html" %}
             <h2 class="posttitle">
                 <a href="{{ post.get_absolute_url }}">
                 {{ post.title }}
@@ -82,6 +43,8 @@
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}
                 &nbsp;&nbsp;阅读({{ post.accesstimes }})
+                {% get_comments_count post as total_comments %}
+                &nbsp;&nbsp;评论({{ total_comments }})
             </p>
         </div>
         {% endfor %}

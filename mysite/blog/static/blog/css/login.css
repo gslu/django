@@ -4,14 +4,24 @@ body.login,body.verify{
     background: #F2F2F2;
 }
 
+.login #content,.verify #content
+{
+    width:100%;
+    height:100%;
+    min-height:1000px;
+    margin:15px auto;
+    background-color:#F2F2F2;
+}
+
+
 .login #text,
 .verify #text{
-    float:top;
     margin:0px auto;
     width:350px;
     background-color:#F2F2F2;
     text-align:center;
 }
+
 
 .login #login-form,
 .login #register-form,
@@ -19,7 +29,7 @@ body.login,body.verify{
  {
     width:350px;
     height:550px;
-    margin:15px auto;
+    margin:25px auto;
     padding-top:20px;
     text-align:center;
     background-color:#FFFFF0;
@@ -42,6 +52,7 @@ body.login,body.verify{
     font-size:22px;
     text-align:center;
 }
+
 
 .login #footer,.verify #footer{
 
@@ -88,6 +99,8 @@ body.login,body.verify{
     width:160px;
     font-size:16px;
     border-radius:20px;
+    letter-spacing: 15px;
+    padding-right:0px;
 }
 
 

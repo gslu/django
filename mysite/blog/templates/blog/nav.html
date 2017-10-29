@@ -9,9 +9,15 @@
     <div id="nav-user">
     {% if auth_user.is_authenticated %}
         <div id="user-center">
-            <a id="user" href='{% url "blog:post_list" auth_user.id %}'>
-            {{ auth_user.profile.nickname|title }}
-            </a>
+         <div class="author-img">
+              <a id="user" href='{% url "blog:post_list" auth_user.id %}'>
+              {% if auth_user.profile.image %}
+                   <img src="{{ MEDIA_URL }}{{ auth_user.profile.image }}">
+              {% else %}
+                   <img src='{% static "blog/img/user_default.jpeg" %}'>
+              {% endif %}
+              </a>
+         </div>
             <!--个人首页暂时充当个人中心，后续添加-->
             <a id="center" href='{% url "blog:post_list" auth_user.id %}'>
             个人中心

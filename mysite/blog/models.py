@@ -12,7 +12,13 @@ from system.storage import ImageStorage
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
-    nickname = models.CharField(verbose_name=u"昵称",max_length=10,blank=True,default=u"未名")
+
+    hometown = models.CharField(verbose_name=u"家乡",max_length=20,blank=True)
+    address = models.CharField(verbose_name=u"现住",max_length=20,blank=True)
+    occupation = models.CharField(verbose_name=u"职业",max_length=20,blank=True)
+    hobby = models.CharField(verbose_name=u"爱好",max_length=100,blank=True)
+
+    nickname = models.CharField(verbose_name=u"昵称",max_length=10,blank=True,default="未名")
 
     GENDER_CHOICES = (
         (u'M', u'男'),
@@ -20,8 +26,8 @@ class Profile(models.Model):
         (u'S',u'保密'),
     )
     gender = models.CharField(verbose_name=u"性别",max_length=10,choices=GENDER_CHOICES,default='S')
-    motto = models.CharField(verbose_name=u"座右铭",max_length=50,blank=True,default="色即是空，空即是色")
-    introduce = models.TextField(verbose_name=u"个人简介",max_length=300,blank=True)
+    motto = models.CharField(verbose_name=u"座右铭",max_length=30,blank=True,default="色即是空，空即是色")
+    introduce = models.TextField(verbose_name=u"个人简介",max_length=200,blank=True)
     phone = models.CharField(verbose_name=u"手机",max_length=30,blank=True)
     image = models.ImageField(verbose_name=u"头像",upload_to="image/user_img",
                               blank=True,storage=ImageStorage())
@@ -72,9 +78,9 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post,related_name='comments')
-    name = models.CharField(max_length=80)
+    name = models.CharField(max_length=50)
     email = models.EmailField()
-    body = models.TextField()
+    body = models.TextField(max_length=800)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)

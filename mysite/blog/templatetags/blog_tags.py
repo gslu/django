@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django import template
 from django.db.models import Count
+from taggit.models import Tag
 from ..models import Post
 
 register = template.Library()
@@ -25,3 +26,15 @@ def get_most_commented_posts(user=None,count=5):
 def get_most_access_posts(user=None,count=5):
     most_access_posts = Post.published.filter(author=user).order_by('-accesstimes')[:count]
     return most_access_posts
+
+@register.assignment_tag
+def get_comments_count(post=None):
+    comments_count = 0
+    comments_count = post.comments.filter(active=True).count
+    return comments_count
+
+@register.assignment_tag
+def get_all_tag(user=None):
+    posts = Post.published.filter(author=user)
+    tags = Tag.objects.filter(post__in=posts).distinct()
+    return tags

@@ -37,7 +37,7 @@ def userLogin(request):
                     return HttpResponseRedirect(request.session['login_from'])
                 except:
                     #跳转错误，跳到网站主页，由number1个人主页暂时充当
-                    return HttpResponseRedirect(request.session['login_from'])
+                    return HttpResponseRedirect('/')
             else:
                 login_status = 400
                 form = LoginForm(initial={"username": cd["username"],
@@ -140,6 +140,8 @@ def pswdForget(request):
     # False/True 重置邮件发送前后
     status = False
     query_error = False
+    email = None
+    username = None
     if request.method == 'POST':
         form = ForgetForm(request.POST)
         if form.is_valid():
@@ -159,7 +161,6 @@ def pswdForget(request):
                 status = True
     else:
         form = ForgetForm()
-        email = None
         username = None
     return render(request,"blog/user/verify.html",{"send_type":"forget",
                                               "status":status,"email":email,

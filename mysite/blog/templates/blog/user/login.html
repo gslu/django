@@ -19,54 +19,49 @@
     </head>
 
     <body class="login">
-        <div id="text">
-            <a id="tohome" href=''>浮文掠影</a>
-        </div>
-
-        {% ifequal type "login" %}
-        <div id="login-form">
-        {% else %}
-        <div id="register-form">
-        {% endifequal %}
-            <div id="form-desc">
-                <a id="type-login" href='{% url "blog:user_login" %}'>登录</a>
-                <b>&nbsp;·&nbsp;</b>
-                <a id="type-reg" href='{% url "blog:user_register" %}'>注册</a>
+        <div id="content">
+            <div id="text">
+                <a id="tohome" href=''>浮文掠影</a>
             </div>
-            <div id="form-row">
-                <form action="." method="post">
-                    {{ form.as_p }}
-                    {% csrf_token %}
-                    {% ifequal type "login" %}
-                        <p id="forget-link"><a href='{% url "blog:pswd_forget" %}'>忘记密码</a></p>
-                    {% endifequal %}
-                    {% ifequal login_status 400 %}
-                        <p id="login-error">帐号或密码错误</p>
-                    {% endifequal %}
 
-                    {% ifequal login_status 200 %}
-                        <p id="login-success">登录成功　正在跳转.</p>
-                    {% endifequal %}
+            {% ifequal type "login" %}
+            <div id="login-form">
+            {% else %}
+            <div id="register-form">
+            {% endifequal %}
+                <div id="form-desc">
+                    <a id="type-login" href='{% url "blog:user_login" %}'>登录</a>
+                    <b>&nbsp;·&nbsp;</b>
+                    <a id="type-reg" href='{% url "blog:user_register" %}'>注册</a>
+                </div>
+                <div id="form-row">
+                    <form action="." method="post">
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                        {% ifequal type "login" %}
+                            <p id="forget-link"><a href='{% url "blog:pswd_forget" %}'>忘记密码</a></p>
+                        {% endifequal %}
+                        {% ifequal login_status 400 %}
+                            <p id="login-error">帐号或密码错误</p>
+                        {% endifequal %}
 
-                    {% if register_msg %}
-                        <p id="register_msg">{{ register_msg }}</p>
-                    {% endif %}
+                        {% ifequal login_status 200 %}
+                            <p id="login-success">登录成功　正在跳转.</p>
+                        {% endifequal %}
 
-                    {% ifequal type "login" %}
-                    <p><input id="login-submit" type="submit" value="登录"></p>
-                    {% else %}
-                    <p><input id="reg-submit" type="submit" value="注册"></p>
-                    {% endifequal %}
-                </form>
+                        {% if register_msg %}
+                            <p id="register_msg">{{ register_msg }}</p>
+                        {% endif %}
+
+                        {% ifequal type "login" %}
+                        <p><input id="login-submit" type="submit" value="登录"></p>
+                        {% else %}
+                        <p><input id="reg-submit" type="submit" value="注册"></p>
+                        {% endifequal %}
+                    </form>
+                </div>
             </div>
         </div>
-    <div id="footer">
-        <div class=”page-tail”>
-
-        　　© Ｇuang博客<br/>
-        　　For Django learning
-
-        </div>
-    </div>
+        {% include "blog/footer.html" %}
     </body>
 </html>

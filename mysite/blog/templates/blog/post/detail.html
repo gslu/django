@@ -13,23 +13,7 @@
     <div class="post-detail">
         <h1>{{ post.title }}</h1>
 
-        <div class="post-author">
-            <div class="author-img">
-                <a href='{% url "blog:post_list" post.author.id %}'>
-                    {% if post.author.profile.image %}
-                        <img src="{{ MEDIA_URL }}{{ post.author.profile.image }}">
-                    {% else %}
-                        <img src='{% static "blog/img/user_default.jpeg" %}'>
-                    {% endif %}
-                </a>
-            </div>
-            <div class="post-author-nickname">
-                <a href='{% url "blog:post_list" post.author.id %}'>
-                    {{ post.author.profile.nickname }}　
-                </a>
-                <span class="date">{{ post.publish }}</span>
-            </div>
-        </div>
+        {% include "blog/post/author.html" %}
 
         <div id="post-body">
             {{ post.body|linebreaks }}
@@ -37,10 +21,10 @@
         <br/>
 
         {% with comments.count as total_comments %}
-            <h2 class="post-access-cm">
+            <p class="post-access-cm">
                 <!--{{ total_comments }} Comment{{ total_comments|pluralize }}-->
                 阅读({{ post.accesstimes }}) | 评论({{ total_comments }})
-            </h2>
+            </p>
         {% endwith %}
 
         <p>
