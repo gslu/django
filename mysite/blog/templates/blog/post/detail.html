@@ -16,7 +16,9 @@
         {% include "blog/post/author.html" %}
 
         <div id="post-body">
+            {% autoescape on %}
             {{ post.body|linebreaks }}
+            {% endautoescape %}
         </div>
         <br/>
 

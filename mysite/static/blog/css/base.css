@@ -75,12 +75,6 @@ h2 {
     font-size: 20px;
 }
 
-h2.post-access-cm {
-    font-weight: 500;
-    font-size: 13px;
-    font-family:PMingLiU;
-    color:#949494;
-}
 
 h2.simglelable {
     font-weight: bold;
@@ -107,35 +101,6 @@ h5 {
     color: #666;
     text-transform: uppercase;
     letter-spacing: 1px;
-}
-
-div.header-nav ul
-{
-    list-style:none; /* 去掉ul前面的符号 */
-    margin:0 0 0 5%;
-    padding: 0px; /* 与内部元素的距离为0 */
-    width: auto; /* 宽度根据元素内容调整 */
-}
-
-
-div.header-nav ul li
-{
-    border-style: none;
-    float:left; /* 向左漂移，将竖排变为横排 */
-    font-size: 16px;
-    margin:0px 18px;
-    padding: 0px; /* 与内部元素的距离为0 */
-    width: auto; /* 宽度根据元素内容调整 */
-
-}
-
-div.header-nav ul li a, div.header-nav ul li a:visited
-{
-    display: block; /* 此元素将显示为块级元素，此元素前后会带有换行符 */
-    line-height: 1.35em; /* 行高 */
-    padding: 4px 10px; /* 内部填充的距离 */
-    text-decoration: none;
-    white-space: nowrap; /* 对于文本内的空白处，不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
 }
 
 div.post-detail #post-body{
@@ -344,8 +309,7 @@ input[type=button][disabled].default {
 }
 
 div.body{
-    float:top;
-    width:1010px;
+    width:1020px;
     margin:65px auto;
 }
 
@@ -367,17 +331,21 @@ div.body{
 }
 
 #header h1{
-    margin:0% 0% 0% 5%;
+    min-height:100px;
+    margin:1% 0% 0% 5%;
     padding:0px;
     font-family:PMingLiU;
     color:#8B4C39;
 }
 
 #header h2{
+    min-height:85px;
+    line-height:85px;
     margin:0% 0% 0% 5%;
     font-family:PMingLiU;
     font-weight:500;
     color:#363636;
+
 }
 
 #header a{
@@ -395,6 +363,40 @@ div.body{
     color: #8B2500
 }
 
+div.header-nav{
+    height:35px;
+}
+
+div.header-nav ul
+{
+    list-style:none; /* 去掉ul前面的符号 */
+    margin:0 0 0 5%;
+    padding: 0px; /* 与内部元素的距离为0 */
+    width: auto; /* 宽度根据元素内容调整 */
+}
+
+
+div.header-nav ul li
+{
+    border-style: none;
+    float:left; /* 向左漂移，将竖排变为横排 */
+    font-size: 16px;
+    margin:0px 18px;
+    padding: 0px; /* 与内部元素的距离为0 */
+    width: auto; /* 宽度根据元素内容调整 */
+
+}
+
+div.header-nav ul li a, div.header-nav ul li a:visited
+{
+    display: block; /* 此元素将显示为块级元素，此元素前后会带有换行符 */
+    line-height: 1.35em; /* 行高 */
+    padding: 4px 10px; /* 内部填充的距离 */
+    text-decoration: none;
+    white-space: nowrap; /* 对于文本内的空白处，不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
+}
+
+
 .home-page #header .nav-w0,
 .detail-page #header .nav-w1,
 .share-page #header .nav-w1,
@@ -408,18 +410,18 @@ div.body{
 
 
 #tail{
-    float:bottom;
     width:1020px;
     height:auto;
-    min-height:800px;
+    overflow:hidden;
+    min-height:1000px;
     margin:40px auto;
     border:0px solid;
-    border-radius:12px;
 }
 
 #content {
     float:left;
-    width:690px;
+    height:auto;
+    width:700px;
     background-color:#EEE9BF;
     border-radius:12px;
 
@@ -430,16 +432,16 @@ div.body{
     font-family:Tahoma;
 }
 
-#content #music{
-    float:left;
-    width:1020px;
-    margin-bottom:20px;
-    background-color:#FFFAFA;
-    border:0px solid;
-    border-radius:12px;
 
+#music{
+    width: 1020px;
+    min-height: 400px;
+    overflow:hidden;
+    background: #FCFCFC;
+    border-radius: 12px;
 }
-#content #music #skplayer
+
+#music #skplayer
 {
     float:left;
     width:310px;
@@ -452,7 +454,7 @@ div.body{
 
 #audio
 {
-    margin-top:100%;
+    margin-top:350px;
     margin-left:5px;
 }
 
@@ -515,21 +517,27 @@ div.introduce p{
     line-height:50px;
     overflow:hidden;
     margin-right:50px;
-    /*vertical-align:middle;*/
 }
 
 #nav-user #user-center{
     float:left;
     height:50px;
-    line-height:50px;
+    line-height:47px;
     overflow:hidden;
     margin-right:30px;
-    /*vertical-align:middle;*/
+}
+
+#user-center div.author-img
+{
+    height:40px;
+    width:40px;
+    margin-right:20px;
 }
 
 #user-center a{
     margin-right:20px;
 }
+
 
 /*vertical-align:middle;*/
 
@@ -594,10 +602,8 @@ div.introduce p{
 
 #footer {
     clear: both;
-    display: block;
+    bottom:0px;
     padding:20px;
-    margin: 0px auto;
-    position: relative;
     background:#EEE9BF;
     text-align: center;
 
@@ -609,14 +615,84 @@ div.introduce p{
 
 div.post-list, div.post-detail, div.post-share {
     margin-bottom:30px;
-    padding:2em;
-    padding-top:5px;
+    padding:1em;
     background-color:#FCFCFC;
     border-radius:8px;
 }
+div.post-detail{
+    padding:2em;
+    padding-top:1em;
+}
+
+
+div.post-list a{
+    color:#262626;
+}
+
+div.post-list a:focus,
+div.post-list a:hover
+{
+    color:#458B74;
+}
+
+div.post-list h2, div.post-detail h2, div.post-share h2
+{
+    line-height:25px;
+    color:#262626;
+}
+
+div.post-detail h1, div.post-share h1
+{
+    line-height:60px;
+    color:#262626;
+}
+
+div.post-detail p.post-access-cm {
+    font-weight: 500;
+    font-size: 13px;
+}
+
+div.post-author
+{
+    height:45px;
+}
+
+div.post-detail div.post-author
+{
+    margin-bottom:25px;
+}
+
+div.author-img,div.post-author-nickname{
+    display:inline-block;
+    margin-right:10px;
+    vertical-align:middle;
+    width: 45px;
+    height: 45px;
+    border: 0px solid;
+}
+
+div.post-author-nickname
+{
+    height:auto;
+    width:auto;
+}
+
+span.date
+{
+    font-size:13px;
+    color:gray;
+}
+
+div.author-img img{
+    background-size: 100%;
+    width: 100%;
+    height: 100%;
+    border-radius:10px;
+}
+
 
 #empty-page{
-    height:200px;
+    height:300px;
     text-align:center;
 }
 
@@ -636,9 +712,61 @@ div.comment-form{
     border-color:#F5F5DC;
     }
 
+div.comment-form textarea
+{
+    width:510px;
+    height:150px;
+    resize:none;
+    overflow:scroll;
+    overflow-x:hidden;
+}
+
+#cm-submit
+{
+    margin:0 auto;
+    width:90px;
+}
+
+#cm-submit input[type="submit"]
+{
+    width:90px;
+}
+
+
 div.comment-form h2{
     margin:0px;
 }
+
+div.comment-form label{
+    float:left;
+    width:45px;
+    text-align:left;
+    padding:4px;
+    margin:1px;
+}
+
+
+div.comment-form span{
+    display:inline-block;
+    word-break:break-all;
+}
+
+
+p.cm-info{
+    font-weight: bold;
+}
+
+
+#cm-time
+{
+    color:gray;
+    font-weight:normal;
+    font-size:13px;
+}
+
+
+div.comment-form .errorlist{color:red;}
+
 
 div.owner-img{
     margin:0px auto;
@@ -646,7 +774,6 @@ div.owner-img{
     height: 240px;
     border: 0px solid;
     }
-
 
 div.owner-img img {
     background-size: 100%;
@@ -662,10 +789,6 @@ div.pagination{
 }
 
 
-p.info{
-    font-weight: bold;
-}
-
 .tags {
     margin: 5px 0 5px;
     font-weight: bold;
@@ -673,13 +796,6 @@ p.info{
     color: #666;
 }
 
-div.comment-form label{
-    float:left;
-    width:40px;
-    text-align:left;
-    padding:4px;
-    margin:1px;
-}
 
 div.post-share label{
     float:left;
@@ -693,19 +809,15 @@ div.post-share label{
     height:auto;
     min-height:50px;
     margin-bottom:15px;
-    padding:1px;
     background-color:#D1EEEE;
-    border-radius:10px;
-    border:1px solid #D1EEEE;
-    /*border-color:#CDC673;*/
+    font-size: 0;
 }
 
-#tag-bar #tag,#tag-bar #select-tag{
+#tag,#select-tag{
+    line-height:25px;
     display:inline-block;
-    margin-bottom:2px;
     padding-left:10px;
     padding-right:10px;
-    border-radius:10px;
     background:#E0FFFF;
 }
 
@@ -735,4 +847,110 @@ div.post-share label{
 div.select-tag
 {
     background:#FFD39B;
+}
+
+#about{
+    width:960px;
+    height:auto;
+    overflow:hidden;
+    min-height:700px;
+    padding:30px;
+    padding-top:15px;
+    background:#FCFCFC;
+    border-radius:12px;
+}
+
+#about h2{
+    line-height:0px;
+}
+
+#about #about-row h2
+{
+    line-height:20px;
+}
+
+#about h2,#about h3{
+    color:gray;
+}
+
+#vbar {
+    float:left;
+    min-height:550px;
+    margin-top:15px;
+    background:#FCFCFC;
+    text-align:center;
+}
+
+#time-info {
+    margin-top:20px;
+}
+
+#recent-access,#recent-comment,#message
+{
+    width:220px;
+    padding:5px;
+    line-height:0px;
+    margin:12px auto;
+    background:#CDC673;
+    border-radius:5px;
+}
+
+#recent-access{margin-top:30px;}
+
+#recent-access:focus,#recent-comment:focus,
+#recent-access:hover,#recent-comment:hover
+{
+    background:#FFA54F;
+}
+
+#message:focus,
+#message:hover
+{
+    background:#BCEE68;
+}
+
+#about-row{
+    float:right;
+    width:660px;
+    min-height:650px;
+    text-align:left;
+    color:#5E5E5E;
+}
+
+#about-row #lable{
+    display:inline-block;
+    float:left;
+}
+
+#about-row #text-area{
+    display:inline-block;
+    width:550px;
+    height:auto;
+    margin-bottom:10px;
+    overflow:hidden;
+}
+
+#about span{
+    display:inline-block;
+    word-break:break-all;
+}
+
+
+#care-topic{
+    margin-bottom:5px;
+}
+
+#care-topic #tag {
+    margin-right:1px;
+    padding:15px;
+    border:1px solid #FFA54F;
+    border-radius:10px;
+    background:#FFFFF0;
+}
+
+#care-topic #tag:focus,#care-topic #tag:hover{background:#FFF68F;}
+
+#care-topic h3{
+    line-height:10px;
+    margin:0px;
 }

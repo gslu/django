@@ -2,18 +2,11 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.models import User
 from .models import Post,Comment,Profile,EmailVerifyRecord
 
 # Register your models here.
 
-# Profile inline User
-#class ProfileInline(admin.StackedInline):
-#    model = Profile
 
-#class UserAdmin(BaseUserAdmin):
-#    inlines = [ProfileInline]
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user','nickname',)
@@ -26,6 +19,16 @@ class PostAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish'
     prepopulated_fields = {'slug': ('title',)}
     raw_id_fields = ('author',)
+
+    #class Media:
+        #css = ("blog/simditor/styles/simditor.css",)
+        #js = ("blog/simditor/scripts/jquery.min.js",
+        #      "blog/simditor/scripts/module.js",
+        #      "blog/simditor/scripts/hotkeys.js",
+        #      "blog/simditor/scripts/uploader.js",
+        #      "blog/simditor/scripts/simditor.js",
+        #      "blog/simditor/init.js",)
+
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'post', 'created', 'active')
@@ -40,6 +43,5 @@ admin.site.register(Post,PostAdmin)
 admin.site.register(Comment,CommentAdmin)
 admin.site.register(EmailVerifyRecord,EmailVerifyRecordAdmin)
 admin.site.register(Profile,ProfileAdmin)
-#admin.site.unregister(User)
-#admin.site.register(User,UserAdmin)
+
 

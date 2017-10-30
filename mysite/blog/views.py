@@ -83,6 +83,7 @@ def userRegister(request):
                                         email=email,
                                         is_active=0)
                     user.set_password(password)
+                    user.profile.bgimg="/home/lsg/00e93901213fb80eb476f1143cd12f2eb838944a.jpg"
                     user.save()
                 except Exception as e:
                     if settings.DEBUG:

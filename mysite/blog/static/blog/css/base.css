@@ -662,7 +662,7 @@ div.post-detail div.post-author
     margin-bottom:25px;
 }
 
-div.author-img,div.post-author-nickname{
+div.author-img, div.post-author-nickname{
     display:inline-block;
     margin-right:10px;
     vertical-align:middle;
