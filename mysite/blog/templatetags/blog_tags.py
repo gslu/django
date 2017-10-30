@@ -34,7 +34,15 @@ def get_comments_count(post=None):
     return comments_count
 
 @register.assignment_tag
-def get_all_tag(user=None):
+def get_tags(user=None):
     posts = Post.published.filter(author=user)
     tags = Tag.objects.filter(post__in=posts).distinct()
     return tags
+
+@register.assignment_tag
+def get_hot_tags(count=5):
+    return Tag.objects.all().annotate(
+        total_posts=Count('post')
+    ).order_by('-total_posts')[:count]
+
+

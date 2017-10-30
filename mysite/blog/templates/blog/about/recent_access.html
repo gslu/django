@@ -1,0 +1,22 @@
+{% load blog_tags %}
+{% load static %}
+
+<div id="ra-page">
+    {% for access in ra %}
+    <a href='{% url "blog:post_list" access.guest.id %}'>
+        <div id="simgle">
+             <div class="author-img">
+                  {% if access.guest.profile.image %}
+                       <img src="{{ MEDIA_URL }}{{ access.guest.profile.image }}">
+                  {% else %}
+                       <img src='{% static "blog/img/user_default.jpeg" %}'>
+                  {% endif %}
+             </div>
+             <div class="post-author-nickname">
+                 <p>{{ access.guest.profile.nickname | slice:"6" }}</p>
+                 <span class="date">{{ access.access_time | date:"Y-m-d H:i" }}</span>
+             </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>

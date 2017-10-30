@@ -1,0 +1,21 @@
+{% load blog_tags %}
+{% load static %}
+
+<div id="rc-page">
+    {% for comment in rc %}
+    <a href="{{ comment.post.get_absolute_url }}">
+        <div id="simgle">
+             <div class="post-title">
+                <h2>{{ comment.post.title }}</h2>
+             </div>
+            <div class="comment">
+                <p class="cm-info">
+                    {{ comment.user.profile.nickname }}
+                    <span id="cm-time">{{ comment.created | date:"Y-m-d H:i:s" }} - {{ comment.floor }}楼</span>
+                </p>
+                <p id="cm-body">{{ comment.body | slice:"50" }}...</p>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>

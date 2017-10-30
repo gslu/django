@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,Http404
 from django.shortcuts import render, get_object_or_404
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
@@ -192,9 +192,25 @@ def pswdReset(request,username,code):
     return render(request,"blog/user/reset.html",{"form":form})
 
 
+def updateAccessRecord(request,user):
+    if not request.user.is_authenticated:
+        return
+    elif request.user == user:
+        return
+    else:
+        try:
+            import datetime
+            record = request.user.visit_records.get(master=user)
+            record.access_time = datetime.datetime.now()
+            record.save()
+        except:
+            request.user.visit_records.create(master=user)
+
+
 def postList(request,user_id, tag_name=None):
 
     user = get_object_or_404(User,id=user_id)
+    updateAccessRecord(request, user)
     object_list = Post.published.filter(author=user)
     tag = None
     tags = Tag.objects.filter(post__in=object_list).distinct()
@@ -226,20 +242,27 @@ def postDetail(request,year,month,day,slug,id):
     post = get_object_or_404(Post, slug=slug,status='published',publish__year=year,
                                     publish__month=month, #要setting设置USE_TZ=False,否则不识别month,day
                                     publish__day=day,
-                                    id=id
-                                )
+                                    id=id)
     if post:
         post.accesstimes += 1
         post.save()
 
-    comments = post.comments.filter(active=True)
+    comments = post.comments.filter(active=True).order_by("created")
     new_comment = None
     if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        if comment_form.is_valid():
-            new_comment = comment_form.save(commit=False)
-            new_comment.post = post
-            new_comment.save()
+        if request.user.is_authenticated:
+            comment_form = CommentForm(data=request.POST)
+            if comment_form.is_valid():
+                new_comment = comment_form.save(commit=False)
+                new_comment.post = post
+                new_comment.user = request.user
+                if comments:
+                    new_comment.floor = comments.count + 1
+                else:
+                    new_comment.floor = 1
+                new_comment.save()
+        else:
+            comment_form = CommentForm()
     else:
         comment_form = CommentForm()
 
@@ -258,6 +281,7 @@ def postDetail(request,year,month,day,slug,id):
                                                    'user': post.author,
                                                    'auth_user': request.user
                                                    })
+
 @login_required
 def postShare(request,post_id):
     # Retrieve post by id
@@ -296,8 +320,28 @@ def music(request,user_id):
                                                    'auth_user': request.user})
 
 
-def about(request,user_id):
+def about(request,user_id,option):
+    if option not in ("ps","ra","rc","rm"):
+        return Http404
     user = get_object_or_404(User, id=user_id)
+    if option == "ra":
+        ra = user.access_records.order_by('-access_time')[:50]
+    else:
+        ra = None
+
+    if option == "rc":
+        posts = Post.objects.filter(author=user)
+        rc = Comment.objects.filter(post__in=posts).order_by("-updated")[:50]
+    else:
+        rc = None
+
+    if option == "rm":
+        rm = user.receive_msg.order_by("-send_time")[:50]
+    else:
+        rm = None
+
     return render(request,'blog/about/about.html',{'user': user,
-                                                   'auth_user': request.user})
+                                                   'auth_user': request.user,
+                                                   "option":option,
+                                                   "ra":ra,"rc":rc,"rm":rm})
 

@@ -706,10 +706,9 @@ div.author-img img{
 }
 
 div.comment-form{
-    background-color:#F5F5DC;
-    border: 12px solid;
+    background-color:#FCFCFC;
     border-radius:8px;
-    border-color:#F5F5DC;
+
     }
 
 div.comment-form textarea
@@ -739,7 +738,7 @@ div.comment-form h2{
 
 div.comment-form label{
     float:left;
-    width:45px;
+    width:35px;
     text-align:left;
     padding:4px;
     margin:1px;
@@ -885,29 +884,50 @@ div.select-tag
     margin-top:20px;
 }
 
-#recent-access,#recent-comment,#message
+
+#recent-access,#recent-comment,#message,#personal,
+#send-message,#care
 {
     width:220px;
     padding:5px;
     line-height:0px;
-    margin:12px auto;
+    margin:5px auto;
     background:#CDC673;
     border-radius:5px;
 }
 
-#recent-access{margin-top:30px;}
 
-#recent-access:focus,#recent-comment:focus,
-#recent-access:hover,#recent-comment:hover
+#send-message,#care{
+    width:100px;
+    display:inline-block;
+    margin-top:0px;
+    background:#BCEE68;
+}
+
+#send-message:focus,#care:focus,
+#send-message:hover,#care:hover
+{
+    background:#7CCD7C;
+}
+
+#personal{margin-top:10px;}
+
+
+#ra-content #recent-access,
+#rc-content #recent-comment,
+#rm-content #message,
+#ps-content #personal
 {
     background:#FFA54F;
 }
 
-#message:focus,
-#message:hover
+
+#recent-access:focus,#recent-comment:focus,#personal:focus,#message:focus,
+#recent-access:hover,#recent-comment:hover,#personal:hover,#message:hover
 {
-    background:#BCEE68;
+    background:#FFA54F;
 }
+
 
 #about-row{
     float:right;
@@ -953,4 +973,33 @@ div.select-tag
 #care-topic h3{
     line-height:10px;
     margin:0px;
+}
+
+#ra-page #simgle,#rc-page #simgle{
+    display:inline-block;
+    width:auto;
+    min-width:180px;
+    padding:10px;
+    margin:2px;
+    background:#F2F2F2;
+    border-radius:10px;
+}
+
+#ra-page #simgle:focus,
+#ra-page #simgle:hover,
+#rc-page #simgle:focus,
+#rc-page #simgle:hover
+{
+    background:#F0E68C;
+}
+
+#ra-page p , #rc-page p{
+    line-height:100%;
+    color:#242424;
+}
+
+#ra-page div.author-img{width:55px;height:55px;}
+
+#rc-page #simgle{
+    width:600px;
 }

@@ -1,0 +1,54 @@
+{% load blog_tags %}
+{% load static %}
+<div id="ps-page">
+            <h2>基本资料</h2>
+            <p>昵称：{{ user.profile.nickname }}</p>
+            <p>性别：{% ifequal user.profile.gender "F" %}
+                        男
+                    {% else %}
+                        {% ifequal user.profile.gender "M" %}
+                            女
+                        {% else %}
+                            保密
+                        {%　endifequal %}
+                    {%　endifequal %}
+            </p>
+            <p>说说：{{ user.profile.motto }}</p>
+            <div>
+                <div id="lable">简介：</div>
+                <div id="text-area">
+                    <span>{{ user.profile.introduce }}</span>
+                </div>
+            </div>
+            <hr/>
+
+            <h2>个人信息</h2>
+            <p>家乡：{{ user.profile.hometown }}</p>
+            <p>现住：{{ user.profile.address }}</p>
+            <p>职业：{{ user.profile.occupation }}</p>
+            <div>
+                <div id="lable">爱好：</div>
+                <div id="text-area">
+                    <span>{{ user.profile.hobby }}</span>
+                </div>
+            </div>
+            <hr/>
+
+            <h2>联系方式</h2>
+            <p>Phone：{{ user.profile.phone }}</p>
+            <p>Email：{{ user.email }}</p>
+            <hr/>
+
+            <h2>关注主题</h2>
+                {% get_tags user as tags %}
+                <div id="care-topic">
+                {% for tag in tags %}
+                    <a href="{% url "blog:post_list_by_tag" user.id tag.name %}">
+                        <div id="tag">
+                        <h3>{{ tag.name }}</h3>
+                        </div>
+                    </a>
+                {% endfor %}
+                </div>
+            <hr/>
+</div>

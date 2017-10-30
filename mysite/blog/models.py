@@ -77,10 +77,10 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post,related_name='comments')
-    name = models.CharField(max_length=50)
-    email = models.EmailField()
-    body = models.TextField(max_length=800)
+    post = models.ForeignKey(Post,related_name='comments',default=None,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,related_name='comments',default=None)
+    body = models.TextField(max_length=800,verbose_name="内容")
+    floor = models.IntegerField(verbose_name="楼层",default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
@@ -89,7 +89,7 @@ class Comment(models.Model):
         ordering = ('created',)
 
     def __unicode__(self):
-        return 'Comment by {} on {}'.format(self.name,self.post)
+        return '{} 对 {} 的评论'.format(self.user,self.post)
 
 
 class EmailVerifyRecord(models.Model):
@@ -105,4 +105,24 @@ class EmailVerifyRecord(models.Model):
         verbose_name = u"VerifyRecord"
         verbose_name_plural = verbose_name
     def __unicode__(self):
-        return '{0}({1})'.format(self.code, self.email)
+        return '{0}-{1}'.format(self.email, self.send_type)
+
+
+class AccessRecord(models.Model):
+    master = models.ForeignKey(User,related_name='access_records')
+    guest = models.ForeignKey(User,related_name="visit_records")
+    access_time = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return "{} {} 访问 {}".format(self.access_time,self.guest,self.master)
+
+
+class MessageRecord(models.Model):
+    sender = models.ForeignKey(User,related_name='send_msg')
+    receiver = models.ForeignKey(User,related_name="receive_msg")
+    body = models.CharField(max_length=300, verbose_name=u"留言")
+    send_time = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return "{} {} 给 {} 留言".format(self.send_time,self.sender,self.receiver)

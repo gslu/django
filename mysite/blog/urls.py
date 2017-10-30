@@ -17,7 +17,7 @@ urlpatterns = [
 
     url(r'^blog/(?P<post_id>\d+)/share/$',views.postShare,name='post_share'),
     url(r'^user/(?P<user_id>\d+)/music/$',views.music,name='music'),
-    url(r'^user/(?P<user_id>\d+)/about/$', views.about, name='about'),
+    url(r'^user/(?P<user_id>\d+)/about/(?P<option>\w+)/$', views.about, name='about'),
 
     # login,logout,register
     url(r'^login/$', views.userLogin, name="user_login"),

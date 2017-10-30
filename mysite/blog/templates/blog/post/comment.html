@@ -1,11 +1,13 @@
+{% load static %}
 <div class="comment-form">
 
     {% for comment in comments %}
     <div class="comment">
         <p class="cm-info">
-            {{ comment.name }} &nbsp;
-            <span id="cm-time">{{ comment.created | date:"Y-m-d H:i:s" }} - {{ forloop.counter }}楼</span>
-
+            <a href='{% url "blog:post_list" comment.user.id %}'>
+                {{ comment.user.profile.nickname }}
+            </a> &nbsp;
+            <span id="cm-time">{{ comment.created | date:"Y-m-d H:i:s" }} - {{ comment.floor }}楼</span>
         </p>
         <span id="cm-body">{{ comment.body|linebreaks }}</span>
     </div>
@@ -18,10 +20,17 @@
     {% else %}
     <hr/>
     <h3>发表评论</h3>
+    {% if not auth_user.is_authenticated %}
+    <a href="{% url 'blog:user_login' %}">>>请登录</a>
+    {% endif %}
     <form action="." onsubmit="return validate_form(this);" method="post" >
         {{ comment_form.as_p }}
         {% csrf_token %}
+        {% if not auth_user.is_authenticated %}
+        <div id="cm-submit"><input type="submit" value="提交" disabled="true"></div>
+        {% else %}
         <div id="cm-submit"><input type="submit" value="提交"></div>
+        {% endif %}
     </form>
     {% endif %}
 </div>

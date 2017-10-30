@@ -2,7 +2,7 @@
 {% load blog_tags %}
 {% load static %}
 
-{% block title %}{{ user.profile.nickname }} 关于-浮文掠影{% endblock %}
+{% block title %}{{ user.profile.nickname }} 关于我-浮文掠影{% endblock %}
 
 {% block header %}
 <div class="about-page">
@@ -12,9 +12,25 @@
 
 {% block content %}
 
-<div id="about-content">
+<div id="{{ option }}-content">
     <div id="about">
-        <h2>个人资料</h2>
+        <h2>
+            {% ifequal option "ps" %}
+                个人资料
+            {% endifequal %}
+
+            {% ifequal option "ra" %}
+                最近来访
+            {% endifequal %}
+
+            {% ifequal option "rc" %}
+                最近评论
+            {% endifequal %}
+
+            {% ifequal option "rm" %}
+                最近留言
+            {% endifequal %}
+        </h2>
         <div id="vbar">
             <div class="owner-img">
                 <a href='{% url "blog:post_list" user.id %}'>
@@ -29,77 +45,34 @@
                 <h3>建立时间:{{ user.date_joined | date:"Y-m-d H:i" }}</h3>
                 <h3>最近登录:{{ user.last_login | date:"Y-m-d H:i" }}</h3>
                 <br/>
+                <div>
+                    <a href=""><div id="send-message"><h2>写信</h2></div></a>
+                    <a href=""><div id="care"><h2>关注</h2></div></a>
+                </div>
                 <hr/>
             </div>
-            <a href="">
-            <div id="recent-access">
-                <h2>最近访问</h2>
-            </div>
-            </a>
-            <a href="">
-            <div id="recent-comment">
-                <h2>最近评论</h2>
-            </div>
-            </a>
-            <a href="">
-            <div id="message">
-                <h2>留言</h2>
-            </div>
-            </a>
+            <a href="{% url "blog:about" user.id "ps" %}"><div id="personal"><h2>个人资料</h2></div></a>
+            <a href="{% url "blog:about" user.id "ra" %}"><div id="recent-access"><h2>最近来访</h2></div></a>
+            <a href="{% url "blog:about" user.id "rc" %}"><div id="recent-comment"><h2>最近评论</h2></div></a>
+            <a href="{% url "blog:about" user.id "rm" %}"><div id="message"><h2>留言</h2></div></a>
         </div>
+
         <div id="about-row">
+            {% ifequal option "ps" %}
+                {% include "blog/about/personal.html" %}
+            {% endifequal %}
 
-            <h2>基本资料</h2>
-            <p>昵称：{{ user.profile.nickname }}</p>
-            <p>性别：{% ifequal user.profile.gender "F" %}
-                        男
-                    {% else %}
-                        {% ifequal user.profile.gender "M" %}
-                            女
-                        {% else %}
-                            保密
-                        {%　endifequal %}
-                    {%　endifequal %}
-            </p>
-            <p>说说：{{ user.profile.motto }}</p>
-            <div>
-                <div id="lable">简介：</div>
-                <div id="text-area">
-                    <span>{{ user.profile.introduce }}</span>
-                </div>
-            </div>
-            <hr/>
+            {% ifequal option "ra" %}
+                {% include "blog/about/recent_access.html" %}
+            {% endifequal %}
 
-            <h2>个人信息</h2>
-            <p>家乡：{{ user.profile.hometown }}</p>
-            <p>现住：{{ user.profile.address }}</p>
-            <p>职业：{{ user.profile.occupation }}</p>
-            <div>
-                <div id="lable">爱好：</div>
-                <div id="text-area">
-                    <span>{{ user.profile.hobby }}</span>
-                </div>
-            </div>
-            <hr/>
+            {% ifequal option "rc" %}
+                {% include "blog/about/recent_comment.html" %}
+            {% endifequal %}
 
-            <h2>联系方式</h2>
-            <p>Phone：{{ user.profile.phone }}</p>
-            <p>Email：{{ user.email }}</p>
-            <hr/>
-
-            <h2>关注主题</h2>
-                {% get_all_tag user as tags %}
-                <div id="care-topic">
-                {% for tag in tags %}
-                    <a href="{% url "blog:post_list_by_tag" user.id tag.name %}">
-                        <div id="tag">
-                        <h3>{{ tag.name }}</h3>
-                        </div>
-                    </a>
-                {% endfor %}
-                </div>
-            <hr/>
-
+            {% ifequal option "rm" %}
+                {% include "blog/about/message.html" %}
+            {% endifequal %}
         </div>
     </div>
 </div>
