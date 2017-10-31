@@ -12,9 +12,7 @@
 <div id="pd-content">
     <div class="post-detail">
         <h1>{{ post.title }}</h1>
-
         {% include "blog/post/author.html" %}
-
         <div id="post-body">
             {% autoescape on %}
             {{ post.body|linebreaks }}
@@ -56,4 +54,12 @@
 
 {% block sidebar %}
 
+{% endblock %}
+
+{% block column-bar %}
+    <div class="column-bar" id="pd">
+        <a href="#top"><div id="back-top" title="回到顶部"><p>顶部</p></div></a>
+        <a href=""><div id="collect" title="收藏文章"><p>收藏</p></div></a>
+        <a href=""><div id="share" title="分享文章"><p>分享</p></div></a>
+    </div>
 {% endblock %}

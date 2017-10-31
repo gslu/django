@@ -41,6 +41,16 @@
                 }
             }
 
+            window.onscroll = function(){
+                var t = document.documentElement.scrollTop || document.body.scrollTop;
+                var back_top = document.getElementById( "back-top" );
+                if( t < 400 ) {
+                    back_top.style.display = "none";
+                } else {
+                    back_top.style.display = "inline-block";
+                }
+            }
+
         </script>
     </head>
 
@@ -70,5 +80,11 @@
                 {% include "blog/footer.html" %}
             {% endblock %}
 
+            {% block column-bar %}
+                <div class="column-bar">
+                    <a href="#top"><div id="back-top" title="回到顶部"><p>顶部</p></div></a>
+                </div>
+            {% endblock %}
     </body>
+
 </html>

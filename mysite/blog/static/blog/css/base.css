@@ -57,7 +57,7 @@ p, ol, ul, dl {
 
 p {
     padding: 0;
-    line-height: 140%;
+    line-height: 180%;
 }
 
 
@@ -493,10 +493,58 @@ div.header-nav ul li a, div.header-nav ul li a:visited
 #sidebar #care p{
     color:#D2691E;
     font-weight:bold;
+    line-height:18px;
+}
+
+div.column-bar
+{
+    position:fixed;
+    width:50px;
+    height:auto;
+    right:50px;
+    bottom:50px;
+}
+
+div.column-bar p
+{
+    font-size:16px;
+    line-height:45px;
+    text-align:center;
+    color:#333333;
+}
+
+#back-top,
+#collect,
+#share
+{
+    display:inline-block;
+    width:50px;
+    height:50px;
+    border:1px solid #CDAA7D;
 }
 
 
-#post-class #self,#post-class #reprint,#post-class #collect
+#back-top{
+    display:none;
+}
+
+
+#pd #back-top,
+#pd #collect
+{
+    border-bottom:0px;
+}
+
+
+#back-top:focus,#back-top:hover,
+#collect:focus,#collect:hover,
+#share:focus,#share:hover
+{
+    background:#FFFAFA;
+}
+
+
+#post-class #self,#post-class #reprint,#post-class #collection
 {
     width:75px;
     display:inline-block;
@@ -696,8 +744,11 @@ div.post-author
 
 div.post-detail div.post-author
 {
-    margin-bottom:25px;
+    margin-bottom:30px;
 }
+
+#post-collect {
+float:right;}
 
 div.author-img, div.post-author-nickname{
     display:inline-block;
