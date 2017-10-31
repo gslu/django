@@ -10,9 +10,6 @@ def sendVerifyEmail(email,name,send_type="register",request=None):
 
     code = unicode(uuid.uuid1())
 
-    EmailVerifyRecord.objects.create(code=code,email=email,send_type=send_type)
-
-
     if send_type == "register":
         subject = u"浮文掠影帐号－注册激活"
         link = request.build_absolute_uri(reverse("blog:verify_register_after",
@@ -30,6 +27,7 @@ def sendVerifyEmail(email,name,send_type="register",request=None):
     msg = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
     msg.content_subtype = "html"
     send_status = msg.send()
+    EmailVerifyRecord.objects.create(code=code, email=email, send_type=send_type)
     return send_status
 
 

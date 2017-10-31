@@ -78,12 +78,14 @@ def userRegister(request):
 
             if user is None:
                 try:
+                    email_send.sendVerifyEmail(email, username,
+                                               send_type="register", request=request)
+
                     user = User.objects.create(username=username,
                                         password=password,
                                         email=email,
                                         is_active=0)
                     user.set_password(password)
-                    user.profile.bgimg="/home/lsg/00e93901213fb80eb476f1143cd12f2eb838944a.jpg"
                     user.save()
                 except Exception as e:
                     if settings.DEBUG:
@@ -91,8 +93,6 @@ def userRegister(request):
                     else:
                         register_msg = "Server error"
                 else:
-                    email_send.sendVerifyEmail(email, username,
-                                               send_type="register", request=request)
                     return HttpResponseRedirect(reverse("blog:verify_register_before",
                                                         kwargs={"email":email,
                                                                 "username":username}))
