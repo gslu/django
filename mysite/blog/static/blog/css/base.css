@@ -420,13 +420,17 @@ div.header-nav ul li a, div.header-nav ul li a:visited
     border:0px solid;
 }
 
-#content {
+#content ,#pd-content, #pd-content {
     float:left;
     height:auto;
     width:700px;
     background-color:#EEE9BF;
     border-radius:12px;
 
+}
+
+#pd-content ,#ps-content {
+    width:1020px;
 }
 
 #content p{
@@ -621,9 +625,10 @@ div.post-list, div.post-detail, div.post-share {
     background-color:#FCFCFC;
     border-radius:8px;
 }
-div.post-detail{
-    padding:2em;
+div.post-detail,div.post-share{
+    padding:8em;
     padding-top:1em;
+    padding-bottom:1em;
 }
 
 
@@ -715,7 +720,7 @@ div.comment-form{
 
 div.comment-form textarea
 {
-    width:510px;
+    width:560px;
     height:150px;
     resize:none;
     overflow:scroll;
