@@ -316,12 +316,10 @@ div.body{
 /* HEADER */
 
 #header {
-    float:top;
     width:1020px;
     height:230px;
     margin:0px auto;
     padding-bottom:10px;
-    line-height:100px;
     overflow: hidden;
     border:0px solid;
     border-radius:12px;
@@ -330,23 +328,27 @@ div.body{
     background-repeat: no-repeat;
 }
 
+#header #nickname{
+    margin:45px;
+}
+
+#header #motto{
+    margin:45px;
+}
+
 #header h1{
-    min-height:100px;
-    margin:1% 0% 0% 5%;
-    padding:0px;
     font-family:PMingLiU;
     color:#8B4C39;
 }
 
 #header h2{
-    min-height:85px;
-    line-height:85px;
-    margin:0% 0% 0% 5%;
     font-family:PMingLiU;
     font-weight:500;
     color:#363636;
 
 }
+
+
 
 #header a{
     color: #5E5E5E;
@@ -849,11 +851,11 @@ div.select-tag
 }
 
 #about{
-    width:960px;
+    width:940px;
     height:auto;
     overflow:hidden;
     min-height:700px;
-    padding:30px;
+    padding:40px;
     padding-top:15px;
     background:#FCFCFC;
     border-radius:12px;
@@ -931,7 +933,7 @@ div.select-tag
 
 #about-row{
     float:right;
-    width:660px;
+    width:650px;
     min-height:650px;
     text-align:left;
     color:#5E5E5E;

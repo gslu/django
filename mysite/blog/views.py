@@ -257,10 +257,11 @@ def postDetail(request,year,month,day,slug,id):
                 new_comment.post = post
                 new_comment.user = request.user
                 if comments:
-                    new_comment.floor = comments.count + 1
+                    new_comment.floor = comments.count() + 1
                 else:
                     new_comment.floor = 1
                 new_comment.save()
+                comments = post.comments.filter(active=True).order_by("created")
         else:
             comment_form = CommentForm()
     else:
@@ -325,18 +326,18 @@ def about(request,user_id,option):
         return Http404
     user = get_object_or_404(User, id=user_id)
     if option == "ra":
-        ra = user.access_records.order_by('-access_time')[:50]
+        ra = user.access_records.order_by('access_time')[:50]
     else:
         ra = None
 
     if option == "rc":
         posts = Post.objects.filter(author=user)
-        rc = Comment.objects.filter(post__in=posts).order_by("-updated")[:50]
+        rc = Comment.objects.filter(post__in=posts).order_by("updated")[:50]
     else:
         rc = None
 
     if option == "rm":
-        rm = user.receive_msg.order_by("-send_time")[:50]
+        rm = user.receive_msg.order_by("send_time")[:50]
     else:
         rm = None
 
