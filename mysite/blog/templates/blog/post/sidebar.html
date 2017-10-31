@@ -12,9 +12,12 @@
     </div>
 
     <h2 id="blogger">{{ user.profile.nickname }}</h2>
-
+    <a href="">
+        <div id="care"><p>
+        +关注 √
+        </p></div>
+    </a>
     <hr/>
-
     <div class="introduce">
         <p>个人简介<p>
         <div id="irdtext">
@@ -23,7 +26,25 @@
     </div>
 
     <hr/><br/>
-    <p>已发布的文章 {% total_posts user %} </p>
+    <div id="post-class">
+        <div id="self">
+            {% post_count user "self" as self_count %}
+            <p>{{ self_count }}</p>
+            <p>原创</p>
+        </div>
+
+        <div id="reprint">
+            {% post_count user "reprint" as reprint_count %}
+            <p>{{ reprint_count }}</p>
+            <p>转载</p>
+        </div>
+
+        <div id="collect">
+            {% post_count user "collect" as collect_count %}
+            <p>{{ collect_count }}</p>
+            <p>收藏</p>
+        </div>
+    </div>
 
     <h3>最新文章</h3>
     {% get_latest_posts user 4 as latest_posts %}

@@ -75,6 +75,20 @@ class Post(models.Model):
                              self.slug,
                              self.id])
 
+class PostClass(models.Model):
+    user = models.ForeignKey(User,related_name="post_class",default=None)
+    post = models.ForeignKey(Post, related_name="post_class",default=None)
+
+    STATUS_CHOICES = (
+                    ('self', '原创'),
+                    ('reprint', '转载'),
+                    ('collect', '收藏'))
+    post_type = models.CharField(max_length=10, choices=STATUS_CHOICES, default='reprint')
+
+    def __unicode__(self):
+        return self.post_type
+
+
 
 class Comment(models.Model):
     post = models.ForeignKey(Post,related_name='comments',default=None,on_delete=models.CASCADE)

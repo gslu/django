@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from .models import Post,Comment,Profile,EmailVerifyRecord,AccessRecord,MessageRecord
+from .models import *
 
 # Register your models here.
 
@@ -52,6 +52,8 @@ admin.site.register(EmailVerifyRecord,EmailVerifyRecordAdmin)
 admin.site.register(Profile,ProfileAdmin)
 admin.site.register(AccessRecord,AccessRecordAdmin)
 admin.site.register(MessageRecord,MessageRecordAdmin)
+
+admin.site.register([PostClass])
 
 
 

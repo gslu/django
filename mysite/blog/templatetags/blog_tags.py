@@ -2,7 +2,7 @@
 from django import template
 from django.db.models import Count
 from taggit.models import Tag
-from ..models import Post
+from ..models import Post,PostClass
 
 register = template.Library()
 
@@ -44,5 +44,13 @@ def get_hot_tags(count=5):
     return Tag.objects.all().annotate(
         total_posts=Count('post')
     ).order_by('-total_posts')[:count]
+
+
+@register.assignment_tag
+def post_count(user=None,post_type=None):
+    posts = PostClass.objects.filter(user=user)
+    return posts.filter(post_type=post_type).count()
+
+
 
 
