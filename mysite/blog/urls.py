@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 from django.conf.urls import url
 from django.views.generic.base import RedirectView
+
+from .upload_file import uploadImage
 from . import views
 
 urlpatterns = [
@@ -9,7 +11,7 @@ urlpatterns = [
     url(r'^$',RedirectView.as_view(url='user/1/'),name="index"),
 
     url(r'^user/(?P<user_id>\d+)/$', views.postList, name='post_list'),
-    url(r'^user/(?P<user_id>\d+)/blog/tag/(?P<tag_name>[-\w]+)/$',views.postList,name='post_list_by_tag'),
+    url(r'^user/(?P<user_id>\d+)/blog/tag/(?P<tag_name>.+)/$',views.postList,name='post_list_by_tag'),
 
     url(r'^blog/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+)/(?P<id>\d+)/$',
                     views.postDetail,
@@ -31,4 +33,8 @@ urlpatterns = [
     url(r'^password/forget/$', views.pswdForget, name='pswd_forget'),
     url(r'^password/reset/(?P<username>[\w\d-]+)/(?P<code>[\w\d-]+)/$', views.pswdReset, name='pswd_reset'),
 
+    url(r'^test/$', views.test, name='test'),
+    url(r'^blog/write/$', views.writePost, name='write_post'),
+    url(r'^blog/edit/(?P<post_id>\d+)/$', views.editPost, name='edit_post'),
+    url(r'^upload/$', uploadImage, name='upload_image'),
 ]

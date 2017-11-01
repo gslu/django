@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.db import models
+from django.utils import timezone
 from taggit.managers import TaggableManager
+from uuslug import slugify
 from system.storage import ImageStorage
 
 # Create your models here.
@@ -74,6 +75,11 @@ class Post(models.Model):
                              self.publish.strftime('%d'),
                              self.slug,
                              self.id])
+
+    def save(self,*args,**kwargs):
+        self.slug = slugify(self.title)
+        super(Post,self).save(*args,**kwargs)
+
 
 class PostClass(models.Model):
     user = models.ForeignKey(User,related_name="post_class",default=None)

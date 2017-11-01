@@ -52,5 +52,13 @@ def post_count(user=None,post_type=None):
     return posts.filter(post_type=post_type).count()
 
 
+@register.assignment_tag
+def get_text(post_body=None):
+    import re
+    pattern = re.compile(r'<[^>]+>|&nbsp;', re.S)
+    text = pattern.sub('',post_body)
+    return text
+
+
 
 

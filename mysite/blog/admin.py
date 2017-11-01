@@ -26,14 +26,13 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
     raw_id_fields = ('author',)
 
-    #class Media:
-        #css = ("blog/simditor/styles/simditor.css",)
-        #js = ("blog/simditor/scripts/jquery.min.js",
-        #      "blog/simditor/scripts/module.js",
-        #      "blog/simditor/scripts/hotkeys.js",
-        #      "blog/simditor/scripts/uploader.js",
-        #      "blog/simditor/scripts/simditor.js",
-        #      "blog/simditor/init.js",)
+    class Media:
+        js = ("blog/simditor/scripts/jquery.min.js",
+              "blog/simditor/scripts/module.js",
+              "blog/simditor/scripts/hotkeys.js",
+              "blog/simditor/scripts/uploader.js",
+              "blog/simditor/scripts/simditor.js",
+              "blog/simditor/scripts/init.js",)
 
 
 class CommentAdmin(admin.ModelAdmin):

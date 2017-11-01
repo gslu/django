@@ -346,3 +346,53 @@ def about(request,user_id,option):
                                                    "option":option,
                                                    "ra":ra,"rc":rc,"rm":rm})
 
+def test(request):
+    data = None
+    if request.method=="POST":
+        form = UploadFileForm(request.POST,request.FILES)
+        if form.is_valid():
+            data=form.cleaned_data
+        else:
+            data="fsfee"
+    else:
+        form = UploadFileForm()
+    return render(request,"blog/test/test.html",{"form":form,
+                                     "data":data})
+
+
+@login_required
+def writePost(request):
+    if request.method == "POST":
+        form = WriteForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            post = Post.objects.create(title=cd["title"], status="published",body=cd["body"],
+                                   author=request.user)
+            return HttpResponseRedirect(reverse("blog:edit_post",kwargs={"post_id":post.id}))
+    else:
+        form = WriteForm()
+
+    return render(request,"blog/edit/write.html",{"form":form,"auth_user":request.user})
+
+
+@login_required
+def editPost(request,post_id=None):
+
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == "POST":
+        form = WriteForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            post.title=cd["title"]
+            post.status="published"
+            post.body = cd["body"]
+            post.save()
+            return HttpResponseRedirect(reverse("blog:edit_post", kwargs={"post_id": post.id}))
+    else:
+        form = WriteForm(initial={"title":post.title,"body": post.body,})
+
+    return render(request,"blog/edit/write.html",{"form":form,"auth_user":request.user})
+
+
+
+

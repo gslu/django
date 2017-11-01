@@ -4334,6 +4334,7 @@ ImageButton = (function(superClass) {
         }
         return $input = $('<input/>', {
           type: 'file',
+          name: 'fileData',
           title: _this._t('uploadImage'),
           multiple: true,
           accept: 'image/*'

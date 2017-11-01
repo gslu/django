@@ -129,9 +129,14 @@ blockquote {
 }
 
 code, pre {
-    font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
-    color: #666;
-    font-size: 12px;
+    padding: 10px 5px 10px 10px;
+    display: block;
+    line-height: 20px;
+    background: #F0F0F0;
+    border-radius: 3px;
+    font-size: 14px;
+    color:#212121;
+    font-family: 'monaco', 'Consolas', "Liberation Mono", Courier, monospace;
 }
 
 pre.literal-block {
@@ -515,7 +520,8 @@ div.column-bar p
 
 #back-top,
 #collect,
-#share
+#share,
+#edit-post
 {
     display:inline-block;
     width:50px;
@@ -530,7 +536,8 @@ div.column-bar p
 
 
 #pd #back-top,
-#pd #collect
+#pd #collect,
+#edit-post
 {
     border-bottom:0px;
 }
@@ -538,7 +545,8 @@ div.column-bar p
 
 #back-top:focus,#back-top:hover,
 #collect:focus,#collect:hover,
-#share:focus,#share:hover
+#share:focus,#share:hover,
+#edit-post:focus,#edit-post:hover
 {
     background:#FFFAFA;
 }
@@ -587,6 +595,23 @@ div.introduce p{
     margin-top:5px;
     margin-left:10px;
 }
+
+#nav #write-btn{
+
+    display:inline-block;
+    margin:6px 0 0 70px;
+    padding:6px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 16px;
+    color:#0A0A0A;
+    border-radius: 15px;
+    background: #FFEC8B;
+    border:1px solid #CDAA7D;
+}
+
+
+#nav #write-btn:focus,#nav #write-btn:hover{background:#EE9572;}
 
 #nav img{
 
@@ -649,6 +674,8 @@ div.introduce p{
     background:#F0FFF0;
 }
 
+
+
 #nav-user #login
 {
     float:left;
@@ -704,7 +731,7 @@ div.post-list, div.post-detail, div.post-share {
     border-radius:8px;
 }
 div.post-detail,div.post-share{
-    padding:8em;
+    padding:90px;
     padding-top:1em;
     padding-bottom:1em;
 }
@@ -891,6 +918,8 @@ div.post-share label{
     padding:4px;
     margin:1px;
 }
+
+
 
 #tag-bar {
     height:auto;
@@ -1090,4 +1119,46 @@ div.select-tag
 
 #rc-page #simgle{
     width:600px;
+}
+
+
+/*write-post*/
+
+.write-post #tail form
+{
+    width: 840px;
+    margin: 0px auto;
+}
+
+.write-post #id_title
+{
+    padding:0.5em;
+    width:815px;
+    font-size:25px;
+    font-weight:bold;
+}
+
+
+.write-post #publish-btn,.write-post #save-btn
+{
+    position:fixed;
+    width:80px;
+    height:50px;
+    top:80px;
+    right:50px;
+    font-size:18px;
+}
+
+
+.write-post #save-btn{top:140px;}
+
+.write-post #tail{
+    background:#FCFCFC;
+    padding-top:60px;
+    padding-bottom:40px;
+    border-radius:15px;
+}
+
+.write-post .body{
+    margin-top:0px;
 }

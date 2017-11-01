@@ -14,7 +14,7 @@
         <h1>{{ post.title }}</h1>
         {% include "blog/post/author.html" %}
         <div id="post-body">
-            {% autoescape on %}
+            {% autoescape off %}
             {{ post.body|linebreaks }}
             {% endautoescape %}
         </div>
@@ -59,7 +59,11 @@
 {% block column-bar %}
     <div class="column-bar" id="pd">
         <a href="#top"><div id="back-top" title="回到顶部"><p>顶部</p></div></a>
-        <a href=""><div id="collect" title="收藏文章"><p>收藏</p></div></a>
-        <a href=""><div id="share" title="分享文章"><p>分享</p></div></a>
+        {% if auth_user.is_authenticated %}
+            <a href='{% url "blog:edit_post" post.id %}' target="_blank"><div id="edit-post" title="编辑文章"><p>编辑</p></div></a>
+        {% else %}
+           <a href=""><div id="collect" title="收藏文章"><p>收藏</p></div></a>
+        {% endif %}
+        <a href="{% url "blog:post_share" post.id %}"><div id="share" title="分享文章"><p>分享</p></div></a>
     </div>
 {% endblock %}

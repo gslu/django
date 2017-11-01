@@ -32,7 +32,10 @@
             </h2>
             <hr/>
             <p class="post_body">
-            {{ post.body | slice:"100" | linebreaks}}...
+                {% get_text post.body as body %}
+                {% autoescape on %}
+                {{ body | slice:"100" | linebreaks}}...
+                {% endautoescape %}
             </p>
             <p class="tags">
                 标签:

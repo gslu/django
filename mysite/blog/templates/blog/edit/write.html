@@ -1,0 +1,36 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block addhead %}
+        <link rel="stylesheet" type="text/css" href='{% static "blog/simditor/styles/simditor.css" %}' />
+        <script type="text/javascript" src='{% static "blog/simditor/scripts/jquery.min.js" %}'></script>
+        <script type="text/javascript" src='{% static "blog/simditor/scripts/module.js" %}'></script>
+        <script type="text/javascript" src='{% static "blog/simditor/scripts/hotkeys.js" %}'></script>
+        <script type="text/javascript" src='{% static "blog/simditor/scripts/uploader.js" %}'></script>
+        <script type="text/javascript" src='{% static "blog/simditor/scripts/simditor.js" %}'></script>
+        <script type="text/javascript" src='{% static "blog/simditor/scripts/init.js" %}'></script>
+{% endblock %}
+
+
+{% block title %}写作-浮文掠影{% endblock %}
+
+{% block bodyclass %}
+    <body class="write-post">
+{% endblock %}
+
+{% block nav %}
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+
+<form action="." method="post",id="write-form">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input id="save-btn" type="submit" value="保存">
+</form>
+<input id="publish-btn" type="submit" value="发布">
+
+{% endblock %}

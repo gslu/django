@@ -64,10 +64,20 @@ class ResetForm(forms.Form):
         password = self.cleaned_data['password']
         password_confirm = self.cleaned_data['password_confirm']
         if password <> password_confirm:
-            raise forms.ValidationError("密码不一致")
+            raise forms.ValidationError("前后密码不一致")
         else:
             return password_confirm
 
+
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=50)
+    file = forms.FileField()
+
+
+class WriteForm(forms.Form):
+    title = forms.CharField(max_length=100,label="",
+                            widget=forms.TextInput(attrs={'placeholder':'文章标题'}))
+    body = forms.CharField(widget=forms.Textarea,label="")
 
 
 
