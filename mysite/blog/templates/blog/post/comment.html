@@ -16,8 +16,12 @@
     {% endfor %}
 
     {% if new_comment %}
-    <h3>成功发表评论</h3>
-    {% else %}
+    <h3 id="come-here" name="come-here">成功发表评论</h3>
+    <script  type="text/javascript">
+        window.onload=function(){
+        location.hash='#come-here';}
+    </script>
+    {% endif %}
     <hr/>
     <h3>发表评论</h3>
     {% if not auth_user.is_authenticated %}
@@ -32,5 +36,5 @@
         <div id="cm-submit"><input type="submit" value="提交"></div>
         {% endif %}
     </form>
-    {% endif %}
+
 </div>

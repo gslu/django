@@ -596,6 +596,23 @@ div.introduce p{
     margin-left:10px;
 }
 
+#nav #write-btn{
+
+    display:inline-block;
+    margin:6px 0 0 70px;
+    padding:6px;
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 16px;
+    color:#0A0A0A;
+    border-radius: 15px;
+    background: #FFEC8B;
+    border:1px solid #CDAA7D;
+}
+
+
+#nav #write-btn:focus,#nav #write-btn:hover{background:#EE9572;}
+
 #nav img{
 
     width:100%;
@@ -656,6 +673,8 @@ div.introduce p{
     border-color: #EE9572;
     background:#F0FFF0;
 }
+
+
 
 #nav-user #login
 {
@@ -1105,34 +1124,41 @@ div.select-tag
 
 /*write-post*/
 
-#tail form
+.write-post #tail form
 {
     width: 840px;
     margin: 0px auto;
 }
 
-#id_title
+.write-post #id_title
 {
     padding:0.5em;
-    width:600px;
-    font-size:20px;
+    width:815px;
+    font-size:25px;
+    font-weight:bold;
 }
 
-#id_slug
-{
-    padding:0.5em;
-    width:300px;
-    font-size:18px;
-}
 
-#publish-btn,#save-btn
+.write-post #publish-btn,.write-post #save-btn
 {
     position:fixed;
     width:80px;
     height:50px;
-    top:50px;
+    top:80px;
     right:50px;
     font-size:18px;
 }
 
-#save-btn{top:120px;}
+
+.write-post #save-btn{top:140px;}
+
+.write-post #tail{
+    background:#FCFCFC;
+    padding-top:60px;
+    padding-bottom:40px;
+    border-radius:15px;
+}
+
+.write-post .body{
+    margin-top:0px;
+}

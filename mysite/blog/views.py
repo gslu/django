@@ -267,6 +267,9 @@ def postDetail(request,year,month,day,slug,id):
     else:
         comment_form = CommentForm()
 
+    if new_comment:
+        comment_form = CommentForm()
+
     # List of similar posts
     post_tags_ids = post.tags.values_list('id', flat=True)
     similar_posts = Post.published.filter(tags__in=post_tags_ids) \
@@ -362,21 +365,12 @@ def test(request):
 
 @login_required
 def writePost(request):
-    if request.method == "POST":
-        form = WriteForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            post = Post.objects.create(title=cd["title"], status="published",body=cd["body"],
-                                   author=request.user)
-            return HttpResponseRedirect(reverse("blog:edit_post",kwargs={"post_id":post.id}))
-    else:
-        form = WriteForm()
-
-    return render(request,"blog/edit/write.html",{"form":form,"auth_user":request.user})
+    post = Post.objects.create(title="无标题文章", status="draft", body="",author=request.user)
+    return HttpResponseRedirect(reverse("blog:edit_post", kwargs={"post_id": post.id}))
 
 
 @login_required
-def editPost(request,post_id=None):
+def editPost(request,post_id=None,opt=None):
 
     post = get_object_or_404(Post, id=post_id)
     if request.method == "POST":
@@ -384,14 +378,17 @@ def editPost(request,post_id=None):
         if form.is_valid():
             cd = form.cleaned_data
             post.title=cd["title"]
-            post.status="published"
+            if opt == "publish":
+                post.status="published"
+            else:
+                post.status = "draft"
             post.body = cd["body"]
             post.save()
             return HttpResponseRedirect(reverse("blog:edit_post", kwargs={"post_id": post.id}))
     else:
         form = WriteForm(initial={"title":post.title,"body": post.body,})
 
-    return render(request,"blog/edit/write.html",{"form":form,"auth_user":request.user})
+    return render(request,"blog/edit/write.html",{"form":form,"auth_user":request.user, "post_id":post_id})
 
 
 

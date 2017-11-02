@@ -36,5 +36,6 @@ urlpatterns = [
     url(r'^test/$', views.test, name='test'),
     url(r'^blog/write/$', views.writePost, name='write_post'),
     url(r'^blog/edit/(?P<post_id>\d+)/$', views.editPost, name='edit_post'),
+    url(r'^blog/edit/(?P<post_id>\d+)/(?P<opt>\w+)/$', views.editPost, name='publish'),
     url(r'^upload/$', uploadImage, name='upload_image'),
 ]

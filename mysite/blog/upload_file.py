@@ -28,7 +28,7 @@ def uploadImage(request):
         # 得到JSON格式的返回值
         upload_info = {"success": True, 'file_path': settings.MEDIA_URL + 'article_image/'+ file_name}
     else:
-        upload_info = {"success": False, 'file_path': None}
+        upload_info = {"success": False, 'file_path': None,"msg":"文件上传失败"}
     upload_info = json.dumps(upload_info)
 
     return HttpResponse(upload_info, content_type="application/json")

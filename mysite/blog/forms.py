@@ -77,7 +77,7 @@ class UploadFileForm(forms.Form):
 class WriteForm(forms.Form):
     title = forms.CharField(max_length=100,label="",
                             widget=forms.TextInput(attrs={'placeholder':'文章标题'}))
-    body = forms.CharField(widget=forms.Textarea,label="")
+    body = forms.CharField(required=False,widget=forms.Textarea,label="")
 
 
 

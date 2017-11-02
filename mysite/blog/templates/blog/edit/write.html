@@ -9,6 +9,7 @@
         <script type="text/javascript" src='{% static "blog/simditor/scripts/uploader.js" %}'></script>
         <script type="text/javascript" src='{% static "blog/simditor/scripts/simditor.js" %}'></script>
         <script type="text/javascript" src='{% static "blog/simditor/scripts/init.js" %}'></script>
+        <script type="text/javascript" src='{% static "blog/js/actions.js" %}'></script>
 {% endblock %}
 
 
@@ -16,6 +17,7 @@
 
 {% block bodyclass %}
     <body class="write-post">
+
 {% endblock %}
 
 {% block nav %}
@@ -26,11 +28,12 @@
 
 {% block content %}
 
-<form action="." method="post",id="write-form">
+<form action="." method="post" id="write-form" >
     {{ form.as_p }}
     {% csrf_token %}
     <input id="save-btn" type="submit" value="保存">
 </form>
-<input id="publish-btn" type="submit" value="发布">
+<input id="publish-btn" type="button" value="发布">
 
+<label id="save-msg"></label>
 {% endblock %}
