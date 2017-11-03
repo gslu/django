@@ -34,6 +34,9 @@ class PostAdmin(admin.ModelAdmin):
               "blog/simditor/scripts/simditor.js",
               "blog/simditor/scripts/init.js",)
 
+class PostClassAdmin(admin.ModelAdmin):
+    list_display = ("post","post_type")
+    search_fields = ("post",)
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('id','user', 'post', 'created', 'active')
@@ -52,7 +55,7 @@ admin.site.register(Profile,ProfileAdmin)
 admin.site.register(AccessRecord,AccessRecordAdmin)
 admin.site.register(MessageRecord,MessageRecordAdmin)
 
-admin.site.register([PostClass])
+admin.site.register(PostClass,PostClassAdmin)
 
 
 

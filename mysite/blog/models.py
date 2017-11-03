@@ -82,14 +82,14 @@ class Post(models.Model):
 
 
 class PostClass(models.Model):
-    user = models.ForeignKey(User,related_name="post_class",default=None)
-    post = models.ForeignKey(Post, related_name="post_class",default=None)
+    user = models.ForeignKey(User,related_name="classes",default=None)
+    post = models.OneToOneField(Post,on_delete=models.CASCADE)
 
     STATUS_CHOICES = (
                     ('self', '原创'),
                     ('reprint', '转载'),
                     ('collect', '收藏'))
-    post_type = models.CharField(max_length=10, choices=STATUS_CHOICES, default='reprint')
+    post_type = models.CharField(max_length=10, choices=STATUS_CHOICES, default='self')
 
     def __unicode__(self):
         return self.post_type

@@ -2,6 +2,7 @@
 <div class="comment-form">
 
     {% for comment in comments %}
+    <hr/>
     <div class="comment-author">
          <div class="author-img">
               <a href='{% url "blog:post_list" comment.user.id %}'>

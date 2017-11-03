@@ -40,7 +40,7 @@ $(document).ready(function() {
 
             },
             complete:function(){
-                $('#publish-btn').val("已发布");
+                $("#save-msg").html("已发布");
                 $("#publish-btn").attr("disabled",true);
 
             },

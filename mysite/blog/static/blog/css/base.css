@@ -771,7 +771,20 @@ div.post-author
 
 div.post-detail div.post-author
 {
-    margin-bottom:30px;
+    margin-bottom:0px;
+}
+
+
+div.post-detail #post-type{
+    width:50px;
+    margin-top:15px;
+    margin-bottom:25px;
+    padding:5px;
+    background:#FFFFE0;
+    border:1px solid #CDC673;
+    border-radius:8px;
+    text-align:center;
+    color:gray;
 }
 
 #post-collect {
@@ -829,6 +842,8 @@ div.comment-form{
     border-radius:8px;
 
     }
+
+div.comment-author{margin-top:10px;}
 
 div.comment-form textarea
 {

@@ -13,6 +13,13 @@
     <div class="post-detail">
         <h1>{{ post.title }}</h1>
         {% include "blog/post/author.html" %}
+        <div id="post-type">
+            {% if post.postclass.get_post_type_display %}
+            {{ post.postclass.get_post_type_display }}
+            {% else %}
+            --
+            {% endif %}
+        </div>
         <div id="post-body">
             {% autoescape off %}
             {{ post.body|linebreaks }}
@@ -43,8 +50,6 @@
             <br/>
             <br/>
         {% endfor %}
-
-        <hr/>
 
         <h2 class="simglelable">评论</h2>
         {% include "blog/post/comment.html" %}
