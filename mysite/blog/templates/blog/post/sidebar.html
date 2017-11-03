@@ -26,6 +26,48 @@
     </div>
 
     <hr/><br/>
+
+    <div id="post-class">
+        {% if auth_user.is_authenticated %}
+            <div id="self">
+                <a href="">
+                <p>我的文章</p>
+                </a>
+            </div>
+
+            <div id="reprint">
+                <a href="">
+                <p>我转载的文章</p>
+                </a>
+            </div>
+
+            <div id="collection">
+                <a href="">
+                <p>我收藏的文章/专题</p>
+                </a>
+            </div>
+        {% else %}
+            <div id="self">
+                <a href="">
+                <p>Ta的文章</p>
+                </a>
+            </div>
+
+            <div id="reprint">
+                <a href="">
+                <p>Ta转载的文章</p>
+                </a>
+            </div>
+
+            <div id="collection">
+                <a href="">
+                <p>Ta收藏的文章/专题</p>
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!--
     <div id="post-class">
         <div id="self">
             {% post_count user "self" as self_count %}
@@ -45,10 +87,10 @@
             <p>收藏</p>
         </div>
     </div>
-
+    -->
     <h3>最新文章</h3>
     {% get_latest_posts user 4 as latest_posts %}
-    <ul>
+    <ul class="last-post">
         {% for post in latest_posts %}
         <li>
             <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>

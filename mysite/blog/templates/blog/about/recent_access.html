@@ -12,7 +12,7 @@
                        <img src='{% static "blog/img/user_default.jpeg" %}'>
                   {% endif %}
              </div>
-             <div class="post-author-nickname">
+             <div class="author-nickname">
                  <p>{{ access.guest.profile.nickname | slice:"6" }}</p>
                  <span class="date">{{ access.access_time | date:"Y-m-d H:i" }}</span>
              </div>

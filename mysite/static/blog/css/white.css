@@ -1,0 +1,440 @@
+body
+{
+    color: #333;
+    background-color: #EE29BF;
+}
+
+h1 {
+    color: #666;
+}
+
+h5 {
+    color: #666;
+}
+
+blockquote {
+    color: #777;
+    border-left: 5px solid #ddd;
+}
+
+code, pre {
+
+    background: #F0F0F0;
+    color:#212121;
+}
+
+pre.literal-block {
+    background: #eee;
+}
+
+code strong {
+    color: #930;
+}
+
+hr {
+    color: #CDAA7D;
+    background-color: #CDBA96;
+}
+
+table {
+    border-color: #ccc;
+}
+
+thead th,
+tfoot td {
+    color: #666;
+    background: #fff;
+    border: none;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+/* SORTABLE TABLES */
+
+thead th {
+    background: #f6f6f6;
+}
+
+thead th a:link, thead th a:visited {
+    color: #666;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=url],
+input[type=number], textarea, select, .vTextField {
+    border: 1px solid #ccc;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus,
+input[type=url]:focus, input[type=number]:focus, textarea:focus, select:focus,
+.vTextField:focus {
+    border-color: #999;
+}
+
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #79aec8;
+}
+
+.button:active, input[type=submit]:active, input[type=button]:active,
+.button:focus, input[type=submit]:focus, input[type=button]:focus,
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #609ab6;
+}
+
+.button.default, input[type=submit].default, .submit-row input.default {
+    background: #417690;
+}
+
+.button.default:active, input[type=submit].default:active,
+.button.default:focus, input[type=submit].default:focus,
+.button.default:hover, input[type=submit].default:hover {
+    background: #205067;
+}
+
+/* HEADER */
+
+#header {
+    background: #BEBEBE;
+}
+
+
+#header h1{
+    color:#8B4C39;
+}
+
+#header h2{
+    color:#363636;
+}
+
+
+
+#header a{
+    color: #5E5E5E;
+}
+
+#header a:link,#header a:visited {
+    color: #5E5E5E;
+}
+
+#header a:focus , #header a:hover {
+    color: #8B2500
+}
+
+
+
+.home-page #header .nav-w0,
+.detail-page #header .nav-w1,
+.share-page #header .nav-w1,
+.music-page #header .nav-w2,
+.Album-page #header .nav-w3,
+.about-page #header .nav-w4
+{
+    color: #8B2500
+}
+
+#content ,#pd-content, #pd-content {
+    background-color:#EEE9BF;
+}
+
+#music{
+    background: #FCFCFC;
+}
+
+
+#music #skplayer
+{
+    background-color:#F0F0F0;
+    border-color:#FFFAFA;
+
+}
+
+
+#sidebar {
+    color:#5C5C5C;
+    background-color:#FAFAD2;
+}
+
+#sidebar #care{
+    border:1px solid #EE7942;
+}
+
+#sidebar #care{background:#FFFFE0;}
+#sidebar #care:focus,#sidebar #care:hover{background:#FFD39B;}
+
+div.column-bar p
+{
+    color:#333333;
+}
+
+#back-top,
+#collect,
+#share,
+#edit-post
+{
+
+    border:1px solid #CDAA7D;
+}
+
+
+
+#back-top:focus,#back-top:hover,
+#collect:focus,#collect:hover,
+#share:focus,#share:hover,
+#edit-post:focus,#edit-post:hover
+{
+    background:#FFFAFA;
+}
+
+
+div.introduce{
+    color:#262626;
+}
+
+div.introduce p{
+    color:gray;
+}
+
+
+#nav {
+    background:#FAFAFA;
+    border-color:#EED5D2;
+}
+
+#nav #write-btn{
+
+    color:#0A0A0A;
+    background: #FFEC8B;
+    border:1px solid #CDAA7D;
+}
+
+#nav-user #login,
+#nav-user #logout,
+#nav-user #register
+{
+    background: #FAFAFA;
+    color:#104E8B;
+}
+
+#nav-user #register
+{
+    border-color: #EE9572;
+    background:#F0FFF0;
+}
+
+
+#nav-user #logout:focus,#nav-user #logout:hover,
+#nav-user #login:focus,#nav-user #login:hover
+{
+    background: #87CEFF;
+    color:#2F4F4F;
+}
+
+#nav-user #register:focus,
+#nav-user #register:hover
+{
+    background: #9AFF9A;
+    color:#2F4F4F;
+}
+
+
+#nav #register:active,
+#nav login:active,
+#nav logout:active
+{
+    background: #6CA6CD;
+    color:#2F4F4F;
+}
+
+
+#footer {
+    background:#EEE9BF;
+}
+
+
+div.post-list, div.post-detail, div.post-share {
+    background-color:#FCFCFC;
+}
+
+
+
+div.post-list a,div.author-nickname a{
+    color:#262626;
+}
+
+
+div.post-list a:focus,div.author-nickname a:focus,
+div.post-list a:hover,div.author-nickname a:hover
+{
+    color:#458B74;
+}
+
+div.post-list h2, div.post-detail h2, div.post-share h2
+{
+
+    color:#262626;
+}
+
+div.post-detail h1, div.post-share h1
+{
+
+    color:#262626;
+}
+
+span.date
+{
+    color:gray;
+}
+
+.previous a,.next a{
+    color:#FF4500;
+}
+
+div.comment-form{
+    background-color:#FCFCFC;
+ }
+
+#cm-time
+{
+    color:gray;
+}
+
+div.comment-form .errorlist{color:red;}
+
+
+#tag-bar {
+    background-color:#D1EEEE;
+}
+
+#tag,#select-tag{
+    background:#E0FFFF;
+}
+
+#tag-bar #select-tag
+{
+    background:#FFD39B;
+}
+
+#tag-bar h2{
+    color:#CD6839;
+}
+
+
+#tag-bar #tag:focus,
+#tag-bar #tag:hover,
+#tag-bar #select-tag:focus,
+#tag-bar #select-tag:hover
+{
+    background:#FFF68F;
+}
+
+#tag-bar #tag:active,#tag-bar #select-tag:active
+{
+    background:#FFD39B;
+}
+
+div.select-tag
+{
+    background:#FFD39B;
+}
+
+
+#about{
+    background:#FCFCFC;
+}
+
+#about h2,#about h3{
+    color:gray;
+}
+
+
+
+#vbar {
+
+    background:#FCFCFC;
+}
+
+
+
+#recent-access,#recent-comment,#message,#personal,
+#send-message,#care
+{
+
+    background:#CDC673;
+}
+
+
+#send-message,#care{
+
+    background:#BCEE68;
+}
+
+#send-message:focus,#care:focus,
+#send-message:hover,#care:hover
+{
+    background:#7CCD7C;
+}
+
+
+#ra-content #recent-access,
+#rc-content #recent-comment,
+#rm-content #message,
+#ps-content #personal
+{
+    background:#FFA54F;
+}
+
+
+#recent-access:focus,#recent-comment:focus,#personal:focus,#message:focus,
+#recent-access:hover,#recent-comment:hover,#personal:hover,#message:hover
+{
+    background:#FFA54F;
+}
+
+
+#about-row{
+    color:#5E5E5E;
+}
+
+
+#care-topic #tag {
+
+    border:1px solid #FFA54F;
+    background:#FFFFF0;
+}
+
+#care-topic #tag:focus,#care-topic #tag:hover{background:#FFF68F;}
+
+
+#ra-page #simgle,#rc-page #simgle{
+
+    background:#F2F2F2;
+}
+
+#ra-page #simgle:focus,
+#ra-page #simgle:hover,
+#rc-page #simgle:focus,
+#rc-page #simgle:hover
+{
+    background:#F0E68C;
+}
+
+#ra-page p , #rc-page p{
+
+    color:#242424;
+}
+
+
+
+/*write-post*/
+
+
+.write-post #save-msg{
+
+    color:#006400;
+    }
+
+.write-post #tail{
+    background:#FCFCFC;
+
+}
+

@@ -231,7 +231,6 @@ def postList(request,user_id, tag_name=None):
     # If page is out of range deliver last page of results
         posts = paginator.page(paginator.num_pages)
     return render(request,'blog/post/list.html',{'posts': posts,
-                                                 'page':page,
                                                  'tag':tag,
                                                  'tags':tags,
                                                  'user':user,
@@ -328,19 +327,35 @@ def about(request,user_id,option):
     if option not in ("ps","ra","rc","rm"):
         return Http404
     user = get_object_or_404(User, id=user_id)
+
+    def getPageAndObjs(obj,per_page):
+        paginator = Paginator(obj,per_page)
+        page = request.GET.get('page')
+        try:
+            objs = paginator.page(page)
+        except PageNotAnInteger:
+            objs = paginator.page(1)
+        except EmptyPage:
+            objs = paginator.page(paginator.num_pages)
+        return (page,objs)
+
+
     if option == "ra":
-        ra = user.access_records.order_by('access_time')[:50]
+        ra = user.access_records.order_by('access_time')
+        page,ra = getPageAndObjs(ra,27)
     else:
         ra = None
 
     if option == "rc":
         posts = Post.objects.filter(author=user)
-        rc = Comment.objects.filter(post__in=posts).order_by("updated")[:50]
+        rc = Comment.objects.filter(post__in=posts).order_by("updated")
+        page, rc = getPageAndObjs(rc, 10)
     else:
         rc = None
 
     if option == "rm":
-        rm = user.receive_msg.order_by("send_time")[:50]
+        rm = user.receive_msg.order_by("send_time")
+        page, rm = getPageAndObjs(rm, 15)
     else:
         rm = None
 
@@ -348,20 +363,6 @@ def about(request,user_id,option):
                                                    'auth_user': request.user,
                                                    "option":option,
                                                    "ra":ra,"rc":rc,"rm":rm})
-
-def test(request):
-    data = None
-    if request.method=="POST":
-        form = UploadFileForm(request.POST,request.FILES)
-        if form.is_valid():
-            data=form.cleaned_data
-        else:
-            data="fsfee"
-    else:
-        form = UploadFileForm()
-    return render(request,"blog/test/test.html",{"form":form,
-                                     "data":data})
-
 
 @login_required
 def writePost(request):

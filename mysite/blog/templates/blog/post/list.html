@@ -18,6 +18,7 @@
 
 {% block content %}
 <div id="content">
+    <div id="posts-page">
     {% if tags or tag %}
         {% include "blog/post/tags.html" %}
     {% endif %}
@@ -56,8 +57,10 @@
             <h1>空空如也</h1>
         </div>
     {% endif %}
+    </div>
     <!--include　里的变量名称如果跟外面的一样　就不用with 否则就要传递一下-->
     {% include "blog/post/pagination.html" with page=posts %}
 </div>
+
 {% endblock %}
 

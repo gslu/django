@@ -58,6 +58,7 @@
         </div>
 
         <div id="about-row">
+            <div id="abouts-page">
             {% ifequal option "ps" %}
                 {% include "blog/about/personal.html" %}
             {% endifequal %}
@@ -72,6 +73,18 @@
 
             {% ifequal option "rm" %}
                 {% include "blog/about/message.html" %}
+            {% endifequal %}
+            </div>
+            {% ifequal option "ra" %}
+                {% include "blog/post/pagination.html" with page=ra %}
+            {% endifequal %}
+
+            {% ifequal option "rc" %}
+                {% include "blog/post/pagination.html" with page=rc %}
+            {% endifequal %}
+
+            {% ifequal option "rm" %}
+                {% include "blog/post/pagination.html" with page=rm %}
             {% endifequal %}
         </div>
     </div>

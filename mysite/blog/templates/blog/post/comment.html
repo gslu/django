@@ -2,15 +2,28 @@
 <div class="comment-form">
 
     {% for comment in comments %}
-    <div class="comment">
-        <p class="cm-info">
-            <a href='{% url "blog:post_list" comment.user.id %}'>
-                {{ comment.user.profile.nickname }}
-            </a> &nbsp;
-            <span id="cm-time">{{ comment.created | date:"Y-m-d H:i:s" }} - {{ comment.floor }}楼</span>
-        </p>
+    <div class="comment-author">
+         <div class="author-img">
+              <a href='{% url "blog:post_list" comment.user.id %}'>
+              {% if comment.user.profile.image %}
+                   <img src="{{ MEDIA_URL }}{{ comment.user.profile.image }}">
+              {% else %}
+                   <img src='{% static "blog/img/user_default.jpeg" %}'>
+              {% endif %}
+              </a>
+         </div>
+         <div class="author-nickname">
+              <a href='{% url "blog:post_list" comment.user.id %}'>
+              {{ comment.user.profile.nickname }}　
+              </a>
+              <span class="date">{{ comment.created | date:"Y-m-d H:i:s" }}- {{ comment.floor }}楼</span>
+         </div>
+
+    </div>
+    <div class="cm-body">
         <span id="cm-body">{{ comment.body|linebreaks }}</span>
     </div>
+
     {% empty %}
     <p>暂无评论.</p>
     {% endfor %}

@@ -3,7 +3,6 @@
 */
 
 @import url(fonts.css);
-
 body {
     margin: 0;
     padding: 0;
@@ -475,7 +474,7 @@ div.header-nav ul li a, div.header-nav ul li a:visited
     width:240px;
     padding:1.5em;
     color:#5C5C5C;
-    background-color:#E0E0E0;
+    background-color:#FAFAD2;
     border-radius:12px;
 }
 
@@ -554,14 +553,12 @@ div.column-bar p
 
 #post-class #self,#post-class #reprint,#post-class #collection
 {
-    width:75px;
-    display:inline-block;
-    text-align:center;
+    text-align:left;
 }
 
 #post-class p
 {
-    line-height:15px;
+    line-height:20px;
 }
 
 
@@ -724,6 +721,8 @@ div.introduce p{
     margin:0px auto;
 }
 
+#posts-page,#abouts-page{min-height:700px;}
+
 div.post-list, div.post-detail, div.post-share {
     margin-bottom:30px;
     padding:1em;
@@ -737,12 +736,13 @@ div.post-detail,div.post-share{
 }
 
 
-div.post-list a{
+div.post-list a,div.author-nickname a{
     color:#262626;
 }
 
-div.post-list a:focus,
-div.post-list a:hover
+
+div.post-list a:focus,div.author-nickname a:focus,
+div.post-list a:hover,div.author-nickname a:hover
 {
     color:#458B74;
 }
@@ -777,7 +777,7 @@ div.post-detail div.post-author
 #post-collect {
 float:right;}
 
-div.author-img, div.post-author-nickname{
+div.author-img, div.author-nickname{
     display:inline-block;
     margin-right:10px;
     vertical-align:middle;
@@ -786,7 +786,7 @@ div.author-img, div.post-author-nickname{
     border: 0px solid;
 }
 
-div.post-author-nickname
+div.author-nickname
 {
     height:auto;
     width:auto;
@@ -814,6 +814,10 @@ div.author-img img{
 .pagination
 {
     text-align:center;
+}
+
+#about-row .pagination{
+    margin-top:20px;
 }
 
 .previous a,.next a{
@@ -870,12 +874,9 @@ p.cm-info{
     font-weight: bold;
 }
 
-
-#cm-time
-{
-    color:gray;
-    font-weight:normal;
-    font-size:13px;
+div.cm-body{
+    padding: 10px;
+    color:#8B3E2F;
 }
 
 
@@ -1166,8 +1167,10 @@ div.select-tag
     padding-top:60px;
     padding-bottom:40px;
     border-radius:15px;
+    margin:5px auto;
 }
 
 .write-post .body{
     margin-top:0px;
 }
+
