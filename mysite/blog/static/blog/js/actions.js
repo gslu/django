@@ -51,7 +51,6 @@ $(document).ready(function() {
 
 $(document).bind('input propertychange', function(){
         $("#save-msg").html("未保存");
-        $('#publish-btn').val("发布");
         $("#publish-btn").attr("disabled",false);
         $("#save-btn").attr("disabled",false);
 

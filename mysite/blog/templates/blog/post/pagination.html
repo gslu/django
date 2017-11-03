@@ -5,16 +5,30 @@
             <span class="previous">
                 <a href="?page={{ page.previous_page_number }}"><<上一页&nbsp;</a>
             </span>
+        {% else %}
+            {% if page.has_next %}
+            <span class="previous">
+                <<上一页
+            </span>
+            {% endif %}
         {% endif %}
 
+        {% if page.has_previous or page.has_next %}
         <span class="current">
             Page {{ page.number }} of {{ page.paginator.num_pages }}
         </span>
+        {% endif %}
 
         {% if page.has_next %}
             <span class="next">
                 <a href="?page={{ page.next_page_number }}">&nbsp;下一页>></a>
             </span>
+        {% else %}
+            {% if page.has_previous %}
+            <span class="next">
+                下一页>>
+            </span>
+            {% endif %}
         {% endif %}
     </span>
 
