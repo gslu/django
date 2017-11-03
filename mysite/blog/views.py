@@ -71,12 +71,13 @@ def userRegister(request):
             username = cd["username"]
             email = cd["email"]
             password = cd["password"]
+
             try:
                 user = User.objects.get(username=username)
             except:
                 user = None
 
-            if user is None:
+            if user is None and cd["code"] == "l14789632":
                 try:
                     email_send.sendVerifyEmail(email, username,
                                                send_type="register", request=request)
@@ -97,7 +98,8 @@ def userRegister(request):
                                                         kwargs={"email":email,
                                                                 "username":username}))
             else:
-                register_msg="该帐号已被注册"
+                register_msg="暂不支持"
+                #register_msg="该帐号已被注册"
                 form = RegisterForm(initial={"username": cd["username"],
                                                 "email":cd["email"],
                                                 "password":""})
