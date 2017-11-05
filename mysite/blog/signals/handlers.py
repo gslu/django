@@ -1,9 +1,9 @@
 #coding:utf-8
 
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,pre_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
-from blog.models import Profile,PostClass,Post
+from blog.models import Profile,PostClass,Post,Book
 
 
 
@@ -33,6 +33,7 @@ def save_postclass(sender, instance, **kwargs):
         instance.postclass.save()
     except:
         PostClass.objects.create(post=instance,user=instance.author)
+
 
 
 #@receiver(post_save,sender=Profile,dispatch_uid="profile_post_save")

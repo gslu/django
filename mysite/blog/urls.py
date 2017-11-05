@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^password/forget/$', views.pswdForget, name='pswd_forget'),
     url(r'^password/reset/(?P<username>[\w\d-]+)/(?P<code>[\w\d-]+)/$', views.pswdReset, name='pswd_reset'),
 
+    url(r'^blog/manage/$', views.postManage, name='post_manage'),
     url(r'^blog/write/$', views.writePost, name='write_post'),
     url(r'^blog/edit/(?P<post_id>\d+)/$', views.editPost, name='edit_post'),
     url(r'^blog/edit/(?P<post_id>\d+)/(?P<opt>\w+)/$', views.editPost, name='publish'),

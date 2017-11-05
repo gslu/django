@@ -1,0 +1,100 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% load static %}
+
+{% block addhead %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+          $("#new-book-form").hide();
+          $("#new-tag-form").hide();
+          $(".nb-btn").click(function(){
+            $("#new-book-form").slideToggle(300);
+          });
+
+          $(".nt-btn").click(function(){
+            $("#new-tag-form").slideToggle(300);
+          });
+          $(".select-book").css("background",'#8E8E38');
+          $(".select-tag").css("background",'#F0E68C');
+        });
+    </script>
+{% endblock %}
+{% block title %}文章-浮文掠影{% endblock %}
+
+{% block bodyclass %}
+    <body class="post-mng">
+
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div id="book-list">
+    <a class="nb-btn" href="javascript:void(0)">
+        <div id="new-book">
+            <h2>新建专题</h2>
+        </div>
+    </a>
+
+    <div id="new-book-form">
+
+    </div>
+
+    <div id="books">
+        {% for book in books %}
+        <a class="book" href="javascript:void(0)">
+            <div id="book" {% ifequal point_book book %}class="select-book"{% endifequal %}>
+                {{ book.name }}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="tag-list">
+    <a class="nt-btn" href="javascript:void(0)">
+        <div id="new-tag">
+            <h2>新建标签</h2>
+        </div>
+    </a>
+
+    <div id="new-tag-form">
+
+    </div>
+
+    <div id="tags">
+        {% for tag in tags %}
+        <a class="tag" href="javascript:void(0)">
+            <div id="tag" {% ifequal point_tag tag %}class="select-tag"{% endifequal %}>
+                {{ tag.name }}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="post-list">
+    <a href="javascript:void(0)">
+        <div id="new-post">
+            <h2>新建文章</h2>
+        </div>
+    </a>
+    <div id="posts">
+        {% for post in posts %}
+        <a class="post" href='{% url "blog:edit_post" post.id %}' target="_blank">
+            <div id="post">
+                <h3>{{ post.title }}</h3>
+                {% get_text post.body as body %}
+                {% autoescape on %}
+                {{ body | slice:"60" | linebreaks}}
+                {% endautoescape %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+<a href="{% url 'blog:post_list' auth_user.id %}">
+<div id="back-home">返回首页</div>
+</a>
+{% endblock %}

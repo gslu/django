@@ -11,6 +11,16 @@ from system.storage import ImageStorage
 
 # Create your models here.
 
+class Book(models.Model):
+    user = models.ForeignKey(User,related_name="books")
+    name = models.CharField(max_length=50)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return '{}-{}'.format(self.user.username,self.name)
+
+
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
 
@@ -60,6 +70,7 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='draft')
     tags = TaggableManager()
+    book = models.ForeignKey(Book,related_name='posts',default=None,blank=True)
     accesstimes = models.IntegerField(default=0)
 
     class Meta:
@@ -93,7 +104,6 @@ class PostClass(models.Model):
 
     def __unicode__(self):
         return self.post_type
-
 
 
 class Comment(models.Model):

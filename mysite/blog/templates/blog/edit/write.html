@@ -9,7 +9,7 @@
         <script type="text/javascript" src='{% static "blog/simditor/scripts/uploader.js" %}'></script>
         <script type="text/javascript" src='{% static "blog/simditor/scripts/simditor.js" %}'></script>
         <script type="text/javascript" src='{% static "blog/simditor/scripts/init.js" %}'></script>
-        <script type="text/javascript" src='{% static "blog/js/actions.js" %}'></script>
+
 {% endblock %}
 
 
@@ -36,4 +36,7 @@
 <input id="publish-btn" type="button" value="发布">
 
 <label id="save-msg"></label>
+<a href="{% url 'blog:post_list' auth_user.id %}">
+<div id="back-home">返回首页</div>
+</a>
 {% endblock %}

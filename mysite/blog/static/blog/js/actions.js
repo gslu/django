@@ -1,7 +1,7 @@
+
 $(document).ready(function() {
 
 // 使用 jQuery异步提交表单
-
 
     $('#write-form').submit(function() {
         jQuery.ajax({
@@ -47,6 +47,32 @@ $(document).ready(function() {
             });
             return false;
      });
+
+    $('.nav-ul a').on('click', function(e) {
+      e.preventDefault();  // 阻止链接跳转
+      var url = this.href;  // 保存点击的地址
+      var cls = $(this).attr('class');
+
+      $.get(url,function(response){
+          var newtitle = $(response).filter("title").text();
+          document.title = newtitle;
+          if(history.pushState){
+              var state=({
+                url: url, title:newtitle
+                });
+              window.history.pushState(state, newtitle, url);
+          }
+          else
+          {
+            window.location.href=url;
+          }
+          });
+      $('#container').remove();
+      $('.nav-ul a').css("color",'#5E5E5E')
+      $('.'+cls).css("color",'#8B2500');
+      $('#tail').load(url + ' #container'); // 加载新内容,url地址与该地址下的选择器之间要有空格,表示该url下的#container
+    });
+
 });
 
 $(document).bind('input propertychange', function(){

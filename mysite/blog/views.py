@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView,View
 from django.db.models import Count
 from taggit.models import Tag
-from .models import Post,Comment,EmailVerifyRecord
+from .models import Post,Comment,EmailVerifyRecord,Book
 from .forms import *
 from utils import email_send
 from django.db.models import Q
@@ -394,5 +394,26 @@ def editPost(request,post_id=None,opt=None):
     return render(request,"blog/edit/write.html",{"form":form,"auth_user":request.user, "post_id":post_id})
 
 
+@login_required
+def postManage(request,book_id=None,tag_name=None,post_id=None):
+    books = Book.objects.filter(user=request.user).order_by('created')
+    if book_id is not None:
+        point_book = get_object_or_404(Book,id=book_id)
+    else:
+        point_book = books[0]
+    tags = Tag.objects.filter(post__in=point_book.posts.all()).distinct()
 
+    if tag_name is not None:
+        point_tag = get_object_or_404(Tag, name=tag_name)
+    else:
+        point_tag = tags[0]
+
+    posts = Post.objects.filter(author=request.user,tags=point_tag)
+
+    return render(request,"blog/edit/manage.html",{"books":books,
+                                                   "tags":tags,
+                                                   "posts": posts,
+                                                   "point_book":point_book,
+                                                   "point_tag":point_tag,
+                                                   "auth_user":request.user})
 

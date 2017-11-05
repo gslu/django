@@ -9,6 +9,7 @@
         <link href= '{% static "blog/css/base.css" %}' rel="stylesheet">
         <link href= '{% static "blog/css/forms.css" %}' rel="stylesheet">
         <script type="text/javascript" src='{% static "blog/js/jquery.js" %}'></script>
+        <script type="text/javascript" src='{% static "blog/js/actions.js" %}'></script>
         {% block addhead %}{% endblock %}
         <script type="text/javascript">
             function httpHtml(){
@@ -66,12 +67,14 @@
                 {% endblock %}
 
                 <div id="tail">
+                    <div id="container">
                     {% block content %}
                     {% endblock %}
 
 
                     {% block sidebar %}
                     {% endblock %}
+                    </div>
                 </div>
             </div>
 

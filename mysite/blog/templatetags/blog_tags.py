@@ -48,8 +48,7 @@ def get_hot_tags(count=5):
 
 @register.assignment_tag
 def post_count(user=None,post_type=None):
-    posts = PostClass.objects.filter(user=user)
-    return posts.filter(post_type=post_type).count()
+    return PostClass.objects.filter(user=user,post_type=post_type).count()
 
 
 @register.assignment_tag
