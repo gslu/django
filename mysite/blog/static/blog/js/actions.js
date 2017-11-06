@@ -8,11 +8,12 @@ $(document).ready(function() {
         url:this.action,
         data:$(this).serialize(),
         type:this.method,
+        dataType:"html",
         beforeSend:function()
         {
             $("#save-msg").html("正在保存..");
         },
-        success:function()
+        success:function(responseText)
         {
             $("#save-msg").html("已保存");
             $("#save-btn").attr("disabled",true);
@@ -34,14 +35,15 @@ $(document).ready(function() {
             {
                 $("#save-msg").html("正在保存..");
             },
-            success:function()
+            success:function(responseText)
             {
                 $("#save-msg").html("已保存");
                 $("#save-btn").attr("disabled",true);
                 $("#save-msg").html("已发布");
                 $("#publish-btn").attr("disabled",true);
                 $("#see-post").attr("disabled",false);
-
+                dom = $(responseText);
+                $("#see-post").attr("onclick",dom.find("#see-post").attr("onclick"));
             },
             complete:function(){
 
