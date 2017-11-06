@@ -144,13 +144,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # QQ email use auth string not user password,you can get the string from QQ Email setting
 #EMAIL_HOST_PASSWORD = "ygzhfoljrwqcbcgg"
 
-EMAIL_USE_SSL = True
 EMAIL_HOST = "smtp.exmail.qq.com"
 EMAIL_HOST_USER = 'admin@fuwenlueying.com'
 EMAIL_HOST_PASSWORD = "Guang6659219"
-
 EMAIL_POST = 465
-DEFAULT_FROM_EMAIL = 'admin@fuwenlueying.com'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_USE_SSL = True
 # ImageField
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 MEDIA_URL = "/media/"

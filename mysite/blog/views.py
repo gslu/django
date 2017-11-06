@@ -15,7 +15,6 @@ from django.db.models import Count
 from taggit.models import Tag
 from .models import Post,Comment,EmailVerifyRecord,Book
 from .forms import *
-from django import forms
 from utils import email_send
 from django.db.models import Q
 
@@ -82,11 +81,8 @@ def userRegister(request):
                 try:
                     email_send.sendVerifyEmail(email, username,
                                                send_type="register", request=request)
-
-                    user = User.objects.create(username=username,
-                                        password=password,
-                                        email=email,
-                                        is_active=0)
+                    user = User.objects.create(username=username,password=password,
+                                        email=email,is_active=0)
                     user.set_password(password)
                     user.save()
                 except Exception as e:
