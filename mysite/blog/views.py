@@ -99,10 +99,8 @@ def userRegister(request):
                 form = RegisterForm(initial={"username": cd["username"],
                                                 "email":cd["email"],
                                                 "password":""})
-
     else:
         form = RegisterForm()
-
     return render(request,"blog/user/login.html",{"form":form,
                                              "register_msg":register_msg,
                                              "type": "register"})
@@ -431,14 +429,13 @@ def addTag(request,book_id):
 def postManage(request,book_id=None,tag_name=None):
 
     context = {}
-
     point_book = newBook(request)
-    print point_book
     add_tag_name = addTag(request, book_id)
 
     books = Book.objects.filter(user=request.user).order_by('-created')
-    if books is None:
+    if not books:
         point_book = Book.objects.create(user=request.user,name="默认")
+        books = [point_book]
     else:
         if book_id is not None:
             point_book = get_object_or_404(Book,id=book_id)
