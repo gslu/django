@@ -3,6 +3,9 @@
 {% load static %}
 
 {% block addhead %}
+    <!--<link href= '{% static "blog/jquery-smartMenu/css/smartMenu.css" %}' rel="stylesheet" type="text/css">
+    <script type="text/javascript" src='{% static "blog/jquery-smartMenu/js/jquery-smartMenu.js" %}'></script>
+    <script type="text/javascript" src='{% static "blog/jquery-smartMenu/js/mini/jquery-smartMenu-min.js" %}'></script>-->
     <script type="text/javascript">
         $(document).ready(function(){
           $("#new-book-form").hide();
@@ -14,8 +17,6 @@
           $(".nt-btn").click(function(){
             $("#new-tag-form").slideToggle(300);
           });
-          $(".select-book").css("background",'#8E8E38');
-          $(".select-tag").css("background",'#F0E68C');
         });
     </script>
 {% endblock %}
@@ -31,70 +32,95 @@
 
 {% block content %}
 <div id="book-list">
+
     <a class="nb-btn" href="javascript:void(0)">
-        <div id="new-book">
+        <div id="new-book" >
             <h2>新建专题</h2>
         </div>
     </a>
 
-    <div id="new-book-form">
-
+    <div id="new-book-form" hidden="true">
+        <form action="{% url "blog:post_manage" %}" method="post" id="nbf">
+            <!--<input type="text" name="name" id="new-book-input" placeholder="专题名称">-->
+            {{ book_form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="提交" id="new-book-submit">
+        </form>
     </div>
 
     <div id="books">
-        {% for book in books %}
-        <a class="book" href="javascript:void(0)">
-            <div id="book" {% ifequal point_book book %}class="select-book"{% endifequal %}>
-                {{ book.name }}
-            </div>
-        </a>
-        {% endfor %}
+        <div id="blctn">
+            {% for book in books %}
+            <a class="book" href='{% url "blog:select_book" book.id %}'>
+                <div id="book" {% ifequal point_book book %}class="select-book"{% endifequal %}>
+                    {{ book.name }}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
 <div id="tag-list">
+
     <a class="nt-btn" href="javascript:void(0)">
         <div id="new-tag">
-            <h2>新建标签</h2>
+            <h2>添加标签</h2>
         </div>
     </a>
 
-    <div id="new-tag-form">
-
+    <div id="new-tag-form" hidden="true">
+        <form action="{% url "blog:select_book" point_book.id %}" method="post" id="ntf">
+            <!--<input type="text" name="name" id="new-tag-input" placeholder="标签名称">-->
+            {{ tag_form.as_p }}
+            {% csrf_token %}
+            <input type="submit" value="提交" id="new-tag-submit">
+        </form>
     </div>
 
     <div id="tags">
-        {% for tag in tags %}
-        <a class="tag" href="javascript:void(0)">
-            <div id="tag" {% ifequal point_tag tag %}class="select-tag"{% endifequal %}>
-                {{ tag.name }}
-            </div>
-        </a>
-        {% endfor %}
+        <div id="tlctn">
+            {% for tag in tags %}
+            <a class="tag" href='{% url "blog:select_tag" point_book.id tag.name %}'>
+                <div id="tag" {% ifequal point_tag tag %}class="select-tag"{% endifequal %}>
+                    {{ tag.name }}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
 <div id="post-list">
-    <a href="javascript:void(0)">
-        <div id="new-post">
-            <h2>新建文章</h2>
-        </div>
-    </a>
-    <div id="posts">
-        {% for post in posts %}
-        <a class="post" href='{% url "blog:edit_post" post.id %}' target="_blank">
-            <div id="post">
+    <div id="plctn">
+        <a href='{% url "blog:write_post" point_book.id point_tag.name %}'>
+            <div id="new-post">
+                <h2>新建文章</h2>
+            </div>
+        </a>
+        <div id="posts">
+            {% for post in posts %}
+            <a class="post" href='{% url "blog:edit_post" post.id %}' target="_blank">
+                <div id="post" {% ifequal post.status "published" %}class="published"{% endifequal %}>
+                <span>{{ post.postclass.get_post_type_display }}</span>
                 <h3>{{ post.title }}</h3>
                 {% get_text post.body as body %}
                 {% autoescape on %}
                 {{ body | slice:"60" | linebreaks}}
                 {% endautoescape %}
-            </div>
-        </a>
-        {% endfor %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
     </div>
 </div>
 <a href="{% url 'blog:post_list' auth_user.id %}">
 <div id="back-home">返回首页</div>
 </a>
+
+<div id="notice">
+    <p><span id="pb-color">------</span>&nbsp;-&nbsp;已发布</p>
+    <p><span id="dr-color">------</span>&nbsp;-&nbsp;未发布</p>
+</div>
+
 {% endblock %}

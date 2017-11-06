@@ -29,14 +29,23 @@
 {% block content %}
 
 <form action="." method="post" id="write-form" >
+    <select id="post_type" name="post_type">
+      <option value="self" {% ifequal post.postclass "self" %}selected="selected"{% endifequal %}>原创</option>
+      <option value="reprint" {% ifequal post.postclass "reprint" %}selected="selected"{% endifequal %}>转载</option>
+    </select>
     {{ form.as_p }}
     {% csrf_token %}
     <input id="save-btn" type="submit" value="保存">
 </form>
+
 <input id="publish-btn" type="button" value="发布">
+<input id="see-post" type="button" value="查看" onclick="location.href='{{ post.get_absolute_url }}'">
 
 <label id="save-msg"></label>
 <a href="{% url 'blog:post_list' auth_user.id %}">
 <div id="back-home">返回首页</div>
+</a>
+<a href="{% url 'blog:post_manage' %}">
+<div id="back-mng">返回管理</div>
 </a>
 {% endblock %}

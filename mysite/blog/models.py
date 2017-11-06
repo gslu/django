@@ -16,6 +16,7 @@ class Book(models.Model):
     name = models.CharField(max_length=50)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    tags = TaggableManager()
 
     def __unicode__(self):
         return '{}-{}'.format(self.user.username,self.name)

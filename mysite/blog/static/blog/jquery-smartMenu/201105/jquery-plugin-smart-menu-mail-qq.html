@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="description" content="jQuery smartMenu插件实现类似QQ邮箱自定义右键菜单效果" />
+<meta name="description" content="张鑫旭web前端学习之jQuery smartMenu插件实现类似QQ邮箱自定义右键菜单效果实例页面" />
+<meta name="keywords" content="web前端, 插件, jQuery, demo页面, smartMenu, QQ邮箱" />
+<meta name="author" content="张鑫旭,zhangxixnu" />
+<title>jQuery smartMenu插件实现类似QQ邮箱自定义右键菜单效果 » 张鑫旭-鑫空间-鑫生活</title>
+<link rel="stylesheet" href="http://www.zhangxinxu.com/study/css/common.css" type="text/css" />
+<link rel="stylesheet" href="../css/smartMenu.css" type="text/css" />
+<style>
+th,td{padding:2px 5px;}
+th{border-left:1px solid #FFFFFF; border-right:1px solid #C6C9CA; border-bottom:1px solid #C1C8D2; background-color:#F2F4F6; text-align:left;}
+td{border-bottom:1px solid #E3E6EB; cursor:pointer;}
+tr:hover,.bg{background-color:#f2f4f6;}
+</style>
+</head>
+<body>
+<div class="zxx_out_box">
+    <div class="zxx_in_box">
+        <div class="zxx_header">
+            <a href="http://www.zhangxinxu.com/">
+                <img class="l" src="http://www.zhangxinxu.com/wordpress/wp-content/themes/default/images/index_logo.gif" />
+            </a>
+            <span class="zxx_author_time">by zhangxinxu 2011-05-30 17:24</span>
+        </div>
+        <h1 class="zxx_title">jQuery smartMenu插件实现类似QQ邮箱自定义右键菜单效果</h1>
+        <div class="zxx_main_con">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <th width="6%" scope="col"><input type="checkbox" /></th>
+                <th width="15%" scope="col">发件人</th>
+                <th width="66%" scope="col">主题</th>
+                <th width="13%" scope="col">时间</th>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>MiFan.me</td>
+                <td><span id="subject">欢迎注册Mifan.me!</span></td>
+                <td>5月27日</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>豆瓣网</td>
+                <td>请激活您的账号，完成注册 </td>
+                <td>5月26日</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>SlideShare</td>
+                <td><div> <span id="subject2">Follow-up comment on 'ss-2670845'</span></div>
+                <div id="tagContainer" ck="tag"> </div></td>
+                <td>5月26日</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>点点网</td>
+                <td>欢迎来到点点网</td>
+                <td>5月26日</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>zhangxinxu</td>
+                <td>[张鑫旭-鑫空间-鑫生活]请审核：&ldquo;我曾经喜欢的一个姑娘要结婚了&rdquo;</td>
+                <td>5月26日</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" /></td>
+                <td>-宏达</td>
+                <td>回复：到你了，写写吧</td>
+                <td>5月24日</td>
+              </tr>
+            </table>
+			<div class="zxx_test_list">
+            	<p class="mt10"><strong>JS相关代码</strong></p>
+            	<div class="zxx_code"><pre>&lt;script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js">&lt;/script>
+&lt;script type="text/javascript" src="/study/js/jquery-smartMenu.js">&lt;/script>
+&lt;script>
+var chkSingle = $("th input"), chkGroup = $("td input");
+<span style="color:green;">//选中样式切换</span>
+var funTrStyle = function() {
+    chkGroup.each(function() {
+        if ($(this).attr("checked")) {
+            $(this).parents("tr").addClass("bg");    
+        } else {
+            $(this).parents("tr").removeClass("bg");    
+        }
+    });
+}, funTrGet = function() {
+    return $("td input:checked").parents("tr");
+};
+<span style="color:green;">//全反选</span>
+chkSingle.bind("click", function() {
+    if ($(this).attr("checked")) {
+        chkGroup.attr("checked", "checked");
+    } else {
+        chkGroup.attr("checked", "");
+    }
+    funTrStyle();    
+});
+chkGroup.bind("click", funTrStyle);
+funTrStyle();
+
+<span style="color:green;">//自定义右键上下文</span>
+<span style="color:green;">//数据</span>
+var objDelete = {
+    text: "删除",
+    func: function() {
+        funTrGet().remove();
+    }    
+}, objRubbish = {
+    text: "这是垃圾邮件",
+    func: function() {
+        funTrGet().hide();
+    }    
+}, objRead = {
+    text: "标记为已读",
+    func: function() {
+        funTrGet().css("font-weight", "400");
+    }
+}, objUnRead = {
+    text: "标记为未读",
+    func: function() {
+        funTrGet().css("font-weight", "700");
+    }    
+}, objSend = {
+    text: "移动到",
+    data: [
+        [{
+            text: "收件箱",
+            func: function() {
+                funTrGet().hide();
+            }
+        }, {
+            text: "已发送",
+            func: function() {
+                funTrGet().hide();
+            }
+        }, {
+            text: "QQ邮箱订阅",
+            func: function() {
+                funTrGet().hide();
+            }
+        }], [{
+            text: "新建文件夹",
+            func: function() {
+                alert("模拟不了，弹出个框框意思下");    
+            }
+        }]
+    ]
+};
+var mailMenuData = [
+    [objDelete, objRubbish]
+];
+
+<span style="color:green;">//绑定</span>
+$("tr").smartMenu(mailMenuData, {
+    name: "mail",
+    <span style="color:green;">//根据已读与否状态显示不同的上下文菜单</span>
+    beforeShow: function() {
+        <span style="color:green;">//右键选中当前行</span>  
+        $(this).find("input").attr("checked", "checked");    
+        funTrStyle();
+        
+        <span style="color:green;">//动态数据，及时清除</span>
+        $.smartMenu.remove();
+        
+        <span style="color:green;">//确定显示数据 - 主要是已读与未读</span>
+        var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
+        eleTr.each(function() {
+            if ($(this).css("font-weight") === "700") {
+                numTrBold++;    
+            } else {
+                numTrNormal++;    
+            }
+        });
+        if (eleTr.size() === numTrBold) {
+            <span style="color:green;">//全是粗体</span>
+            mailMenuData[1] = [objRead, objSend];
+        } else if (eleTr.size() === numTrNormal) {
+            <span style="color:green;">//全是正常</span>
+            mailMenuData[1] = [objUnRead, objSend];
+        } else {
+            <span style="color:green;">//混杂</span>
+            mailMenuData[1] = [objRead, objUnRead, objSend];
+        }
+    }
+});
+&lt;/script></pre></div>
+            
+            </div>
+        </div>
+        <div class="zxx_footer">
+            Copyright &copy; <a href="http://www.zhangxinxu.com/">张鑫旭-鑫空间-鑫生活</a>
+            |
+            <a href="http://www.zhangxinxu.com/wordpress/?p=1667">该篇相关文章</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script type="text/javascript" src="../js/jquery-smartMenu.js"></script>
+<script>
+var chkSingle = $("th input"), chkGroup = $("td input");
+var funTrStyle = function() {
+	chkGroup.each(function() {
+		if ($(this).attr("checked")) {
+			$(this).parents("tr").addClass("bg");	
+		} else {
+			$(this).parents("tr").removeClass("bg");	
+		}
+	});
+}, funTrGet = function() {
+	return 	$("td input:checked").parents("tr");
+};
+chkSingle.bind("click", function() {
+	if ($(this).attr("checked")) {
+		chkGroup.attr("checked", "checked");
+	} else {
+		chkGroup.attr("checked", "");
+	}
+	funTrStyle();	
+});
+chkGroup.bind("click", funTrStyle);
+funTrStyle();
+
+//自定义右键上下文
+var objDelete = {
+	text: "删除",
+	func: function() {
+		funTrGet().remove();
+	}	
+}, objRubbish = {
+	text: "这是垃圾邮件",
+	func: function() {
+		funTrGet().hide();
+	}	
+}, objRead = {
+	text: "标记为已读",
+	func: function() {
+		funTrGet().css("font-weight", "400");
+	}
+}, objUnRead = {
+	text: "标记为未读",
+	func: function() {
+		funTrGet().css("font-weight", "700");
+	}	
+}, objSend = {
+	text: "移动到",
+	data: [
+		[{
+			text: "收件箱",
+			func: function() {
+				funTrGet().hide();
+			}
+		}, {
+			text: "已发送",
+			func: function() {
+				funTrGet().hide();
+			}
+		}, {
+			text: "QQ邮箱订阅",
+			func: function() {
+				funTrGet().hide();
+			}
+		}], [{
+			text: "新建文件夹",
+			func: function() {
+				alert("模拟不了，弹出个框框意思下");	
+			}
+		}]
+	]
+};
+var mailMenuData = [
+	[objDelete, objRubbish]
+];
+
+$("tr").smartMenu(mailMenuData, {
+	name: "mail",
+	beforeShow: function() {		
+		//根据选中的是否是已读显示不同的上下文菜单
+		$(this).find("input").attr("checked", "checked");	
+		funTrStyle();
+		
+		//动态数据，及时清除
+		$.smartMenu.remove();
+		
+		//确定显示数据 - 主要是已读与未读
+		var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
+		eleTr.each(function() {
+			if ($(this).css("font-weight") === "700") {
+				numTrBold++;	
+			} else {
+				numTrNormal++;	
+			}
+		});
+		if (eleTr.size() === numTrBold) {
+			//全是粗体	
+			mailMenuData[1] = [objRead, objSend];
+		} else if (eleTr.size() === numTrNormal) {
+			//全是正常
+			mailMenuData[1] = [objUnRead, objSend];
+		} else {
+			//混杂
+			mailMenuData[1] = [objRead, objUnRead, objSend];
+		}
+	}
+});
+</script>
+</body>
+</html>

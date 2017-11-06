@@ -138,20 +138,19 @@ STATIC_URL = '/static/'
 
 # Send_mail setting
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = "smtp.qq.com"
-EMAIL_HOST_USER = '706715203@qq.com'
+#EMAIL_USE_TLS = True
+#EMAIL_HOST = "smtp.qq.com"
+#EMAIL_HOST_USER = '706715203@qq.com'
 # QQ email use auth string not user password,you can get the string from QQ Email setting
-EMAIL_HOST_PASSWORD = "ygzhfoljrwqcbcgg"
+#EMAIL_HOST_PASSWORD = "ygzhfoljrwqcbcgg"
 
-#EMAIL_USE_SSL = True
-#EMAIL_HOST = "smtp.exmail.qq.com"
-#EMAIL_HOST_USER = 'gslu'
-#EMAIL_HOST_PASSWORD = "Guang6659219"
+EMAIL_USE_SSL = True
+EMAIL_HOST = "smtp.exmail.qq.com"
+EMAIL_HOST_USER = 'admin@fuwenlueying.com'
+EMAIL_HOST_PASSWORD = "Guang6659219"
 
 EMAIL_POST = 465
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
+DEFAULT_FROM_EMAIL = 'admin@fuwenlueying.com'
 # ImageField
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 MEDIA_URL = "/media/"

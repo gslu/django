@@ -1,6 +1,6 @@
 #coding:utf-8
 
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage,send_mail
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from blog.models import EmailVerifyRecord

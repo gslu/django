@@ -6,10 +6,11 @@
         <link rel="icon" href='{% static "blog/img/icon-title.ico" %}' type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv=”X-UA-Compatible” content="IE=edge,chrome=1">
-        <link href= '{% static "blog/css/base.css" %}' rel="stylesheet">
-        <link href= '{% static "blog/css/forms.css" %}' rel="stylesheet">
+        <link href= '{% static "blog/css/base.css" %}' rel="stylesheet" type="text/css">
+        <link href= '{% static "blog/css/forms.css" %}' rel="stylesheet" type="text/css">
         <script type="text/javascript" src='{% static "blog/js/jquery.js" %}'></script>
         <script type="text/javascript" src='{% static "blog/js/actions.js" %}'></script>
+
         {% block addhead %}{% endblock %}
         <script type="text/javascript">
             function httpHtml(){

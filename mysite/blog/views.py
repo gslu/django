@@ -15,6 +15,7 @@ from django.db.models import Count
 from taggit.models import Tag
 from .models import Post,Comment,EmailVerifyRecord,Book
 from .forms import *
+from django import forms
 from utils import email_send
 from django.db.models import Q
 
@@ -77,7 +78,7 @@ def userRegister(request):
             except:
                 user = None
 
-            if user is None and cd["code"] == "l14789632":
+            if user is None:
                 try:
                     email_send.sendVerifyEmail(email, username,
                                                send_type="register", request=request)
@@ -98,8 +99,7 @@ def userRegister(request):
                                                         kwargs={"email":email,
                                                                 "username":username}))
             else:
-                register_msg="暂不支持"
-                #register_msg="该帐号已被注册"
+                register_msg="该帐号已被注册"
                 form = RegisterForm(initial={"username": cd["username"],
                                                 "email":cd["email"],
                                                 "password":""})
@@ -367,53 +367,114 @@ def about(request,user_id,option):
                                                    "ra":ra,"rc":rc,"rm":rm})
 
 @login_required
-def writePost(request):
-    post = Post.objects.create(title="无标题文章", status="draft", body="",author=request.user)
+def writePost(request,book_id,tag_name):
+    book = get_object_or_404(Book,id=book_id)
+    post = Post.objects.create(title="无标题文章",book=book,
+                               status="draft", body="",author=request.user)
+    post.tags.add(tag_name)
+    post.save()
     return HttpResponseRedirect(reverse("blog:edit_post", kwargs={"post_id": post.id}))
 
 
 @login_required
 def editPost(request,post_id=None,opt=None):
-
     post = get_object_or_404(Post, id=post_id)
+
     if request.method == "POST":
         form = WriteForm(request.POST)
+        try:
+            post_type = request.POST.get("post_type")
+            if post_type not in ("self", "reprint"):
+                return Http404
+        except:
+            return Http404
         if form.is_valid():
             cd = form.cleaned_data
             post.title=cd["title"]
+            post.postclass.post_type = post_type
             if opt == "publish":
                 post.status="published"
             else:
                 post.status = "draft"
             post.body = cd["body"]
             post.save()
-            return HttpResponseRedirect(reverse("blog:edit_post", kwargs={"post_id": post.id}))
     else:
         form = WriteForm(initial={"title":post.title,"body": post.body,})
 
-    return render(request,"blog/edit/write.html",{"form":form,"auth_user":request.user, "post_id":post_id})
+    return render(request,"blog/edit/write.html",{"form":form,"auth_user":request.user, "post":post})
 
 
 @login_required
-def postManage(request,book_id=None,tag_name=None,post_id=None):
-    books = Book.objects.filter(user=request.user).order_by('created')
-    if book_id is not None:
-        point_book = get_object_or_404(Book,id=book_id)
+def newBook(request):
+    if request.method == "POST":
+        book_f = NewBookForm(request.POST)
+        if book_f.is_valid():
+            name = book_f.cleaned_data["book_name"]
+            return Book.objects.create(name=name,user=request.user)
+        else:
+            return False
     else:
-        point_book = books[0]
-    tags = Tag.objects.filter(post__in=point_book.posts.all()).distinct()
+        return False
 
-    if tag_name is not None:
-        point_tag = get_object_or_404(Tag, name=tag_name)
+@login_required
+def addTag(request,book_id):
+    if request.method == "POST" and book_id is not None:
+        book = get_object_or_404(Book,id=book_id)
+        tag_f = NewTagForm(request.POST)
+        if tag_f.is_valid():
+            name = tag_f.cleaned_data["tag_name"]
+            book.tags.add(name)
+            return name
+        else:
+            return False
     else:
-        point_tag = tags[0]
+        return False
 
-    posts = Post.objects.filter(author=request.user,tags=point_tag)
 
-    return render(request,"blog/edit/manage.html",{"books":books,
-                                                   "tags":tags,
-                                                   "posts": posts,
-                                                   "point_book":point_book,
-                                                   "point_tag":point_tag,
-                                                   "auth_user":request.user})
+@login_required
+def postManage(request,book_id=None,tag_name=None):
+
+    context = {}
+
+    point_book = newBook(request)
+    print point_book
+    add_tag_name = addTag(request, book_id)
+
+    books = Book.objects.filter(user=request.user).order_by('-created')
+    if books is None:
+        point_book = Book.objects.create(user=request.user,name="默认")
+    else:
+        if book_id is not None:
+            point_book = get_object_or_404(Book,id=book_id)
+        else:
+            point_book = point_book if point_book else books[0]
+
+
+    if not point_book.tags.all():
+        point_book.tags.add("杂记")
+
+    tags = point_book.tags.all()
+
+    if add_tag_name:
+        point_tag = get_object_or_404(tags,name=add_tag_name)
+    else:
+        if tag_name is None:
+            point_tag = tags[0]
+        else:
+            point_tag = get_object_or_404(tags,name=tag_name)
+
+    posts = Post.objects.filter(author=request.user,
+                                tags__in=[point_tag],
+                                book=point_book).order_by('-created')
+
+    context["books"] = books
+    context["tags"] = tags
+    context["posts"] = posts
+    context["point_book"] = point_book
+    context["point_tag"] = point_tag
+    context["auth_user"] = request.user
+    context["tag_form"] = NewTagForm()
+    context["book_form"] = NewBookForm()
+
+    return render(request,"blog/edit/manage.html",context)
 

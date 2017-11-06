@@ -23,7 +23,7 @@ class RegisterForm(forms.Form):
     username = forms.CharField(max_length=40,min_length=3,label=u"帐号")
     email = forms.EmailField(label=u"邮箱")
     password = forms.CharField(widget=forms.PasswordInput,label=u"密码")
-    code = forms.CharField(max_length=10,label=u"序列")
+    #code = forms.CharField(max_length=10,label=u"序列")
     def clean_password(self):
         import re
         password = self.cleaned_data['password']
@@ -78,6 +78,15 @@ class WriteForm(forms.Form):
     title = forms.CharField(max_length=100,label="",
                             widget=forms.TextInput(attrs={'placeholder':'文章标题'}))
     body = forms.CharField(required=False,widget=forms.Textarea,label="")
+
+
+class NewBookForm(forms.Form):
+    book_name = forms.CharField(max_length=20,label="",
+                            widget=forms.TextInput(attrs={'placeholder':'专题名称'}))
+
+class NewTagForm(forms.Form):
+    tag_name = forms.CharField(max_length=20,label="",
+                            widget=forms.TextInput(attrs={'placeholder':'标签名称'}))
 
 
 
