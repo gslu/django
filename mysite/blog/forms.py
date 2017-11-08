@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.contrib.auth.forms import PasswordResetForm
-from .models import Comment
+from .models import Comment,Profile
+from django.contrib.auth.models import User
 
 class EmailPostForm(forms.Form):
     to = forms.EmailField(label="分享至")
@@ -12,6 +13,54 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('body',)
 
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ("image",)
+
+class BgimgForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ("bgimg",)
+
+
+class BasicForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ("nickname",'gender','motto','introduce')
+        labels = {
+            'nickname':'昵称',
+            'gender':'性别',
+            'motto': '说说',
+            'introduce': '简介',
+        }
+        widgets = {
+            "motto":forms.TextInput(attrs={'style': 'width:300px'})
+        }
+
+class PersonForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ("hometown",'address','occupation','hobby')
+        labels = {
+            'hometown':'家乡',
+            'address':'现住',
+            'occupation': '职业',
+            'hobby': '爱好',
+        }
+
+class PhoneForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ("phone",)
+
+class EmailForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("email",)
+        labels = {
+            'email':'邮箱'
+        }
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=40,min_length=3,label=u"帐号")
@@ -32,10 +81,10 @@ class RegisterForm(forms.Form):
     def clean_password(self):
         import re
         password = self.cleaned_data['password']
-        if len(password) < 8:
+        if len(password) < 6:
             raise forms.ValidationError("密码强度须大于6")
-        elif not re.match(r'([0-9]+(\W+|\_+|[A-Za-z]+))+|([A-Za-z]+(\W+|\_+|\d+))+|((\W+|\_+)+(\d+|\w+))+',password):
-            raise forms.ValidationError("密码至少包含字母,数字,符号其中两样")
+        #elif not re.match(r'([0-9]+(\W+|\_+|[A-Za-z]+))+|([A-Za-z]+(\W+|\_+|\d+))+|((\W+|\_+)+(\d+|\w+))+',password):
+        #    raise forms.ValidationError("密码至少包含字母,数字,符号其中两样")
         else:
             return password
 
@@ -92,6 +141,8 @@ class NewBookForm(forms.Form):
 class NewTagForm(forms.Form):
     tag_name = forms.CharField(max_length=20,label="",
                             widget=forms.TextInput(attrs={'placeholder':'标签名称'}))
+
+
 
 
 

@@ -8,11 +8,12 @@ $(document).ready(function() {
         url:this.action,
         data:$(this).serialize(),
         type:this.method,
+        dataType:"html",
         beforeSend:function()
         {
             $("#save-msg").html("正在保存..");
         },
-        success:function()
+        success:function(responseText)
         {
             $("#save-msg").html("已保存");
             $("#save-btn").attr("disabled",true);
@@ -34,14 +35,15 @@ $(document).ready(function() {
             {
                 $("#save-msg").html("正在保存..");
             },
-            success:function()
+            success:function(responseText)
             {
                 $("#save-msg").html("已保存");
                 $("#save-btn").attr("disabled",true);
                 $("#save-msg").html("已发布");
                 $("#publish-btn").attr("disabled",true);
                 $("#see-post").attr("disabled",false);
-
+                dom = $(responseText);
+                $("#see-post").attr("onclick",dom.find("#see-post").attr("onclick"));
             },
             complete:function(){
 
@@ -75,6 +77,7 @@ $(document).ready(function() {
 
       $('#tail').load(url + ' #container');
     });
+
 
 
     $('#books a').click(function(e){
@@ -196,12 +199,92 @@ $(document).ready(function() {
     });
 
 
+
+   $('#id_image').change(function(){
+        var file = this.files[0];
+        name = file.name;
+        size = file.size;
+        type = file.type;
+        //your validation
+
+        $("#image-form").ajaxSubmit({
+            dataType :'json',//返回数据类型
+            beforeSend:function(){
+                $("#change-image").text("正在上传..");
+            },
+            success:function(data){
+                $("#change-image").text("变更头像");
+                if(data.path != "error")
+                {
+                    $('.user-image img').attr("src",data.path);
+                    $("#save-status").text("成功变更头像")
+                    $("#save-status").slideToggle(800);
+                    $("#save-status").slideToggle(1200);
+                }
+                else
+                {alert("系统异常！");}
+            },
+            error:function(xhr){
+                alert("上传失败！");
+            }
+        });
+    });
+
+   $('#id_bgimg').change(function(){
+        var file = this.files[0];
+        name = file.name;
+        size = file.size;
+        type = file.type;
+        //your validation
+
+        $("#bgimg-form").ajaxSubmit({
+            dataType :'json',//返回数据类型
+            beforeSend:function(){
+                $("#change-bgimg").text("正在上传..");
+            },
+            success:function(data){
+                $("#change-bgimg").text("变更背景");
+                if(data.path != "error")
+                {
+                    $('.bg-image img').attr("src",data.path);
+                    $("#save-status").text("成功变更背景")
+                    $("#save-status").slideToggle(800);
+                    $("#save-status").slideToggle(1200);
+                }
+                else
+                {alert("系统异常！");}
+            },
+            error:function(xhr){
+                alert("上传失败！");
+            }
+        });
+    });
+
+
+    $("#save-setting").click(function(){
+        $("#bpc-form").ajaxSubmit({
+            dataType :'json',//返回数据类型
+            beforeSend:function(){
+
+            },
+            success:function(data){
+
+                if(data.path != "error")
+                {
+                    $("#save-status").text("成功保存设置")
+                    $("#save-status").slideToggle(800);
+                    $("#save-status").slideToggle(1200);
+                }
+                else
+                {alert("系统异常！");}
+            },
+            error:function(xhr){
+                alert("上传失败！");
+            }
+        });
+    });
+
 });
 
-$(document).bind('input propertychange', function(){
-        $("#save-msg").html("未保存");
-        $("#publish-btn").attr("disabled",false);
-        $("#save-btn").attr("disabled",false);
-   });
 
 

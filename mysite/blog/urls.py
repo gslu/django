@@ -2,7 +2,7 @@
 from django.conf.urls import url
 from django.views.generic.base import RedirectView
 
-from .upload_file import uploadImage
+from .upload_file import uploadImage,addImage,addBgimg
 from . import views
 
 urlpatterns = [
@@ -44,6 +44,18 @@ urlpatterns = [
     # 文章保存，发布　ajax异步调用接口
     url(r'^blog/edit/(?P<post_id>\d+)/(?P<opt>\w+)/$', views.editPost, name='publish'),
 
-    # 图片上传处理接口
+    # 个人中心
+    url(r'^center/$', views.center, name='center'),
+
+    # 富文本图片上传处理接口
     url(r'^upload/$', uploadImage, name='upload_image'),
+
+    # 个人中心头像变更
+    url(r'^upload/image/$', addImage, name='upload_u_image'),
+
+    # 个人中心背景变更
+    url(r'^upload/bgimg/$', addBgimg, name='upload_bgimg'),
+
+    # 个人中心设置保存
+    url(r'^center/save/$', views.settingSave, name='setting_save'),
 ]

@@ -428,8 +428,9 @@ div.header-nav ul li a, div.header-nav ul li a:visited
 #container{
     width:auto;
     height:auto;
-    min-height: 800px;
+    min-height: 1000px;
     overflow: hidden;
+    padding-bottom: 80px;
 }
 
 #content ,#pd-content, #pd-content {
@@ -1102,7 +1103,6 @@ div.select-tag
 }
 
 #care-topic #tag {
-    margin-right:1px;
     padding:15px;
     border:1px solid #FFA54F;
     border-radius:10px;
@@ -1176,7 +1176,8 @@ div.select-tag
 .write-post #publish-btn{top:140px;}
 .write-post #save-btn{top:200px;}
 
-.write-post #save-msg{
+.write-post #save-msg,
+.setting #save-msg{
     position:fixed;
     width:auto;
     height:30px;
@@ -1184,7 +1185,7 @@ div.select-tag
     right:5px;
     font-size:16px;
     color:#006400;
-    }
+ }
 
 .write-post #tail{
     background:#FCFCFC;
@@ -1455,10 +1456,142 @@ div.select-tag
     border-radius:15px;
     font-size:16px;
     line-height:10px;
-    padding-left:25px;
-    padding-right:25px;
+    padding: 10px 25px 10px 25px;
 }
 
 #nbf p,#ntf p{
     margin-bottom:2px;
+}
+
+/*center setting */
+
+.center .setting
+{
+    float:top;
+    width:800px;
+    height:auto;
+    min-height:800px;
+    margin:0px auto;
+    border-radius:12px;
+    background:#EEE9BF;
+}
+
+.center .user-image,
+.center .bg-image,
+.center .basic,
+.center .person-msg,
+.center .contact
+{
+    width:760px;
+    height:auto;
+    min-height:100px;
+    padding:10px 20px 10px 20px;
+    margin-bottom:10px;
+    border-radius:12px;
+    background:#F5F5F5;
+}
+
+.setting h3{
+    color:gray;
+    line-height:0px;
+    font-size:15px;
+    margin-bottom: 20px;
+}
+
+.setting #save-setting
+{
+    position:fixed;
+    top:130px;
+    right:80px;
+    width:90px;
+    height:50px;
+    background:#A2CD5A;
+    font-size:15px;
+    color:#FFFFFF;
+}
+
+.setting #save-setting:focus,
+.setting #save-setting:hover
+{
+    background:#9ACD32;
+}
+
+
+.setting #save-msg{top:55px;}
+
+.user-image div.owner-img{
+    margin:10px 0px 10px 20px;
+    width: 200px;
+    height: 200px;
+  }
+
+
+.bg-image div.owner-img{
+    margin:10px 0px 10px 20px;
+    width: 510px;
+    height: 120px;
+}
+
+.setting td {
+    text-align:center;
+    vertical-align:middle;
+}
+
+.setting #id_image,
+.setting #id_bgimg
+{
+    position: absolute;
+    margin-left: 50px;
+    padding: 0px;
+    opacity: 0;
+    width: 90px;
+    display: block !important;
+}
+
+.image-btn div,
+.bgimg-btn div
+{
+    width:90px;
+    height:35px;
+    margin-left:50px;
+    border-radius:10px;
+    background:#FFF68F;
+    line-height:35px;
+    border:1px solid #FFA54F;
+    color:#3B3B3B;
+}
+
+.user-image label,
+.bg-image label{
+    position: absolute;
+    display: block !important;
+    opacity: 0;
+}
+
+#save-status
+{
+    position:fixed;
+    top:50px;
+    left:45%;
+    width:200px;
+    height:50px;
+    line-height:50px;
+    font-size:16px;
+    color:#8B8B00;
+    border:1px solid #CD9B1D;
+    background:#EBEBEB;
+    text-align:center;
+}
+
+.setting label{
+    float: left;
+    width: 50px;
+    margin: 5px 0 0 30px;
+}
+
+.setting input[type="text"],
+.setting input[type="email"],
+.setting textarea
+{
+    background:#EAEAEA;
 }

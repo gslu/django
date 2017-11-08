@@ -3,17 +3,21 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404
 from django.conf import settings
+#from .models import Profile
+from .forms import *
 import json
 import datetime
-import uuid
-import os
+import os,random,uuid,time
 
 def handle_uploaded_file(file,dest_path):
     with open(dest_path,'wb+') as destination:
         for chunk in file.chunks():
             destination.write(chunk)
 
+@login_required
 @csrf_exempt
 def uploadImage(request):
 
@@ -32,3 +36,31 @@ def uploadImage(request):
     upload_info = json.dumps(upload_info)
 
     return HttpResponse(upload_info, content_type="application/json")
+
+
+@login_required
+def addImage(request):
+    if request.method == "POST":
+        upf = get_object_or_404(Profile, user=request.user)
+        form = ImageForm(request.POST,request.FILES)
+        if form.is_valid():
+            upf.image = form.cleaned_data["image"]
+            upf.save()
+        ret = json.dumps({"path":"{}{}".format(settings.MEDIA_URL,upf.image)})
+    else:
+        ret = json.dumps({"path":"error"})
+    return HttpResponse(ret, content_type="application/json")
+
+
+@login_required
+def addBgimg(request):
+    if request.method == "POST":
+        upf = get_object_or_404(Profile, user=request.user)
+        form = BgimgForm(request.POST,request.FILES)
+        if form.is_valid():
+            upf.bgimg = form.cleaned_data["bgimg"]
+            upf.save()
+        ret = json.dumps({"path":"{}{}".format(settings.MEDIA_URL,upf.bgimg)})
+    else:
+        ret = json.dumps({"path":"error"})
+    return HttpResponse(ret, content_type="application/json")

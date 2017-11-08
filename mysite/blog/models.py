@@ -157,3 +157,5 @@ class MessageRecord(models.Model):
 
     def __unicode__(self):
         return "{} {} 给 {} 留言".format(self.send_time,self.sender,self.receiver)
+
+

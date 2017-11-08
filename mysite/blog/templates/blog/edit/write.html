@@ -9,7 +9,13 @@
         <script type="text/javascript" src='{% static "blog/simditor/scripts/uploader.js" %}'></script>
         <script type="text/javascript" src='{% static "blog/simditor/scripts/simditor.js" %}'></script>
         <script type="text/javascript" src='{% static "blog/simditor/scripts/init.js" %}'></script>
-
+        <script type="text/javascript">
+        $(document).bind('input propertychange', function(){
+                $("#save-msg").html("未保存");
+                $("#publish-btn").attr("disabled",false);
+                $("#save-btn").attr("disabled",false);
+           });
+        </script>
 {% endblock %}
 
 
@@ -39,7 +45,7 @@
 </form>
 
 <input id="publish-btn" type="button" value="发布">
-<input id="see-post" type="button" value="查看" onclick="location.href='{{ post.get_absolute_url }}'">
+<input id="see-post" type="button" value="查看" {% ifequal post.status "draft" %}disabled="disabled"{% endifequal %} onclick="location.href='{{ post.get_absolute_url }}'">
 
 <label id="save-msg"></label>
 <a href="{% url 'blog:post_list' auth_user.id %}">

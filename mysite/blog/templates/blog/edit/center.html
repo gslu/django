@@ -1,0 +1,101 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% load static %}
+
+{% block addhead %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+        $("#save-status").hide();
+        });
+    </script>
+{% endblock %}
+
+{% block title %}个人中心-浮文掠影{% endblock %}
+
+{% block bodyclass %}
+    <body class="center">
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+<div class="setting">
+    <div class="user-image">
+        <h3>头像</h3>
+        <table>
+            <tr>
+                <td>
+                    <div class="owner-img">
+                        <a href='{% url "blog:post_list" auth_user.id %}'>
+                    {% if user.profile.image %}
+                        <img src="{{ MEDIA_URL }}{{ auth_user.profile.image }}">
+                    {% else %}
+                        <img src='{% static "blog/img/user_default.jpeg" %}'>
+                    {% endif %}
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <form enctype="multipart/form-data"  id="image-form" action='{% url "blog:upload_u_image" %}' method="post">
+                    <a class="image-btn">
+                        {{ image_form.as_p }}
+                        {% csrf_token %}
+                        <div id="change-image">变更头像</div>
+                    </a>
+
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="bg-image">
+        <h3>背景</h3>
+        <table>
+            <tr>
+                <td>
+                    <div class="owner-img">
+                        <a href='{% url "blog:post_list" auth_user.id %}'>
+                    {% if auth_user.profile.bgimg %}
+                        <img src="{{ MEDIA_URL }}{{ auth_user.profile.bgimg }}">
+                    {% else %}
+                        <img src='{% static "blog/img/user_default.jpeg" %}'>
+                    {% endif %}
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <form enctype="multipart/form-data" id="bgimg-form" action='{% url "blog:upload_bgimg" %}'  method="post">
+                    <a class="bgimg-btn">
+                        {{ bgimg_form.as_p }}
+                        {% csrf_token %}
+                        <div id="change-bgimg">变更背景</div>
+                    </a>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <form id="bpc-form" action='{% url "blog:setting_save" %}' method="post">
+        <div class="basic">
+            <h3>基本</h3>
+            {{ basic_form.as_p }}
+            {% csrf_token %}
+        </div>
+        <div class="person-msg">
+            <h3>个人</h3>
+            {{ person_form.as_p }}
+            {% csrf_token %}
+        </div>
+        <div class="contact">
+            <h3>联系</h3>
+            {{ phone_form.as_p }}
+            {{ email_form.as_p }}
+            {% csrf_token %}
+        </div>
+        <input id="save-setting" type="button" value="保存修改">
+    </form>
+</div>
+
+<div id="save-status">成功变更头像</div>
+{% endblock %}

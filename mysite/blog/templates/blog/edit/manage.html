@@ -3,9 +3,8 @@
 {% load static %}
 
 {% block addhead %}
-    <!--<link href= '{% static "blog/jquery-smartMenu/css/smartMenu.css" %}' rel="stylesheet" type="text/css">
-    <script type="text/javascript" src='{% static "blog/jquery-smartMenu/js/jquery-smartMenu.js" %}'></script>
-    <script type="text/javascript" src='{% static "blog/jquery-smartMenu/js/mini/jquery-smartMenu-min.js" %}'></script>-->
+    <link href= '{% static "blog/jquery-right-click/css/base.css" %}' rel="stylesheet" type="text/css">
+    <script type="text/javascript" src='{% static "blog/jquery-right-click/js/BootstrapMenu.min.js" %}'></script>
     <script type="text/javascript">
         $(document).ready(function(){
           $("#new-book-form").hide();
@@ -17,6 +16,27 @@
           $(".nt-btn").click(function(){
             $("#new-tag-form").slideToggle(300);
           });
+
+        var menu = new BootstrapMenu('#book', {
+          actions: [{
+              name: '重命名',
+              onClick: function() {
+                // run when the action is clicked
+
+              }
+            }, {
+              name: '移动到',
+              onClick: function() {
+                // run when the action is clicked
+              }
+            }, {
+              name: '删除标签',
+              onClick: function() {
+                // run when the action is clicked
+              }
+          }]
+        });
+
         });
     </script>
 {% endblock %}

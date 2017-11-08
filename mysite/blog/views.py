@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.http import HttpResponseRedirect,Http404
+from django.http import HttpResponseRedirect,Http404,HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
@@ -10,7 +10,6 @@ from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView,View
 from django.db.models import Count
 from taggit.models import Tag
 from .models import Post,Comment,EmailVerifyRecord,Book
@@ -431,7 +430,6 @@ def postManage(request,book_id=None,tag_name=None):
     context = {}
     point_book = newBook(request)
     add_tag_name = addTag(request, book_id)
-
     books = Book.objects.filter(user=request.user).order_by('-created')
     if not books:
         point_book = Book.objects.create(user=request.user,name="默认")
@@ -442,12 +440,10 @@ def postManage(request,book_id=None,tag_name=None):
         else:
             point_book = point_book if point_book else books[0]
 
-
     if not point_book.tags.all():
         point_book.tags.add("杂记")
 
     tags = point_book.tags.all()
-
     if add_tag_name:
         point_tag = get_object_or_404(tags,name=add_tag_name)
     else:
@@ -455,7 +451,6 @@ def postManage(request,book_id=None,tag_name=None):
             point_tag = tags[0]
         else:
             point_tag = get_object_or_404(tags,name=tag_name)
-
     posts = Post.objects.filter(author=request.user,
                                 tags__in=[point_tag],
                                 book=point_book).order_by('-created')
@@ -470,4 +465,49 @@ def postManage(request,book_id=None,tag_name=None):
     context["book_form"] = NewBookForm()
 
     return render(request,"blog/edit/manage.html",context)
+
+
+@login_required
+def center(request):
+
+    image_form = ImageForm()
+    bgimg_form = BgimgForm()
+
+    basic_form = BasicForm(instance=request.user.profile)
+    person_form = PersonForm(instance=request.user.profile)
+    phone_form = PhoneForm(instance=request.user.profile)
+    email_form = EmailForm(instance=request.user)
+
+    context = {}
+    context["image_form"] = image_form
+    context["bgimg_form"] = bgimg_form
+    context["auth_user"] = request.user
+    context["basic_form"] = basic_form
+    context["person_form"] = person_form
+    context["phone_form"] = phone_form
+    context["email_form"] = email_form
+    return render(request, "blog/edit/center.html", context)
+
+
+@login_required
+def settingSave(request):
+    import json
+    ret = json.dumps({"status": "error"})
+    if request.method == "POST":
+        basic_form = BasicForm(request.POST)
+        person_form = PersonForm(request.POST)
+        phone_form = PhoneForm(request.POST)
+        email_form = EmailForm(request.POST)
+        if basic_form.is_valid() and person_form.is_valid() and\
+            phone_form.is_valid() and email_form.is_valid():
+            request.user.profile.__dict__.update(basic_form.cleaned_data)
+            request.user.profile.__dict__.update(person_form.cleaned_data)
+            request.user.profile.__dict__.update(phone_form.cleaned_data)
+            request.user.__dict__.update(email_form.cleaned_data)
+            request.user.save()
+            ret = json.dumps({"status": "success"})
+    return HttpResponse(ret, content_type="application/json")
+
+
+
 
