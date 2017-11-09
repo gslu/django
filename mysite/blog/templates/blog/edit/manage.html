@@ -4,40 +4,11 @@
 
 {% block addhead %}
     <link href= '{% static "blog/jquery-right-click/css/base.css" %}' rel="stylesheet" type="text/css">
+    <link href= '{% static "blog/jquery-right-click/css/font-awesome.css" %}' rel="stylesheet" type="text/css">
     <script type="text/javascript" src='{% static "blog/jquery-right-click/js/BootstrapMenu.min.js" %}'></script>
+    <script type="text/javascript" src='{% static "blog/js/manage_action.js" %}'></script>
     <script type="text/javascript">
-        $(document).ready(function(){
-          $("#new-book-form").hide();
-          $("#new-tag-form").hide();
-          $(".nb-btn").click(function(){
-            $("#new-book-form").slideToggle(300);
-          });
 
-          $(".nt-btn").click(function(){
-            $("#new-tag-form").slideToggle(300);
-          });
-
-        var menu = new BootstrapMenu('#book', {
-          actions: [{
-              name: '重命名',
-              onClick: function() {
-                // run when the action is clicked
-
-              }
-            }, {
-              name: '移动到',
-              onClick: function() {
-                // run when the action is clicked
-              }
-            }, {
-              name: '删除标签',
-              onClick: function() {
-                // run when the action is clicked
-              }
-          }]
-        });
-
-        });
     </script>
 {% endblock %}
 {% block title %}文章-浮文掠影{% endblock %}
@@ -71,10 +42,8 @@
     <div id="books">
         <div id="blctn">
             {% for book in books %}
-            <a class="book" href='{% url "blog:select_book" book.id %}'>
-                <div id="book" {% ifequal point_book book %}class="select-book"{% endifequal %}>
-                    {{ book.name }}
-                </div>
+            <a class="book-link" href='{% url "blog:select_book" book.id %}'>
+                <div id="book" data-book-id="{{ book.id }}" {% ifequal point_book book %}class="select-book"{% endifequal %}>{{ book.name }}</div>
             </a>
             {% endfor %}
         </div>
@@ -101,10 +70,8 @@
     <div id="tags">
         <div id="tlctn">
             {% for tag in tags %}
-            <a class="tag" href='{% url "blog:select_tag" point_book.id tag.name %}'>
-                <div id="tag" {% ifequal point_tag tag %}class="select-tag"{% endifequal %}>
-                    {{ tag.name }}
-                </div>
+            <a class="tag-link" href='{% url "blog:select_tag" point_book.id tag.name %}'>
+                <div id="tag" {% ifequal point_tag tag %}class="select-tag"{% endifequal %}>{{ tag.name }}</div>
             </a>
             {% endfor %}
         </div>
@@ -120,8 +87,8 @@
         </a>
         <div id="posts">
             {% for post in posts %}
-            <a class="post" href='{% url "blog:edit_post" post.id %}' target="_blank">
-                <div id="post" {% ifequal post.status "published" %}class="published"{% endifequal %}>
+            <a class="post-link" href='{% url "blog:edit_post" post.id %}' target="_blank">
+                <div id="post" data-post-id="{{ post.id }}" {% ifequal post.status "published" %}class="published"{% endifequal %}>
                 <span>{{ post.postclass.get_post_type_display }}</span>
                 <h3>{{ post.title }}</h3>
                 {% get_text post.body as body %}

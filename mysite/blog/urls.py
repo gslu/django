@@ -58,4 +58,12 @@ urlpatterns = [
 
     # 个人中心设置保存
     url(r'^center/save/$', views.settingSave, name='setting_save'),
+
+    # 文章管理
+    url(r'^book/rename/$', views.bookReName, name='book_rename'),
+    url(r'^tag/rename/$', views.tagReName, name='tag_rename'),
+    url(r'^book/delete/$', views.delBook, name='book_delete'),
+    url(r'^tag/delete/$', views.delTag, name='tag_delete'),
+    url(r'^post/delete/$', views.delPost, name='post_delete'),
+    url(r'^post/change_tag/$', views.changeTag, name='change_tag'),
 ]

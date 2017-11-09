@@ -3,16 +3,7 @@
 <div id="ps-page">
             <h2>基本资料</h2>
             <p>昵称：{{ user.profile.nickname }}</p>
-            <p>性别：{% ifequal user.profile.gender "F" %}
-                        男
-                    {% else %}
-                        {% ifequal user.profile.gender "M" %}
-                            女
-                        {% else %}
-                            保密
-                        {%　endifequal %}
-                    {%　endifequal %}
-            </p>
+            <p>性别：{{ user.profile.get_gender_display }}</p>
             <p>说说：{{ user.profile.motto }}</p>
             <div>
                 <div id="lable">简介：</div>

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.http import HttpResponseRedirect,Http404,HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
@@ -16,6 +17,7 @@ from .models import Post,Comment,EmailVerifyRecord,Book
 from .forms import *
 from utils import email_send
 from django.db.models import Q
+import json
 
 # Create your views here.
 
@@ -424,13 +426,14 @@ def addTag(request,book_id):
         return False
 
 
+
 @login_required
 def postManage(request,book_id=None,tag_name=None):
 
     context = {}
     point_book = newBook(request)
     add_tag_name = addTag(request, book_id)
-    books = Book.objects.filter(user=request.user).order_by('-created')
+    books = Book.objects.filter(user=request.user).order_by('-updated')
     if not books:
         point_book = Book.objects.create(user=request.user,name="默认")
         books = [point_book]
@@ -453,7 +456,7 @@ def postManage(request,book_id=None,tag_name=None):
             point_tag = get_object_or_404(tags,name=tag_name)
     posts = Post.objects.filter(author=request.user,
                                 tags__in=[point_tag],
-                                book=point_book).order_by('-created')
+                                book=point_book).order_by('-updated')
 
     context["books"] = books
     context["tags"] = tags
@@ -491,7 +494,7 @@ def center(request):
 
 @login_required
 def settingSave(request):
-    import json
+
     ret = json.dumps({"status": "error"})
     if request.method == "POST":
         basic_form = BasicForm(request.POST)
@@ -509,5 +512,111 @@ def settingSave(request):
     return HttpResponse(ret, content_type="application/json")
 
 
+# post manage
+
+@login_required
+@csrf_exempt
+def bookReName(request):
+
+    ret = json.dumps({"status": "error"})
+    if request.method == "POST":
+        book_id = request.POST.get("book_id")
+        new_name = request.POST.get("new_name")
+        book = get_object_or_404(Book,id=book_id,user=request.user)
+        book.name = new_name
+        book.save()
+        ret = json.dumps({"status": "success"})
+    return HttpResponse(ret, content_type="application/json")
 
 
+@login_required
+@csrf_exempt
+def tagReName(request):
+    ret = json.dumps({"status": "error"})
+    if request.method == "POST":
+        tag_name = request.POST.get("tag_name")
+        book_id = request.POST.get("book_id")
+        new_name = request.POST.get("new_name")
+
+        book = get_object_or_404(Book,id=book_id,user=request.user)
+        post = book.posts.all()
+        post_by_tag = post.filter(tags__name__in=[tag_name])
+
+        book.tags.remove(tag_name)
+        book.tags.add(new_name)
+        book.save()
+
+        #没找到批量update tags的方法
+        map((lambda post:post.tags.remove(tag_name)),post_by_tag)
+        map((lambda post:post.tags.add(new_name)), post_by_tag)
+        [post.save() for post in post_by_tag]
+
+        ret = json.dumps({"status": "success"})
+    return HttpResponse(ret, content_type="application/json")
+
+
+
+@login_required
+@csrf_exempt
+def delBook(request):
+    ret = json.dumps({"status": "success"})
+    if request.method == "POST":
+        book_id = request.POST.get("book_id")
+        book = get_object_or_404(Book,id=book_id,user=request.user)
+        if not book.posts.all():
+            book.delete()
+        else:
+            ret = json.dumps({"status": "error"})
+    return HttpResponse(ret, content_type="application/json")
+
+
+@login_required
+@csrf_exempt
+def delTag(request):
+    ret = json.dumps({"status": "success"})
+    if request.method == "POST":
+        book_id = request.POST.get("book_id")
+        tag_name = request.POST.get("tag_name")
+        book = get_object_or_404(Book, id=book_id, user=request.user)
+        if not book.posts.filter(tags__name__in=[tag_name]):
+            if book.tags.all().count() == 1:
+                ret = json.dumps({"status": "lastone"})
+            else:
+                book.tags.remove(tag_name)
+        else:
+            ret = json.dumps({"status": "error"})
+    return HttpResponse(ret, content_type="application/json")
+
+
+@login_required
+@csrf_exempt
+def delPost(request):
+    ret = json.dumps({"status": "success"})
+    if request.method == "POST":
+        post_id = request.POST.get("post_id")
+        try:
+            post = Post.objects.get(id=post_id,author=request.user)
+        except:
+            ret = json.dumps({"status": "error"})
+        else:
+            post.delete()
+    return HttpResponse(ret, content_type="application/json")
+
+
+@login_required
+@csrf_exempt
+def changeTag(request):
+    ret = json.dumps({"status": "success"})
+    if request.method == "POST":
+        post_id = request.POST.get("post_id")
+        new_tag = request.POST.get("new_tag")
+        tag_name = request.POST.get("tag_name")
+        try:
+            post = Post.objects.get(id=post_id,author=request.user)
+        except:
+            ret = json.dumps({"status": "error"})
+        else:
+            post.tags.remove(tag_name)
+            post.tags.add(new_tag)
+            post.book.tags.add(new_tag)
+    return HttpResponse(ret, content_type="application/json")
