@@ -506,7 +506,7 @@ def settingSave(request):
             request.user.profile.__dict__.update(basic_form.cleaned_data)
             request.user.profile.__dict__.update(person_form.cleaned_data)
             request.user.profile.__dict__.update(phone_form.cleaned_data)
-            request.user.__dict__.update(email_form.cleaned_data)
+            request.user.email = email_form.cleaned_data["email"]
             request.user.save()
             ret = json.dumps({"status": "success"})
     return HttpResponse(ret, content_type="application/json")

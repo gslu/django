@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8j%d%#b^ijs$g#t^71(2ubzz6g23-lh9tpu!b5gs!d@s2gsq31'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -42,6 +42,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -81,8 +86,8 @@ DATABASES = {
         'NAME': 'mysite',
         'USER': 'lsg01',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        #'HOST':'rm-wz9o52bgc2bbytake.mysql.rds.aliyuncs.com',
+        #'HOST': '127.0.0.1',
+        'HOST':'rm-wz9o52bgc2bbytake.mysql.rds.aliyuncs.com',
         'PORT': 3306,
 		'OPTIONS':{'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
 					'charset':'utf8',
@@ -109,6 +114,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHE = {
+    'default':{
+        'BACKEND':'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION':'fwlycache',
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
