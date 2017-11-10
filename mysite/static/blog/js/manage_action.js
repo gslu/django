@@ -141,7 +141,18 @@
                 var book_id = rowElem.data('bookId');
                 var book_name = rowElem.text();
                 var new_name = prompt("专题 '" + book_name + "' 重命名为：", "");
-                book_rename(book_id,new_name,rowElem);
+                if (new_name != null)
+                {
+                    new_name = $.trim(new_name);
+                    if(new_name == "")
+                    {
+                        alert("专题名称不能为空");
+                    }
+                    else
+                    {
+                        book_rename(book_id,new_name,rowElem);
+                    }
+                }
               }
             },
 
@@ -171,9 +182,19 @@
                   var tag_name = rowElem.text();
                   var book_id = $(".select-book").data("bookId");
                   var new_name = prompt("标签 '" + tag_name + "' 重命名为：", "");
+
                   if (new_name != null){
-                        rowElem.text("正在同步文章..请稍等");
-                        tag_rename(tag_name,book_id,new_name,rowElem);
+                      new_name = $.trim(new_name);
+                      if(new_name == "")
+                      {
+                         alert("标签名称不能为空");
+                      }
+                      else
+                      {
+                          rowElem.text("正在同步文章..请稍等");
+                          tag_rename(tag_name,book_id,new_name,rowElem);
+                      }
+
                   }
               }
             },
@@ -206,7 +227,18 @@
                 var book_id = $(".select-book").data("bookId");
                 var tag_name = $(".select-tag").text();
                 var new_tag = prompt("由标签'" + tag_name + "' 变更为：", "");
-                change_tag(post_id, book_id, tag_name, new_tag);
+                if(new_tag != null)
+                {   new_tag = $.trim(new_tag);
+                    if(new_tag == "")
+                    {
+                        alert("标签名称不能为空");
+                    }
+                    else
+                    {
+                        change_tag(post_id, book_id, tag_name, new_tag);
+                    }
+                }
+
               }
             },
            // {

@@ -11,7 +11,7 @@ urlpatterns = [
     url(r'^$',RedirectView.as_view(url='user/1/'),name="index"),
 
     url(r'^user/(?P<user_id>\d+)/$', views.postList, name='post_list'),
-    url(r'^user/(?P<user_id>\d+)/blog/tag/(?P<tag_name>.+)/$',views.postList,name='post_list_by_tag'),
+    url(r'^user/(?P<user_id>\d+)/blog/tag/(?P<tag_name>[\S]+)/$',views.postList,name='post_list_by_tag'),
 
     url(r'^blog/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+)/(?P<id>\d+)/$',
                     views.postDetail,
@@ -35,10 +35,10 @@ urlpatterns = [
     #　文章管理
     url(r'^blog/manage/$', views.postManage, name='post_manage'),
     url(r'^blog/manage/books/(?P<book_id>\d+)/$', views.postManage, name='select_book'),
-    url(r'^blog/manage/books/(?P<book_id>\d+)/tags/(?P<tag_name>.+)/$', views.postManage, name='select_tag'),
+    url(r'^blog/manage/books/(?P<book_id>\d+)/tags/(?P<tag_name>[\S]+)/$', views.postManage, name='select_tag'),
 
     #　文章新建,编辑
-    url(r'^blog/write/books/(?P<book_id>\d+)/tags/(?P<tag_name>.+)/$', views.writePost, name='write_post'),
+    url(r'^blog/write/books/(?P<book_id>\d+)/tags/(?P<tag_name>[\S]+)/$', views.writePost, name='write_post'),
     url(r'^blog/edit/(?P<post_id>\d+)/$', views.editPost, name='edit_post'),
 
     # 文章保存，发布　ajax异步调用接口

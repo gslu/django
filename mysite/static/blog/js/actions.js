@@ -84,8 +84,8 @@ $(document).ready(function() {
          });
 
       $('#container').remove();
-      $('.nav-ul a').css("color",'#5E5E5E')
-      $('.'+cls).css("color",'#8B2500');
+      $('.nav-ul a').css("color",'#424242');
+      $('.'+cls).css("color",'#CD2626');
     });
 
 

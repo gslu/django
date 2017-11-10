@@ -361,7 +361,7 @@ div.body{
 }
 
 #header a:link,#header a:visited {
-    color: #5E5E5E;
+    color:#424242;
 }
 
 #header a:focus , #header a:hover {
@@ -379,6 +379,7 @@ div.header-nav ul
     margin:0 0 0 5%;
     padding: 0px; /* 与内部元素的距离为0 */
     width: auto; /* 宽度根据元素内容调整 */
+
 }
 
 
@@ -391,17 +392,18 @@ div.header-nav ul li
     padding: 0px; /* 与内部元素的距离为0 */
     width: auto; /* 宽度根据元素内容调整 */
 
+
 }
 
-div.header-nav ul li a, div.header-nav ul li a:visited
+div.header-nav ul li a
 {
+
     display: block; /* 此元素将显示为块级元素，此元素前后会带有换行符 */
     line-height: 1.35em; /* 行高 */
     padding: 4px 10px; /* 内部填充的距离 */
     text-decoration: none;
     white-space: nowrap; /* 对于文本内的空白处，不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
 }
-
 
 
 .home-page #header .nav-w0,
@@ -412,7 +414,7 @@ div.header-nav ul li a, div.header-nav ul li a:visited
 .about-page #header .nav-w4
 {
     text-decoration: none;
-    color: #8B2500
+    color: #CD2626;
 }
 
 

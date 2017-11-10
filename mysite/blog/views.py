@@ -205,7 +205,6 @@ def updateAccessRecord(request,user):
 
 
 def postList(request,user_id, tag_name=None):
-
     user = get_object_or_404(User,id=user_id)
     updateAccessRecord(request, user)
     object_list = Post.published.filter(author=user)
@@ -227,6 +226,7 @@ def postList(request,user_id, tag_name=None):
     except EmptyPage:
     # If page is out of range deliver last page of results
         posts = paginator.page(paginator.num_pages)
+
     return render(request,'blog/post/list.html',{'posts': posts,
                                                  'tag':tag,
                                                  'tags':tags,
