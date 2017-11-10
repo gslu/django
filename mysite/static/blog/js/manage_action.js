@@ -87,6 +87,26 @@
                  });
           }
 
+
+         function change_book(tag_name,book_id,new_book_name)
+          {
+            $.post(
+            "/tag/change_book/",
+             { tag_name: tag_name, book_id:book_id, new_book_name:new_book_name}
+             ).success(function(data) {
+                    if(data.status == "error")
+                    {
+                        alert("标签不存在,或已删除");
+                    }
+                    else
+                    {
+                         var new_url = "/blog/manage/books/"+data.book_id+"/tags/"+tag_name+"/";
+                         window.location.href=new_url;
+                    }
+                 });
+          }
+
+
          function change_tag(post_id, book_id, tag_name, new_tag)
           {
             $.post(
@@ -193,6 +213,29 @@
                       {
                           rowElem.text("正在同步文章..请稍等");
                           tag_rename(tag_name,book_id,new_name,rowElem);
+                      }
+
+                  }
+              }
+            },
+
+          　{
+              name: '更换专题',
+              onClick: function(rowElem) {
+                  var tag_name = rowElem.text();
+                  var book_id = $(".select-book").data("bookId");
+                  var book_name = $(".select-book").text();
+                  var new_book_name = prompt("由专题'" + book_name + "' 变更为：", "");
+
+                  if (new_book_name != null){
+                      new_book_name = $.trim(new_book_name);
+                      if(new_book_name == "")
+                      {
+                         alert("专题名称不能为空");
+                      }
+                      else
+                      {
+                          change_book(tag_name,book_id,new_book_name);
                       }
 
                   }

@@ -620,3 +620,28 @@ def changeTag(request):
             post.tags.add(new_tag)
             post.book.tags.add(new_tag)
     return HttpResponse(ret, content_type="application/json")
+
+
+
+@login_required
+@csrf_exempt
+def changeBook(request):
+    ret = {"status": "success","book_id":""}
+    if request.method == "POST":
+        tag_name = request.POST.get("tag_name")
+        book_id = request.POST.get("book_id")
+        new_book_name = request.POST.get("new_book_name")
+
+        book = get_object_or_404(Book,id=book_id,user=request.user)
+        (new_book,exist) = Book.objects.get_or_create(name=new_book_name,user=request.user)
+        try:
+            book.posts.filter(tags__name__in=[tag_name]).update(book=new_book)
+            book.tags.remove(tag_name)
+            new_book.tags.add(tag_name)
+        except:
+            ret = {"status": "error","book_id":""}
+
+        ret["book_id"] = new_book.id
+
+        ret = json.dumps(ret)
+    return HttpResponse(ret, content_type="application/json")
