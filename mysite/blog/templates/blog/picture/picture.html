@@ -1,0 +1,46 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% load static %}
+
+{% block addhead %}
+        <link href= '{% static "blog/css/viewer.min.css" %}' rel="stylesheet" type="text/css">
+        <script type="text/javascript" src='{% static "blog/js/viewer.min.js" %}'></script>
+        <script>
+        $(function() {
+            $('#dowebok').viewer({
+                url: 'data-original',
+            });
+        });
+        </script>
+{% endblock %}
+{% block title %}{{ user.profile.nickname }} 音乐-浮文掠影{% endblock %}
+
+{% block header %}
+<div class="picture-page">
+    {% include "blog/header.html" %}
+</div>
+{% endblock %}
+
+{% block bodyclass %}
+    <body class="picture">
+{% endblock %}
+
+
+{% block content %}
+<div id="picture-content">
+    <ul id="dowebok">
+        {% for p in pictures %}
+            <li>
+                <div id="img-thumb">
+                    <img data-original="{{ MEDIA_URL }}{{ p.picture }}" src="{{ MEDIA_URL }}{{ p.picture }}" alt="图片{{ forloop.counter }}">
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
+
+
+
+
+

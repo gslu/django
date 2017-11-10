@@ -13,7 +13,7 @@
                 {% if auth_user.is_authenticated  %}
                 <li><a class="nav-w2" href="{% url "blog:music" user.id %}">听听</a></li>
                 {% endif %}
-                <li><a class="nav-w3" href="">看看</a></li>
+                <li><a class="nav-w3" href="{% url "blog:picture" user.id %}">看看</a></li>
                 <li><a class="nav-w4" href="{% url "blog:about" user.id "ps" %}">瞧瞧</a></li>
             </ul>
         </div>

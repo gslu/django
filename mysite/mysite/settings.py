@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'taggit',
 ]
 
+
 MIDDLEWARE = [
 
     #'django.middleware.cache.UpdateCacheMiddleware',

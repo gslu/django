@@ -410,7 +410,7 @@ div.header-nav ul li a
 .detail-page #header .nav-w1,
 .share-page #header .nav-w1,
 .music-page #header .nav-w2,
-.Album-page #header .nav-w3,
+.picture-page #header .nav-w3,
 .about-page #header .nav-w4
 {
     text-decoration: none;
@@ -433,6 +433,14 @@ div.header-nav ul li a
     min-height: 1000px;
     overflow: hidden;
     padding-bottom: 80px;
+}
+
+.picture #container{
+    min-height: 600px;
+}
+
+.picture #tail{
+    min-height: 600px;
 }
 
 #content ,#pd-content, #pd-content {
@@ -477,6 +485,40 @@ div.header-nav ul li a
 {
     margin-top:350px;
     margin-left:5px;
+}
+
+#picture-content
+{
+    height: auto;
+    padding:30px;
+    min-height:500px;
+    background:#FCFCFC;
+    border-radius:12px;
+}
+
+#img-thumb
+{
+    display:inline-block;
+    width:236px;
+    height:200px;
+    border-radius:12px;
+}
+
+#img-thumb img{
+    width: 100%;
+    height:100%;
+    border-radius:12px;
+}
+
+#dowebok
+{
+    padding:0px;
+    list-style:none;
+}
+
+#dowebok li
+{
+    display:inline-block;
 }
 
 
@@ -797,6 +839,8 @@ div.post-detail #post-type{
     text-align:center;
     color:gray;
 }
+
+.last-post{list-style:none;padding:0px;}
 
 #post-collect {
 float:right;}

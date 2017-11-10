@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from taggit.models import Tag
-from .models import Post,Comment,EmailVerifyRecord,Book
+from .models import Post,Comment,EmailVerifyRecord,Book,PictureRecord
 from .forms import *
 from utils import email_send
 from django.db.models import Q
@@ -318,6 +318,15 @@ def music(request,user_id):
     user = get_object_or_404(User, id=user_id)
     return render(request,'blog/music/music.html',{'user': user,
                                                    'auth_user': request.user})
+
+
+
+def picture(request,user_id):
+    user = get_object_or_404(User, id=user_id)
+    prds = PictureRecord.objects.filter(user__id=user_id).order_by("-created")
+    return render(request,'blog/picture/picture.html',{'user': user,
+                                                        'auth_user': request.user,
+                                                       "pictures":prds})
 
 
 def about(request,user_id,option):
