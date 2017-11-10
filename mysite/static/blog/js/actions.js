@@ -1,6 +1,13 @@
 
 $(document).ready(function() {
 
+
+    $("#back-top").click(function() {
+                      $("body,html").animate({scrollTop:0}, 200);
+                      return false;
+                  });
+
+
 // 使用 jQuery异步提交表单
 
     $('#write-form').submit(function() {
@@ -11,11 +18,11 @@ $(document).ready(function() {
         dataType:"html",
         beforeSend:function()
         {
-            $("#save-msg").html("正在保存..");
+            $("#save-msg").text("正在保存..");
         },
         success:function(responseText)
         {
-            $("#save-msg").html("已保存");
+            $("#save-msg").text("已保存");
             $("#save-btn").attr("disabled",true);
             $("#see-post").attr("disabled",true);
         }
@@ -37,9 +44,9 @@ $(document).ready(function() {
             },
             success:function(responseText)
             {
-                $("#save-msg").html("已保存");
+                $("#save-msg").text("已保存");
                 $("#save-btn").attr("disabled",true);
-                $("#save-msg").html("已发布");
+                $("#save-msg").text("已发布");
                 $("#publish-btn").attr("disabled",true);
                 $("#see-post").attr("disabled",false);
                 dom = $(responseText);
@@ -59,6 +66,7 @@ $(document).ready(function() {
 
       $.get(url,function(response){
           var newtitle = $(response).filter("title").text();
+
           document.title = newtitle;
           if(history.pushState){
               var state=({
@@ -70,12 +78,14 @@ $(document).ready(function() {
           {
             window.location.href=url;
           }
-          });
+
+          $("#tail").html($(response).find("#tail").html());
+          $(".column-bar").html($(response).filter(".column-bar").html());
+         });
+
       $('#container').remove();
       $('.nav-ul a').css("color",'#5E5E5E')
       $('.'+cls).css("color",'#8B2500');
-
-      $('#tail').load(url + ' #container');
     });
 
 

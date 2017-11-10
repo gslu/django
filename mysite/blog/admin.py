@@ -49,6 +49,9 @@ class EmailVerifyRecordAdmin(admin.ModelAdmin):
     list_display = ("__unicode__","send_time")
     list_filter = ("send_time",)
 
+class PictureRecordAdmin(admin.ModelAdmin):
+    list_display = ("user","picture","created")
+    list_filter = ("user",)
 
 admin.site.register(Post,PostAdmin)
 admin.site.register(Comment,CommentAdmin)
@@ -58,6 +61,7 @@ admin.site.register(AccessRecord,AccessRecordAdmin)
 admin.site.register(MessageRecord,MessageRecordAdmin)
 admin.site.register(PostClass,PostClassAdmin)
 admin.site.register(Book,BookAdmin)
+admin.site.register(PictureRecord,PictureRecordAdmin)
 
 
 

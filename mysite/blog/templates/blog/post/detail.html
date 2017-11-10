@@ -63,7 +63,7 @@
 
 {% block column-bar %}
     <div class="column-bar" id="pd">
-        <a href="#top"><div id="back-top" title="回到顶部"><p>顶部</p></div></a>
+        <a href="javascript:void(0)"><div id="back-top" title="回到顶部"><p>顶部</p></div></a>
         {% if auth_user.is_authenticated %}
             <a href='{% url "blog:edit_post" post.id %}' target="_blank"><div id="edit-post" title="编辑文章"><p>编辑</p></div></a>
         {% else %}

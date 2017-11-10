@@ -159,3 +159,10 @@ class MessageRecord(models.Model):
         return "{} {} 给 {} 留言".format(self.send_time,self.sender,self.receiver)
 
 
+class PictureRecord(models.Model):
+    user = models.ForeignKey(User,related_name="pictures")
+    picture = models.CharField(max_length=300,verbose_name="图片")
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    def __unicode__(self):
+        return self.picture

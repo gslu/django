@@ -4,13 +4,13 @@ from __future__ import unicode_literals
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import  get_object_or_404
 from django.conf import settings
-#from .models import Profile
+from blog.models import PictureRecord
 from .forms import *
 import json
 import datetime
-import os,random,uuid,time
+import os,uuid
 
 def handle_uploaded_file(file,dest_path):
     with open(dest_path,'wb+') as destination:
@@ -27,8 +27,10 @@ def uploadImage(request):
         dest_dir = settings.MEDIA_ROOT + 'article_image/'
         ext = os.path.splitext(file.name)[1]
         file_name = "{}-{}-{}-{}{}".format(today.year, today.month, today.day, uuid.uuid1(), ext)
+        #绝对路径
         dest_path = "{}{}".format(dest_dir, file_name)
         handle_uploaded_file(file,dest_path)  # 上传文件
+        PictureRecord.objects.create(user=request.user,picture='article_image/{}'.format(file_name))
         # 得到JSON格式的返回值
         upload_info = {"success": True, 'file_path': settings.MEDIA_URL + 'article_image/'+ file_name}
     else:
