@@ -11,48 +11,8 @@
         <script type="text/javascript" src='{% static "blog/js/jquery.js" %}'></script>
         <script type="text/javascript" src='{% static "blog/js/jquery.min.js" %}'></script>
         <script type="text/javascript" src='{% static "blog/js/jquery_form.js" %}'></script>
-        <script type="text/javascript" src='{% static "blog/js/actions.js" %}'></script>
-
         {% block addhead %}{% endblock %}
-        <script type="text/javascript">
-            function httpHtml(){
-                var v = document.getElementById("post-body").innerHTML;
-                var reg = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
-                v = v.replace(reg, "<a target='view_window' href='$1$2'>$1$2</a>").replace(/\n/g,"");
-                document.getElementById("post-body").innerHTML = v;
-            }
-            function validate_email(field,alerttxt)
-            {
-                with (field)
-                {
-                    apos=value.indexOf("@")
-                    dotpos=value.lastIndexOf(".")
-                    if (apos<1||dotpos-apos<2)
-                      {alert(alerttxt);return false}
-                    else {return true;}
-                    }
-                }
-
-            function validate_form(thisform)
-            {
-                with (thisform)
-                {
-                    if (validate_email(email,"Not a valid e-mail address!")==false)
-                      {email.focus();return false;}
-                }
-            }
-
-            window.onscroll = function(){
-                var t = document.documentElement.scrollTop || document.body.scrollTop;
-                var back_top = document.getElementById( "back-top" );
-                if( t < 400 ) {
-                    back_top.style.display = "none";
-                } else {
-                    back_top.style.display = "inline-block";
-                }
-            }
-
-        </script>
+        <script type="text/javascript" src='{% static "blog/js/actions.js" %}'></script>
         <title>{% block title %}{% endblock %}</title>
     </head>
     {% block bodyclass %}

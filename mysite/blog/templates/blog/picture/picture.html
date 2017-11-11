@@ -5,15 +5,8 @@
 {% block addhead %}
         <link href= '{% static "blog/css/viewer.min.css" %}' rel="stylesheet" type="text/css">
         <script type="text/javascript" src='{% static "blog/js/viewer.min.js" %}'></script>
-        <script>
-        $(function() {
-            $('#dowebok').viewer({
-                url: 'data-original',
-            });
-        });
-        </script>
 {% endblock %}
-{% block title %}{{ user.profile.nickname }} 音乐-浮文掠影{% endblock %}
+{% block title %}{{ user.profile.nickname }} 相册-浮文掠影{% endblock %}
 
 {% block header %}
 <div class="picture-page">
@@ -22,7 +15,7 @@
 {% endblock %}
 
 {% block bodyclass %}
-    <body class="picture">
+    <body class="picture" onload="init_viewer()">
 {% endblock %}
 
 

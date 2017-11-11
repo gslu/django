@@ -1,12 +1,14 @@
+function init_viewer(){
+      $('#dowebok').viewer({
+      url: 'data-original',
+      });
+  };
 
 $(document).ready(function() {
-
-
     $("#back-top").click(function() {
                       $("body,html").animate({scrollTop:0}, 200);
                       return false;
                   });
-
 
 // 使用 jQuery异步提交表单
 
@@ -64,30 +66,40 @@ $(document).ready(function() {
       var url = this.href;  // 保存点击的地址
       var cls = $(this).attr('class');
 
-      $.get(url,function(response){
-          var newtitle = $(response).filter("title").text();
+      if(url.indexOf("picture") >= 0)
+      {
+        window.location.href=url;
+        return false;
+      }
 
-          document.title = newtitle;
-          if(history.pushState){
-              var state=({
-                url: url, title:newtitle
-                });
-              window.history.pushState(state, newtitle, url);
-          }
-          else
-          {
-            window.location.href=url;
-          }
-
-          $("#tail").html($(response).find("#tail").html());
-          $(".column-bar").html($(response).filter(".column-bar").html());
-         });
-
-      $('#container').remove();
+      $("#container").remove();
       $('.nav-ul a').css("color",'#424242');
       $('.'+cls).css("color",'#CD2626');
-    });
+      $("#tail").load(url + " #container",function(responseTxt,statusTxt,xhr){
 
+            if(statusTxt=="success")
+            {
+                var dom = $(responseTxt);
+                var new_title = dom.filter("title").text();
+                document.title = new_title;
+                if(history.pushState){
+                  var state=({
+                    url: url, title:new_title
+                    });
+                  window.history.pushState(state, new_title, url);
+                }
+                else
+                {
+                    window.location.href=url;
+                }
+            }
+            if(statusTxt=="error")
+            {
+                alert("Error: "+xhr.status+": "+xhr.statusText);
+            }
+      });
+
+    });
 
 
     $('#books a').click(function(e){
@@ -295,6 +307,44 @@ $(document).ready(function() {
     });
 
 });
+
+function httpHtml(){
+   var v = document.getElementById("post-body").innerHTML;
+   var reg = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
+   v = v.replace(reg, "<a target='view_window' href='$1$2'>$1$2</a>").replace(/\n/g,"");
+   document.getElementById("post-body").innerHTML = v;
+}
+
+function validate_email(field,alerttxt)
+{
+   with (field)
+       {
+           apos=value.indexOf("@")
+           dotpos=value.lastIndexOf(".")
+           if (apos<1||dotpos-apos<2)
+           {alert(alerttxt);return false}
+           else {return true;}
+       }
+}
+
+function validate_form(thisform)
+{
+    with (thisform)
+    {
+        if (validate_email(email,"Not a valid e-mail address!")==false)
+        {email.focus();return false;}
+    }
+}
+
+window.onscroll = function(){
+   var t = document.documentElement.scrollTop || document.body.scrollTop;
+   var back_top = document.getElementById( "back-top" );
+   if( t < 400 ) {
+       back_top.style.display = "none";
+       } else {
+        back_top.style.display = "inline-block";
+       }
+}
 
 
 
