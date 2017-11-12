@@ -628,13 +628,14 @@ div.column-bar p
 #before{
     width:15px;
     height:16px;
-    margin:5px;
+    margin:7px;
     display:inline-block;
 }
 
 #before img{
     width:100%;
     height:100%;
+    vertical-align: -2px;
     }
 
 
@@ -1185,7 +1186,7 @@ div.select-tag
     margin:0px;
 }
 
-#ra-page #simgle,#rc-page #simgle{
+#ra-page #simgle,#rc-page #simgle,#rm-page #simgle{
     display:inline-block;
     width:auto;
     min-width:180px;
@@ -1198,20 +1199,39 @@ div.select-tag
 #ra-page #simgle:focus,
 #ra-page #simgle:hover,
 #rc-page #simgle:focus,
-#rc-page #simgle:hover
+#rc-page #simgle:hover,
+#rm-page #simgle:focus,
+#rm-page #simgle:hover
 {
     background:#F0E68C;
 }
 
-#ra-page p , #rc-page p{
+#ra-page p , #rc-page p,#rm-page p{
     line-height:100%;
     color:#242424;
 }
 
-#ra-page div.author-img{width:55px;height:55px;}
+#ra-page div.author-img,#rm-page div.author-img
+{width:55px;height:55px;}
 
 #rc-page #simgle{
     width:600px;
+}
+
+#rm-page #simgle{
+    width:600px;
+}
+
+#rm-page .msg
+{
+    display:inline-block;
+    width:390px;
+    height:auto;
+    min-height:35px;
+    border-radius:5px;
+    padding:10px;
+    border-left:1px solid #CDC5BF;
+    vertical-align: top;
 }
 
 

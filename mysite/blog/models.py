@@ -37,10 +37,10 @@ class Profile(models.Model):
         (u'F', u'女'),
         (u'S',u'保密'),
     )
-    gender = models.CharField(verbose_name=u"性别",max_length=10,choices=GENDER_CHOICES,default='S')
+    gender = models.CharField(verbose_name=u"性别",max_length=2,choices=GENDER_CHOICES,default='S')
     motto = models.CharField(verbose_name=u"座右铭",max_length=30,blank=True,default="色即是空，空即是色")
     introduce = models.TextField(verbose_name=u"个人简介",max_length=200,blank=True)
-    phone = models.CharField(verbose_name=u"手机",max_length=30,blank=True)
+    phone = models.CharField(verbose_name=u"手机",max_length=20,blank=True)
     image = models.ImageField(verbose_name=u"头像",upload_to="image/user_img",
                               blank=True,storage=ImageStorage())
     bgimg = models.ImageField(verbose_name=u"背景", upload_to="image/bg_img",
@@ -62,7 +62,7 @@ class Post(models.Model):
     STATUS_CHOICES = (
                     ('draft', 'Draft'),
                     ('published', 'Published'),)
-    title = models.CharField(max_length=250)
+    title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=250,unique_for_date='publish')
     author = models.ForeignKey(User,related_name='blog_posts')
     body = models.TextField()
@@ -151,7 +151,7 @@ class AccessRecord(models.Model):
 class MessageRecord(models.Model):
     sender = models.ForeignKey(User,related_name='send_msg')
     receiver = models.ForeignKey(User,related_name="receive_msg")
-    body = models.CharField(max_length=300, verbose_name=u"留言")
+    body = models.TextField(max_length=300, verbose_name=u"留言")
     send_time = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
 

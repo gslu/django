@@ -2,5 +2,24 @@
 {% load static %}
 
 <div id="rm-page">
-
+    {% for msg in rm %}
+    <a href="{% url "blog:post_list" msg.sender.id %}">
+        <div id="simgle">
+             <div class="author-img">
+                  {% if msg.sender.profile.image %}
+                       <img src="{{ MEDIA_URL }}{{ msg.sender.profile.image }}">
+                  {% else %}
+                       <img src='{% static "blog/img/user_default.jpeg" %}'>
+                  {% endif %}
+             </div>
+             <div class="author-nickname">
+                 <p>{{ msg.sender.profile.nickname | slice:"6" }}</p>
+                 <span class="date">{{ msg.send_time | date:"Y-m-d H:i" }}</span>
+             </div>
+             <div class="msg">
+                 <span class="date">{{ msg.body | slice:"300" }}</span>
+             </div>
+        </div>
+    </a>
+    {% endfor %}
 </div>

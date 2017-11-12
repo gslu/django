@@ -207,7 +207,9 @@ def updateAccessRecord(request,user):
 def postList(request,user_id, tag_name=None):
     user = get_object_or_404(User,id=user_id)
     updateAccessRecord(request, user)
-    object_list = Post.published.filter(author=user)
+    object_list = Post.published.filter(author=user).annotate(
+                    total_comments=Count('comments')
+                ).order_by('-total_comments')
     tag = None
     tags = Tag.objects.filter(post__in=object_list).distinct()
 
