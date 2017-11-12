@@ -34,7 +34,7 @@
             <hr/>
             <p class="post_body">
                 {% get_text post.body as body %}
-                {% autoescape on %}
+                {% autoescape off %}
                 {{ body | slice:"100" | linebreaks}}...
                 {% endautoescape %}
             </p>

@@ -36,8 +36,8 @@
 
 <form action="." method="post" id="write-form" >
     <select id="post_type" name="post_type">
-      <option value="self" {% ifequal post.postclass "self" %}selected="selected"{% endifequal %}>原创</option>
-      <option value="reprint" {% ifequal post.postclass "reprint" %}selected="selected"{% endifequal %}>转载</option>
+      <option value="self" {% ifequal post.postclass.post_type "self" %}selected="selected"{% endifequal %}>原创</option>
+      <option value="reprint" {% ifequal post.postclass.post_type "reprint" %}selected="selected"{% endifequal %}>转载</option>
     </select>
     {{ form.as_p }}
     {% csrf_token %}
