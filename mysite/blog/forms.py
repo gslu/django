@@ -107,10 +107,10 @@ class ResetForm(forms.Form):
     def clean_password(self):
         import re
         password = self.cleaned_data['password']
-        if len(password) < 8:
+        if len(password) < 6:
             raise forms.ValidationError("密码强度须大于6")
-        elif not re.match(r'([0-9]+(\W+|\_+|[A-Za-z]+))+|([A-Za-z]+(\W+|\_+|\d+))+|((\W+|\_+)+(\d+|\w+))+',password):
-            raise forms.ValidationError("密码至少包含字母,数字,符号其中两样")
+        #elif not re.match(r'([0-9]+(\W+|\_+|[A-Za-z]+))+|([A-Za-z]+(\W+|\_+|\d+))+|((\W+|\_+)+(\d+|\w+))+',password):
+        #    raise forms.ValidationError("密码至少包含字母,数字,符号其中两样")
         else:
             return password
 
