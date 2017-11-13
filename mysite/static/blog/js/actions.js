@@ -309,6 +309,7 @@ $(document).ready(function() {
    $("#follow-link").click(function(e){
         e.preventDefault();
         var url = this.href;
+        {
         $.get(url,function(responseText){
 
             if(responseText.status == "cancel-follow")
@@ -322,6 +323,7 @@ $(document).ready(function() {
                 $("#follow-link").children().css("background","#BCEE68");
             }
         });
+        }
     });
 
 });
