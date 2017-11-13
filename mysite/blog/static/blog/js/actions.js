@@ -306,6 +306,24 @@ $(document).ready(function() {
         });
     });
 
+   $("#follow-link").click(function(e){
+        e.preventDefault();
+        var url = this.href;
+        $.get(url,function(responseText){
+
+            if(responseText.status == "cancel-follow")
+            {
+                $("#follow-link").children().text("+关注");
+                $("#follow-link").children().css("background","#FFFFE0");
+            }
+            else
+            {
+                $("#follow-link").children().text("+关注 √");
+                $("#follow-link").children().css("background","#BCEE68");
+            }
+        });
+    });
+
 });
 
 function httpHtml(){

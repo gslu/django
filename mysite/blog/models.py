@@ -62,7 +62,7 @@ class Post(models.Model):
     STATUS_CHOICES = (
                     ('draft', 'Draft'),
                     ('published', 'Published'),)
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=150)
     slug = models.SlugField(max_length=250,unique_for_date='publish')
     author = models.ForeignKey(User,related_name='blog_posts')
     body = models.TextField()
@@ -166,3 +166,10 @@ class PictureRecord(models.Model):
     updated = models.DateTimeField(auto_now=True)
     def __unicode__(self):
         return self.picture
+
+
+class UserRelation(models.Model):
+    user = models.ForeignKey(User,related_name="follower")
+    follower = models.ForeignKey(User,related_name="follow")
+    follow_time = models.DateTimeField(auto_now_add=True)
+

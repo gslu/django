@@ -527,7 +527,7 @@ div.header-nav ul li a
     width:240px;
     padding:1.5em;
     color:#5C5C5C;
-    background-color:#FAFAD2;
+    background-color:#CDCDB4;
     border-radius:12px;
 }
 
@@ -546,22 +546,27 @@ div.header-nav ul li a
     font-family:SimSun;
 }
 
-#sidebar #care{
+#sidebar .follow{width:100px;}
+
+#sidebar #follow,#sidebar #followed{
     width:80px;
     height:25px;
+    padding:5px;
+    margin:5px;
     text-align:center;
     border:1px solid #EE7942;
+    background:#FFFFE0;
     border-radius:10px;
-}
-
-#sidebar #care{background:#FFFFE0;}
-#sidebar #care:focus,#sidebar #care:hover{background:#FFD39B;}
-
-#sidebar #care p{
     color:#D2691E;
     font-weight:bold;
-    line-height:18px;
+    line-height:25px;
 }
+
+#sidebar #followed{background:#BCEE68;}
+
+#sidebar #follow:focus,#sidebar #follow:hover,
+#sidebar #followed:focus,#sidebar #followed:hover
+{background:#FFD39B;}
 
 div.column-bar
 {

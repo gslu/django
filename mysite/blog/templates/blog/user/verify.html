@@ -21,7 +21,7 @@
     <body class="verify">
         <div id="content">
             <div id="text">
-                <a id="tohome" href=''>浮文掠影</a>
+                <a id="tohome" href='{% url "blog:post_list" 1 %}'>浮文掠影</a>
             </div>
 
             {% ifequal send_type "register" %}

@@ -13,7 +13,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from taggit.models import Tag
-from .models import Post,Comment,EmailVerifyRecord,Book,PictureRecord
+from .models import Post,Comment,EmailVerifyRecord,Book,PictureRecord,UserRelation
 from .forms import *
 from utils import email_send
 from django.db.models import Q
@@ -655,4 +655,19 @@ def changeBook(request):
         ret["book_id"] = new_book.id
 
         ret = json.dumps(ret)
+    return HttpResponse(ret, content_type="application/json")
+
+
+@login_required
+@csrf_exempt
+def editFollow(request,user_id):
+
+    ret = {"status": "follow"}
+    user = get_object_or_404(User, id=user_id)
+    relation,created = UserRelation.objects.get_or_create(user=user,follower=request.user)
+    if not created:
+        relation.delete()
+        ret = {"status": "cancel-follow"}
+
+    ret = json.dumps(ret)
     return HttpResponse(ret, content_type="application/json")

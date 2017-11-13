@@ -2,7 +2,7 @@
 from django import template
 from django.db.models import Count
 from taggit.models import Tag
-from ..models import Post,PostClass
+from ..models import Post,PostClass,UserRelation
 
 register = template.Library()
 
@@ -58,6 +58,15 @@ def get_text(post_body=None):
     text = pattern.sub('',post_body)
     return text
 
+
+@register.assignment_tag
+def is_follower(auth_user=None,user=None):
+    try:
+        user_relation = UserRelation.objects.get(user=user,follower=auth_user)
+    except:
+        return False
+    else:
+        return True
 
 
 

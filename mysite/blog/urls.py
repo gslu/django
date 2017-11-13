@@ -68,4 +68,7 @@ urlpatterns = [
     url(r'^post/delete/$', views.delPost, name='post_delete'),
     url(r'^post/change_tag/$', views.changeTag, name='change_tag'),
     url(r'^tag/change_book/$', views.changeBook, name='change_book'),
+
+    # 关注
+    url(r'^user/(?P<user_id>\d+)/edit_follow/$', views.editFollow, name='edit_follow'),
 ]
