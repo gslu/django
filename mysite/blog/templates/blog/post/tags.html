@@ -3,7 +3,7 @@
         <div id="tag-bar">
             <a href="{% url "blog:post_list_by_tag" user.id tag.name %}">
                 <div id="select-tag">
-                <h2>{{ tag.name }}-专题</h2>
+                <h2>{{ tag.name }}-标签</h2>
                 </div>
             </a>
             {% for a_tag in tags %}

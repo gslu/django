@@ -26,13 +26,13 @@
 
     <a class="nb-btn" href="javascript:void(0)">
         <div id="new-book" >
-            <h2>新建专题</h2>
+            <h2>新建文集</h2>
         </div>
     </a>
 
     <div id="new-book-form" hidden="true">
         <form action="{% url "blog:post_manage" %}" method="post" id="nbf">
-            <!--<input type="text" name="name" id="new-book-input" placeholder="专题名称">-->
+            <!--<input type="text" name="name" id="new-book-input" placeholder="文集名称">-->
             {{ book_form.as_p }}
             {% csrf_token %}
             <input type="submit" value="提交" id="new-book-submit">

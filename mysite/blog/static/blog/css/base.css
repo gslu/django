@@ -546,9 +546,10 @@ div.header-nav ul li a
     font-family:SimSun;
 }
 
-#sidebar .follow{width:100px;}
+#sidebar .follow{min-width:100px;}
 
 #sidebar #follow,#sidebar #followed{
+    display:inline-block;
     width:80px;
     height:25px;
     padding:5px;
@@ -567,6 +568,24 @@ div.header-nav ul li a
 #sidebar #follow:focus,#sidebar #follow:hover,
 #sidebar #followed:focus,#sidebar #followed:hover
 {background:#FFD39B;}
+
+
+#visit-follow,
+#vf-count
+{
+    display:inline-block;
+    padding:1px;
+    margin-left:10px;
+    text-align:center;
+    vertical-align:-10px;
+}
+
+.follow p{
+    color:#8B4513;
+    line-height:10px;
+    font-size:13px;
+    }
+
 
 div.column-bar
 {
@@ -599,6 +618,11 @@ div.column-bar p
 
 #back-top{
     display:none;
+}
+
+.column-bar img{
+    width:100%;
+    height:100%;
 }
 
 
@@ -675,10 +699,15 @@ div.introduce p{
     margin-left:10px;
 }
 
-#nav #write-btn{
 
+#nav .write-btn{
     display:inline-block;
+    width:auto;
+    height:auto;
     margin:6px 0 0 70px;
+}
+
+#nav #write-btn{
     padding:6px;
     padding-left: 30px;
     padding-right: 30px;
@@ -833,6 +862,21 @@ div.post-list h2, div.post-detail h2, div.post-share h2
 {
     line-height:25px;
     color:#262626;
+}
+
+#pl-tag
+{
+    display:inline-block;
+    width:20px;
+    height:18px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+#pl-tag img
+{
+    width:100%;
+    height:100%;
 }
 
 div.post-detail h1, div.post-share h1

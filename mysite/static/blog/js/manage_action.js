@@ -37,7 +37,7 @@
              ).success(function(data) {
                     if(data.status == "error")
                     {
-                        alert("专题非空");
+                        alert("文集非空");
                     }
                     else
                     {
@@ -59,7 +59,7 @@
                     }
                     else if(data.status == "lastone")
                     {
-                        alert("至少需保留一个标签,若不需要可删除空专题");
+                        alert("至少需保留一个标签,若不需要可删除空文集");
                     }
                     else
                     {
@@ -160,13 +160,13 @@
               onClick: function(rowElem) {
                 var book_id = rowElem.data('bookId');
                 var book_name = rowElem.text();
-                var new_name = prompt("专题 '" + book_name + "' 重命名为：", "");
+                var new_name = prompt("文集 '" + book_name + "' 重命名为：", "");
                 if (new_name != null)
                 {
                     new_name = $.trim(new_name);
                     if(new_name == "")
                     {
-                        alert("专题名称不能为空");
+                        alert("文集名称不能为空");
                     }
                     else
                     {
@@ -177,11 +177,11 @@
             },
 
             {
-              name: '删除空专题',
+              name: '删除空文集',
               onClick: function(rowElem) {
                 var book_id = rowElem.data('bookId');
                 var book_name = rowElem.text();
-                if(confirm("删除空专题: "+book_name)){
+                if(confirm("删除空文集: "+book_name)){
                 　　book_delete(book_id);
                 }
               }
@@ -220,18 +220,18 @@
             },
 
           　{
-              name: '更换专题',
+              name: '更换文集',
               onClick: function(rowElem) {
                   var tag_name = rowElem.text();
                   var book_id = $(".select-book").data("bookId");
                   var book_name = $(".select-book").text();
-                  var new_book_name = prompt("由专题'" + book_name + "' 变更为：", "");
+                  var new_book_name = prompt("由文集'" + book_name + "' 变更为：", "");
 
                   if (new_book_name != null){
                       new_book_name = $.trim(new_book_name);
                       if(new_book_name == "")
                       {
-                         alert("专题名称不能为空");
+                         alert("文集名称不能为空");
                       }
                       else
                       {

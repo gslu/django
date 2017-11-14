@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 ]
 
 
+
 MIDDLEWARE = [
 
     #'django.middleware.cache.UpdateCacheMiddleware',

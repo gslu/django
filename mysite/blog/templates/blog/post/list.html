@@ -4,7 +4,7 @@
 
 {% block title %}
     {% if tag %}
-        {{ user.profile.nickname }} {{ tag.name }}-专题-浮文掠影
+        {{ user.profile.nickname }} {{ tag.name }}-标签-浮文掠影
     {% else %}
         {{ user.profile.nickname }}-浮文掠影
     {% endif %}
@@ -39,14 +39,14 @@
                 {% endautoescape %}
             </p>
             <p class="tags">
-                标签:
+                 <div id="pl-tag"><img src="{% static "blog/img/tag.png" %}"></div>
                 {% for tag in post.tags.all %}
                     <a href="{% url "blog:post_list_by_tag" user.id tag.name %}">
                     {{ tag.name }}
                     </a>
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}
-                &nbsp;&nbsp;阅读({{ post.accesstimes }})
+                &nbsp;&nbsp;|&nbsp;&nbsp;阅读({{ post.accesstimes }})
                 {% get_comments_count post as total_comments %}
                 &nbsp;&nbsp;评论({{ total_comments }})
             </p>

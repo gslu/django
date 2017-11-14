@@ -384,7 +384,7 @@ def writePost(request,book_id,tag_name):
 
 @login_required
 def editPost(request,post_id=None,opt=None):
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post, id=post_id,author=request.user)
 
     if request.method == "POST":
         form = WriteForm(request.POST)
@@ -668,6 +668,5 @@ def editFollow(request,user_id):
     if not created:
         relation.delete()
         ret = {"status": "cancel-follow"}
-
     ret = json.dumps(ret)
     return HttpResponse(ret, content_type="application/json")

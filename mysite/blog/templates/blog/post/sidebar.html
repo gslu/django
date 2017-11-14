@@ -12,30 +12,42 @@
     </div>
 
     <h2 id="blogger">{{ user.profile.nickname }}</h2>
-    <div class="follow">
-    {% if auth_user.is_authenticated %}
-    {% is_follower auth_user user as IsFollower %}
-    {% if IsFollower %}
-    <a id="follow-link" href="{% url "blog:edit_follow" user.id %}">
-        <div id="followed">
-            +关注 √
-        </div>
-    </a>
 
-    {% else %}
-    <a id="follow-link" href="{% url "blog:edit_follow" user.id %}">
-        <div id="follow">
-            +关注
+    <div class="follow">
+        {% if auth_user.is_authenticated %}
+        {% is_follower auth_user user as IsFollower %}
+        {% if IsFollower %}
+        <a id="follow-link" href="{% url "blog:edit_follow" user.id %}">
+            <div id="followed">
+                +关注 √
+            </div>
+        </a>
+
+        {% else %}
+        <a id="follow-link" href="{% url "blog:edit_follow" user.id %}">
+            <div id="follow">
+                +关注
+            </div>
+        </a>
+        {% endif %}
+        {% else %}
+        <a id="follow-after-login" href="{% url "blog:user_login" %}">
+            <div id="follow">
+                +关注
+            </div>
+        </a>
+        {% endif %}
+
+        <div id="visit-follow">
+            <p>访问:</p>
+            <p>浏览:</p>
         </div>
-    </a>
-    {% endif %}
-    {% else %}
-    <a id="follow-after-login" href="{% url "blog:user_login" %}">
-        <div id="follow">
-            +关注
+        <div id="vf-count">
+            {% get_uv as uv %}
+            <p>{{ uv }}</p>
+            {% get_pv as pv %}
+            <p>{{ pv }}</p>
         </div>
-    </a>
-    {% endif %}
     </div>
     <hr/>
     <div class="introduce">
@@ -56,7 +68,7 @@
             </div>
             <div id="care-topic">
                 <a href="">
-                <div id="before"><img src='{% static "blog/img/care.png" %}'></div>我收到的关注
+                <div id="before"><img src='{% static "blog/img/care.png" %}'></div>我的关注
                 </a>
             </div>
         {% else %}
@@ -67,33 +79,12 @@
             </div>
             <div id="care-topic">
                 <a href="">
-                <p><div id="before"><img src='{% static "blog/img/care.png" %}'></div>Ta收到的关注</p>
+                <p><div id="before"><img src='{% static "blog/img/care.png" %}'></div>Ta的关注</p>
                 </a>
             </div>
         {% endif %}
     </div>
 
-    <!--
-    <div id="post-class">
-        <div id="self">
-            {% post_count user "self" as self_count %}
-            <p>{{ self_count }}</p>
-            <p>原创</p>
-        </div>
-
-        <div id="reprint">
-            {% post_count user "reprint" as reprint_count %}
-            <p>{{ reprint_count }}</p>
-            <p>转载</p>
-        </div>
-
-        <div id="collection">
-            {% post_count user "collect" as collect_count %}
-            <p>{{ collect_count }}</p>
-            <p>收藏</p>
-        </div>
-    </div>
-    -->
     <h3>最新文章</h3>
     {% get_latest_posts user 4 as latest_posts %}
     <ul class="last-post">

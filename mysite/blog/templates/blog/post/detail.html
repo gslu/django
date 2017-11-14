@@ -63,12 +63,20 @@
 
 {% block column-bar %}
     <div class="column-bar" id="pd">
-        <a href="javascript:void(0)"><div id="back-top" title="回到顶部"><p>顶部</p></div></a>
+        <a href="javascript:void(0)"><div id="back-top" title="回到顶部">
+            <img src="{% static "blog/img/tp.png" %}">
+        </div></a>
         {% if auth_user.is_authenticated %}
-            <a href='{% url "blog:edit_post" post.id %}' target="_blank"><div id="edit-post" title="编辑文章"><p>编辑</p></div></a>
+            {% ifequal auth_user user %}
+            <a href='{% url "blog:edit_post" post.id %}' target="_blank"><div id="edit-post" title="编辑文章">
+                <img src="{% static "blog/img/ed.png" %}">
+            </div></a>
+            {% else %}
+            <a href=""><div id="collect" title="收藏文章"><img src="{% static "blog/img/cl.png" %}"></div></a>
+            {% endifequal %}
         {% else %}
-           <a href=""><div id="collect" title="收藏文章"><p>收藏</p></div></a>
+           <a href=""><div id="collect" title="收藏文章"><img src="{% static "blog/img/cl.png" %}"></div></a>
         {% endif %}
-        <a href="{% url "blog:post_share" post.id %}"><div id="share" title="分享文章"><p>分享</p></div></a>
+        <a href="{% url "blog:post_share" post.id %}"><div id="share" title="分享文章"><img src="{% static "blog/img/sh.png" %}"></div></a>
     </div>
 {% endblock %}

@@ -1,8 +1,10 @@
 # -*- coding:utf-8 -*-
 from django import template
 from django.db.models import Count
+from django.conf import settings
 from taggit.models import Tag
 from ..models import Post,PostClass,UserRelation
+import os,json
 
 register = template.Library()
 
@@ -67,6 +69,32 @@ def is_follower(auth_user=None,user=None):
         return False
     else:
         return True
+
+
+@register.assignment_tag
+def get_follower_count(user=None):
+    return UserRelation.objects.filter(user=user).count()
+
+
+@register.assignment_tag
+def get_uv():
+    uv = 0
+    path = os.path.join(settings.BASE_DIR,'logs/nginx/uv_pv.json')
+    with open(path,'r') as f:
+        obj = json.load(f)
+        uv = obj['uv']
+    return uv
+
+
+@register.assignment_tag
+def get_pv():
+    pv = 0
+    path = os.path.join(settings.BASE_DIR,'logs/nginx/uv_pv.json')
+    with open(path,'r') as f:
+        obj = json.load(f)
+        pv = obj['pv']
+    return pv
+
 
 
 

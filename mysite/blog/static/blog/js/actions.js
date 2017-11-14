@@ -359,10 +359,13 @@ function validate_form(thisform)
 window.onscroll = function(){
    var t = document.documentElement.scrollTop || document.body.scrollTop;
    var back_top = document.getElementById( "back-top" );
-   if( t < 400 ) {
-       back_top.style.display = "none";
+   if( t < 300 ) {
+        back_top.style.display = "none";
+        //$("#tag-bar").removeAttr("style");
        } else {
         back_top.style.display = "inline-block";
+        //$("#tag-bar").css("position","fixed");
+        //$("#tag-bar").css("top","50px");
        }
 }
 
