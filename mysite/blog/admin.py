@@ -66,6 +66,7 @@ admin.site.register(PostClass,PostClassAdmin)
 admin.site.register(Book,BookAdmin)
 admin.site.register(PictureRecord,PictureRecordAdmin)
 admin.site.register(UserRelation,UserRelationAdmin)
+admin.site.register(Pv)
 
 
 

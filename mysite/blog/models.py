@@ -98,13 +98,13 @@ class Pv(models.Model):
     accesstimes = models.IntegerField(default=0)
 
     def __unicode__(self):
-        return self.accesstimes
+        return str(self.accesstimes)
 
 class Uv(models.Model):
     user = models.ForeignKey(User,related_name="uv")
     accesstimes = models.IntegerField(default=0)
     def __unicode__(self):
-        return self.accesstimes
+        return str(self.accesstimes)
 
 
 class PostClass(models.Model):
