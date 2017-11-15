@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
 from django import template
 from django.db.models import Count
+from django.db.models import Sum
 from django.conf import settings
 from taggit.models import Tag
-from ..models import Post,PostClass,UserRelation
+from ..models import Post,PostClass,UserRelation,Pv
 import os,json
 
 register = template.Library()
@@ -77,23 +78,20 @@ def get_follower_count(user=None):
 
 
 @register.assignment_tag
-def get_uv():
-    uv = 0
-    path = os.path.join(settings.BASE_DIR,'logs/nginx/uv_pv.json')
-    with open(path,'r') as f:
-        obj = json.load(f)
-        uv = obj['uv']
-    return uv
+def get_accesstimes(post=None):
+    try:
+        pv = Pv.objects.get(post=post)
+        accesstimes = pv.accesstimes
+    except:
+        accesstimes = 0
+    return accesstimes
 
 
 @register.assignment_tag
-def get_pv():
-    pv = 0
-    path = os.path.join(settings.BASE_DIR,'logs/nginx/uv_pv.json')
-    with open(path,'r') as f:
-        obj = json.load(f)
-        pv = obj['pv']
-    return pv
+def get_pv(user=None):
+    posts = Post.objects.filter(author=user)
+    pv = Pv.objects.filter(post__in=posts).aggregate(Sum('accesstimes'))
+    return pv["accesstimes__sum"] if pv["accesstimes__sum"] is not None else 0
 
 
 

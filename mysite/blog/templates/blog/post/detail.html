@@ -1,4 +1,5 @@
 {% extends "blog/post/base.html" %}
+{% load blog_tags %}
 {% load static %}
 {% block title %}{{ post.title }}-浮文掠影{% endblock %}
 
@@ -6,6 +7,10 @@
 <div class="detail-page">
     {% include "blog/header.html" %}
 </div>
+{% endblock %}
+
+{% block bodyclass %}
+    <body onload="add_pv({{ post.id }})">
 {% endblock %}
 
 {% block content %}
@@ -29,16 +34,11 @@
 
         {% with comments.count as total_comments %}
             <p class="post-access-cm">
-                <!--{{ total_comments }} Comment{{ total_comments|pluralize }}-->
-                阅读({{ post.accesstimes }}) | 评论({{ total_comments }})
+                {% get_accesstimes post as accesstimes %}
+                阅读({{ accesstimes }}) | 评论({{ total_comments }})
             </p>
         {% endwith %}
 
-        <p>
-            <a href="{% url "blog:post_share" post.id %}">
-            分享此文
-            </a>
-        </p>
         <hr/>
         <h2>类似文章</h2>
         {% for post in similar_posts %}

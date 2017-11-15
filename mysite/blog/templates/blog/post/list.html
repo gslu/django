@@ -46,7 +46,8 @@
                     </a>
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}
-                &nbsp;&nbsp;|&nbsp;&nbsp;阅读({{ post.accesstimes }})
+                {% get_accesstimes post as accesstimes %}
+                &nbsp;&nbsp;|&nbsp;&nbsp;阅读({{ accesstimes }})
                 {% get_comments_count post as total_comments %}
                 &nbsp;&nbsp;评论({{ total_comments }})
             </p>

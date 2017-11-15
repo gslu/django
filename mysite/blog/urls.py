@@ -71,4 +71,5 @@ urlpatterns = [
 
     # 关注
     url(r'^user/(?P<user_id>\d+)/edit_follow/$', views.editFollow, name='edit_follow'),
+    url(r'^add_pv/$', views.addPv, name='add_pv'),
 ]

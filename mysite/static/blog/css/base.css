@@ -570,17 +570,20 @@ div.header-nav ul li a
 {background:#FFD39B;}
 
 
-#visit-follow,
-#vf-count
+#pv
 {
     display:inline-block;
-    padding:1px;
+    width:120px;
+    padding-top:3px;
     margin-left:10px;
+    margin-bottom:1px;
     text-align:center;
     vertical-align:-10px;
+    border-radius:5px;
+    background:#CDC9A5;
 }
 
-.follow p{
+.fl-pv-uv p{
     color:#8B4513;
     line-height:10px;
     font-size:13px;
@@ -594,6 +597,7 @@ div.column-bar
     height:auto;
     right:50px;
     bottom:50px;
+    font-size: 0;
 }
 
 div.column-bar p

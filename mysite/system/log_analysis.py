@@ -9,27 +9,16 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mysite.settings")
 from mysite import settings
 
 access_log = os.path.join(settings.BASE_DIR,'logs/nginx/access.log')
-uv_pv_path = os.path.join(settings.BASE_DIR,'logs/nginx/uv_pv.json')
 
-def getUvPv():
-    uv = 0
-    pv = 0
-    uv_pattern = re.compile(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} ')
-    pv_pattern = re.compile(r'("GET /user/.*?"|"POST /user/.*?"|"POST /blog/.*?"|"POST /user/.*?")')
+def getVisits():
 
+    pattern = re.compile(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) .*?("GET /(user)/(\d+)/.*?"|"GET /(blog)/\d{4}/\d{2}/\d{2}/.*?/(\d+)/.*?")')
     with open(access_log,'r') as aclog:
         s = aclog.read()
-        ips = uv_pattern.findall(s)
-        views = pv_pattern.findall(s)
-        ips = set(ips)
-        uv = len(ips)
-        pv = len(views)
-    return uv,pv
+        visits = pattern.findall(s)
+    blog_pages = [(i[0],i[4],i[5]) for i in visits if i[4]<>'']
+
+    return blog_pages
 
 if __name__ == '__main__':
-    while(True):
-        uv,pv = getUvPv()
-        s={"uv":uv,"pv":pv}
-        with open(uv_pv_path,'w') as f:
-            json.dump(s,f)
-        time.sleep(600)
+    pass

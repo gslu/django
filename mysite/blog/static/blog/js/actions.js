@@ -328,6 +328,7 @@ $(document).ready(function() {
 
 });
 
+
 function httpHtml(){
    var v = document.getElementById("post-body").innerHTML;
    var reg = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
@@ -369,5 +370,14 @@ window.onscroll = function(){
        }
 }
 
+function add_pv(post_id)
+{
+    $.post(
+       "/add_pv/",
+       { post_id: post_id}
+       ).success(function(data){
+
+    });
+}
 
 

@@ -13,7 +13,7 @@
 
     <h2 id="blogger">{{ user.profile.nickname }}</h2>
 
-    <div class="follow">
+    <div class="fl-pv-uv">
         {% if auth_user.is_authenticated %}
         {% is_follower auth_user user as IsFollower %}
         {% if IsFollower %}
@@ -38,16 +38,15 @@
         </a>
         {% endif %}
 
-        <div id="visit-follow">
-            <p>访问:</p>
-            <p>浏览:</p>
-        </div>
-        <div id="vf-count">
-            {% get_uv as uv %}
-            <p>{{ uv }}</p>
-            {% get_pv as pv %}
+        <div id="pv">
+            {% get_pv user as pv %}
             <p>{{ pv }}</p>
+            <p>浏览</p>
         </div>
+        <!--
+        <div id="uv">
+
+        </div>-->
     </div>
     <hr/>
     <div class="introduce">
@@ -94,25 +93,5 @@
         </li>
         {% endfor %}
     </ul>
-<!--
-    <h3>按浏览</h3>
-    {% get_most_access_posts user 3 as most_access_posts %}
-    <ul>
-        {% for post in most_access_posts %}
-        <li>
-            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
 
-    <h3>按评论</h3>
-    {% get_most_commented_posts user 3 as most_commented_posts %}
-    <ul>
-        {% for post in most_commented_posts %}
-        <li>
-            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-        </li>
-        {% endfor %}
-    </ul>
--->
 </div>

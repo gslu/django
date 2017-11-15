@@ -5,6 +5,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect,Http404,HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.cache import cache_page
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
@@ -13,7 +14,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from taggit.models import Tag
-from .models import Post,Comment,EmailVerifyRecord,Book,PictureRecord,UserRelation
+from .models import Post,Comment,EmailVerifyRecord,Book,PictureRecord,UserRelation,Pv,Uv
 from .forms import *
 from utils import email_send
 from django.db.models import Q
@@ -241,9 +242,6 @@ def postDetail(request,year,month,day,slug,id):
                                     publish__month=month, #要setting设置USE_TZ=False,否则不识别month,day
                                     publish__day=day,
                                     id=id)
-    if post:
-        post.accesstimes += 1
-        post.save()
 
     comments = post.comments.filter(active=True).order_by("created")
     new_comment = None
@@ -670,3 +668,16 @@ def editFollow(request,user_id):
         ret = {"status": "cancel-follow"}
     ret = json.dumps(ret)
     return HttpResponse(ret, content_type="application/json")
+
+
+@csrf_exempt
+def addPv(request):
+    msg = {"status": "success"}
+    if request.method == "POST":
+        post_id = request.POST.get("post_id")
+        post = get_object_or_404(Post, id=post_id)
+        pv,create = Pv.objects.get_or_create(post=post)
+        pv.accesstimes += 1
+        pv.save()
+    msg = json.dumps(msg)
+    return HttpResponse(msg, content_type="application/json")

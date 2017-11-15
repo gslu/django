@@ -72,7 +72,8 @@ class Post(models.Model):
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='draft')
     tags = TaggableManager()
     book = models.ForeignKey(Book,related_name='posts',default=None,blank=True)
-    accesstimes = models.IntegerField(default=0)
+
+
 
     class Meta:
         ordering = ('-publish',)
@@ -91,6 +92,19 @@ class Post(models.Model):
     def save(self,*args,**kwargs):
         self.slug = slugify(self.title)
         super(Post,self).save(*args,**kwargs)
+
+class Pv(models.Model):
+    post = models.ForeignKey(Post,related_name="pv")
+    accesstimes = models.IntegerField(default=0)
+
+    def __unicode__(self):
+        return self.accesstimes
+
+class Uv(models.Model):
+    user = models.ForeignKey(User,related_name="uv")
+    accesstimes = models.IntegerField(default=0)
+    def __unicode__(self):
+        return self.accesstimes
 
 
 class PostClass(models.Model):
