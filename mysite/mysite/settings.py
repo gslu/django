@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8j%d%#b^ijs$g#t^71(2ubzz6g23-lh9tpu!b5gs!d@s2gsq31'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -88,8 +88,8 @@ DATABASES = {
         'NAME': 'mysite',
         'USER': 'lsg01',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        #'HOST':'rm-wz9o52bgc2bbytake.mysql.rds.aliyuncs.com',
+        #'HOST': '127.0.0.1',
+        'HOST':'rm-wz9o52bgc2bbytake.mysql.rds.aliyuncs.com',
         'PORT': 3306,
 		'OPTIONS':{'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
 					'charset':'utf8',
@@ -144,25 +144,19 @@ USE_TZ = False
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 STATIC_URL = '/static/'
 
-# app static files, does not need to set this ,just build static directory in app
-#STATICFILES_DIRS = [
-#    os.path.join(BASE_DIR, "blog/static/"),
-#]
+
 
 # Send_mail setting
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#EMAIL_USE_TLS = True
-#EMAIL_HOST = "smtp.qq.com"
-#EMAIL_HOST_USER = '706715203@qq.com'
-# QQ email use auth string not user password,you can get the string from QQ Email setting
-#EMAIL_HOST_PASSWORD = "ygzhfoljrwqcbcgg"
+
 
 EMAIL_HOST = "smtp.exmail.qq.com"
 EMAIL_HOST_USER = 'admin@fuwenlueying.com'
-EMAIL_HOST_PASSWORD = "Guang6659219"
+EMAIL_HOST_PASSWORD = ""
 EMAIL_POST = 465
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_USE_SSL = True
+
 # ImageField
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 MEDIA_URL = "/media/"

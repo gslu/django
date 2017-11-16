@@ -27,8 +27,9 @@ urlpatterns = [
     url(r'^register/$', views.userRegister, name="user_register"),
 
     # 注册验证，忘记密码
-    url(r'^verify/(?P<username>[\w\d-]+)/(?P<email>.+)/$',
+    url(r'^verify/(?P<username>[\w\d-]+)/(?P<email>[^/]+)/$',
                     views.verifyRegister, name='verify_register_before'),
+
     url(r'^verify/(?P<username>[\w\d-]+)/confirm/(?P<code>[\w\d-]+)/$', views.verifyRegister, name='verify_register_after'),
     url(r'^password/forget/$', views.pswdForget, name='pswd_forget'),
     url(r'^password/reset/(?P<username>[\w\d-]+)/(?P<code>[\w\d-]+)/$', views.pswdReset, name='pswd_reset'),

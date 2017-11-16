@@ -109,7 +109,7 @@ def userRegister(request):
 
 
 def verifyRegister(request,email=None,username=None,code=None):
-
+    print code,username
     import datetime
     #验证链接一天过期
     now = datetime.datetime.now()
@@ -168,6 +168,7 @@ def pswdForget(request):
 
 
 def pswdReset(request,username,code):
+    print code
     import datetime
     #重置密码链接一天过期
     now = datetime.datetime.now()
@@ -284,27 +285,22 @@ def postDetail(request,year,month,day,slug,id):
 
 @login_required
 def postShare(request,post_id):
-    # Retrieve post by id
     post = get_object_or_404(Post,id=post_id,status='published')
     sent = False
     cd = None
     if request.method == 'POST':
-        # Form was submitted
         form = EmailPostForm(request.POST)
-        # Form fields passed validation
         if form.is_valid():
             cd = form.cleaned_data
-            #....send email
+
             post_url = request.build_absolute_uri(post.get_absolute_url())
             share_from = request.user.profile.nickname
             subject = '{}　给你分享 "{}"'.format(share_from,post.title)
-            message = '阅读文章 "{}" 链接 {}\n\n{} 读后感: {}'.format(post.title,
+            message = '阅读文章 "{}" 链接 {}<br/><br/>{} 读后感: {}'.format(post.title,
                                                                     post_url,
                                                                     share_from,cd['comments'])
 
-            msg = EmailMessage(subject, message, settings.DEFAULT_FROM_EMAIL,[cd['to']])
-            msg.content_subtype = "html"
-            msg.send()
+            email_send.sendEmail(subject, message, settings.DEFAULT_FROM_EMAIL,[cd['to']])
             sent = True
     else:
         form = EmailPostForm()

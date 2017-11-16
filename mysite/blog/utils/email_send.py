@@ -5,6 +5,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from blog.models import EmailVerifyRecord
 from email.mime.text import MIMEText
+from email.header import Header
 import smtplib
 import uuid
 
@@ -12,7 +13,11 @@ def sendEmail(subject, message, email_from, to):
     HOST = settings.EMAIL_HOST
     msg=MIMEText(message,'html',"utf-8")
     msg['Subject'] = subject
-    msg['From'] = email_from
+
+    h = Header('浮文掠影', 'utf-8')
+    h.append('<{}>'.format(email_from), 'ascii')
+
+    msg['From'] = h
     msg['To'] = ",".join(to)
 
     server = smtplib.SMTP_SSL()
@@ -20,6 +25,7 @@ def sendEmail(subject, message, email_from, to):
     server.login(email_from, settings.EMAIL_HOST_PASSWORD)
     server.sendmail(email_from,to,msg.as_string())
     server.quit()
+    return True
 
 
 
