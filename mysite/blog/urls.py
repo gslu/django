@@ -8,15 +8,20 @@ from . import views
 urlpatterns = [
 
     #　暂时充当网站主页
-    url(r'^$',RedirectView.as_view(url='user/1/'),name="index"),
+    url(r'^$',views.postList,{"user_id":1},name="index"),
+    #url(r'^$',RedirectView.as_view(url='user/1/'),name="index"),
 
     url(r'^user/(?P<user_id>\d+)/$', views.postList, name='post_list'),
     url(r'^user/(?P<user_id>\d+)/blog/tag/(?P<tag_name>.+)/$',views.postList,name='post_list_by_tag'),
 
-    url(r'^blog/(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+)/(?P<id>\d+)/$',
-                    views.postDetail,
-                    name='post_detail'),
+    url(r'^blog/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/(?P<slug>[-\w]+)/(?P<id>\d+)/$',
+                    views.postDetail,name='post_detail'),
     url(r'^blog/(?P<post_id>\d+)/share/$',views.postShare,name='post_share'),
+    url(r'^user/(?P<user_id>\d+)/log/$', views.log, name='log'),
+    url(r'^user/(?P<user_id>\d+)/log/follow/$', views.follow, name='my_follow'),
+    url(r'^user/(?P<user_id>\d+)/log/collection/$', views.collection, name='my_collection'),
+    url(r'^user/(?P<user_id>\d+)/log/(?P<year>\d{4})/(?P<month>\d{1,2})/$', views.log, name='log_by_date'),
+
     url(r'^user/(?P<user_id>\d+)/music/$',views.music,name='music'),
     url(r'^user/(?P<user_id>\d+)/picture/$', views.picture, name='picture'),
     url(r'^user/(?P<user_id>\d+)/about/(?P<option>\w+)/$', views.about, name='about'),
@@ -72,5 +77,8 @@ urlpatterns = [
 
     # 关注
     url(r'^user/(?P<user_id>\d+)/edit_follow/$', views.editFollow, name='edit_follow'),
+    # 收藏
+    url(r'^blog/(?P<post_id>\d+)/edit_collect/$', views.editCollect, name='edit_collect'),
+
     url(r'^add_pv/$', views.addPv, name='add_pv'),
 ]

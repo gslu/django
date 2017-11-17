@@ -14,7 +14,7 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from taggit.models import Tag
-from .models import Post,Comment,EmailVerifyRecord,Book,PictureRecord,UserRelation,Pv,Uv
+from .models import Post,Comment,EmailVerifyRecord,Book,PictureRecord,UserRelation,Collection,Pv
 from .forms import *
 from utils import email_send
 from django.db.models import Q
@@ -309,6 +309,49 @@ def postShare(request,post_id):
                                                   'user': post.author,
                                                   'auth_user': request.user
                                                   })
+
+
+def log(request,user_id,year=None,month=None):
+    user = get_object_or_404(User, id=user_id)
+    dates = Post.published.filter(author=user.id).order_by('-publish').values_list("publish")
+    dates = [date[0] for date in dates]
+    if dates == []:
+        posts = None
+        y = 0
+        m = 0
+    else:
+        y = year if year else dates[0].year
+        m = month if month  else dates[0].month
+        posts = Post.published.filter(author=user,publish__year=y,publish__month=m)
+    return render(request,'blog/log/log.html',{'user': user,
+                                               'auth_user': request.user,
+                                               'dates':dates,
+                                               'posts':posts,
+                                               'select_y':int(y),
+                                               'select_m':int(m)})
+def follow(request,user_id):
+    user = get_object_or_404(User, id=user_id)
+    dates = Post.published.filter(author=user.id).values_list("publish")
+    dates = [date[0] for date in dates]
+    follows = UserRelation.objects.filter(follower=user).order_by("-follow_time")
+    select = "follow"
+    return render(request,'blog/log/log.html',{'user': user,
+                                               'auth_user': request.user,
+                                               'dates':dates,
+                                               'follows':follows,
+                                               'select':select})
+def collection(request,user_id):
+    user = get_object_or_404(User, id=user_id)
+    dates = Post.published.filter(author=user.id).values_list("publish")
+    dates = [date[0] for date in dates]
+    collections = user.collections.all().order_by('-collect_time')
+    select = 'collection'
+    return render(request,'blog/log/log.html',{'user': user,
+                                               'auth_user': request.user,
+                                               'dates':dates,
+                                               'collections':collections,
+                                               'select':select})
+
 
 def music(request,user_id):
     user = get_object_or_404(User, id=user_id)
@@ -664,6 +707,21 @@ def editFollow(request,user_id):
         ret = {"status": "cancel-follow"}
     ret = json.dumps(ret)
     return HttpResponse(ret, content_type="application/json")
+
+
+@login_required
+@csrf_exempt
+def editCollect(request,post_id):
+
+    ret = {"status": "collect"}
+    post = get_object_or_404(Post, id=post_id)
+    collection,new = Collection.objects.get_or_create(collect_post=post,user=request.user)
+    if not new:
+        collection.delete()
+        ret = {"status": "cancel-collect"}
+    ret = json.dumps(ret)
+    return HttpResponse(ret, content_type="application/json")
+
 
 
 @csrf_exempt

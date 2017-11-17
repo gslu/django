@@ -409,6 +409,7 @@ div.header-nav ul li a
 .home-page #header .nav-w0,
 .detail-page #header .nav-w1,
 .share-page #header .nav-w1,
+.log-page #header .nav-w1,
 .music-page #header .nav-w2,
 .picture-page #header .nav-w3,
 .about-page #header .nav-w4
@@ -461,6 +462,201 @@ div.header-nav ul li a
     font-family:Tahoma;
 }
 
+
+#log-content
+{
+    float:left;
+    height:auto;
+    width:1020px;
+    background-color:#FCFCFC;
+    border-radius:12px;
+    font-size:15px;
+}
+
+#log-content a{color:#8B4513;}
+
+
+#log-content #bar-ctn
+{
+    float:left;
+    width:310px;
+    min-height:600px;
+    padding:10px 0 10px 0;
+    background:#FFFAFA;
+    border-radius:12px;
+    border-right:1px solid #CD5B45;
+}
+
+#log-content #bar-ctn h2
+{
+    margin-left:20px;
+    line-height:0px;
+    font-size:20px;
+    color:gray;
+}
+
+#log-content #posts-ctn
+{
+    float:right;
+    width:640px;
+    padding:30px;
+    min-height:500px;
+    background:#FFFAFA;
+    border-radius:12px;
+}
+
+#posts-ctn-head
+{
+    height:auto;
+    padding:5px;
+    border-bottom:2px solid #EAEAEA;
+    color:gray;
+}
+
+
+#log-content #calendar
+{
+    height:20px;
+}
+
+#log-content #my-collection,#log-content #my-follow
+{
+    margin:0px;
+    height:40px;
+    line-height:40px;
+    padding:0 20px 0 20px;
+}
+
+#log-content #my-collection:focus,#log-content #my-follow:focus,
+#log-content #my-collection:hover,#log-content #my-follow:hover
+{
+    background:#C4C4C4;
+}
+
+
+
+#log-content .select
+{
+    background:#C4C4C4;
+}
+
+
+#log-content #log-date
+{
+    height:auto;
+    padding-top:20px;
+    overflow;hidden;
+    line-height:28px;
+
+}
+
+#log-date
+{
+    max-height:700px;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+#log-date #year
+{
+    border:1px solid #EEEED1;
+    padding-left:20px;
+    background:#CDBE70;
+}
+
+
+#log-date #year:focus,#log-date #year:hover
+{
+    background:#8B814C;
+}
+
+#log-date li
+{
+    background:#F5F5F5;
+}
+
+
+#log-date #month:focus,#log-date #month:hover
+{
+    background:#C4C4C4;
+}
+
+#log-date ul
+{
+    list-style:none;
+    margin:0px;
+    padding:0px;
+    width: auto;
+}
+
+#log-date ul li
+{
+    padding-left:30px;
+    color:#383838;
+}
+
+#posts-ctn #follow
+{
+    display:inline-block;
+    width:190px;
+    height:100px;
+    padding:5px;
+    margin:2px;
+    overflow:hidden;
+    border-radius:10px;
+    border:2px solid #9ACD32;
+}
+
+#posts-ctn #follow:focus,#posts-ctn #follow:hover
+{
+    background:#BCEE68;
+}
+
+#follow p{line-height:20px;}
+#follow .author-img{width:55px;height:55px;}
+
+#follow .author-nickname{
+    max-width:100px;
+    margin:0px;
+    }
+#follow .motto{
+    width:190px;
+    height:40px;
+    margin-top:10px;
+    color:#8B7355;
+    }
+
+#posts-ctn #right-content
+{
+    max-height:850px;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+#posts-ctn #post
+{
+    display:inline-block;
+    overflow:hidden;
+    width:600px;
+    height:90px;
+    padding:10px;
+    margin:5px 0 0 0;
+    border-radius:10px;
+    border:1px solid #C1C1C1;
+    color:#4D4D4D;
+    background:#EAFAF1;
+}
+
+
+#posts-ctn #post:focus,#posts-ctn #post:hover
+{
+        background:#EEEED1;
+}
+
+#posts-ctn h2
+{
+    line-height:0px;
+}
 
 #music{
     width: 1020px;
@@ -610,6 +806,7 @@ div.column-bar p
 
 #back-top,
 #collect,
+#cancel-collect,
 #share,
 #edit-post
 {
@@ -632,6 +829,7 @@ div.column-bar p
 
 #pd #back-top,
 #pd #collect,
+#pd #cancel-collect,
 #edit-post
 {
     border-bottom:0px;
@@ -646,6 +844,15 @@ div.column-bar p
     background:#FFFAFA;
 }
 
+#cancel-collect
+{
+    background:#C0FF3E;
+}
+
+#cancel-collect:focus,#cancel-collect:hover
+{
+    background:#CAFF70;
+}
 
 #post-class #collection,#post-class #care-topic
 {

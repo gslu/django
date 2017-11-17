@@ -2,10 +2,10 @@
 from django import template
 from django.db.models import Count
 from django.db.models import Sum
-from django.conf import settings
 from taggit.models import Tag
-from ..models import Post,PostClass,UserRelation,Pv
-import os,json
+from ..models import Post,PostClass,UserRelation,Pv,Collection
+from collections import namedtuple
+import copy
 
 register = template.Library()
 
@@ -92,6 +92,33 @@ def get_pv(user=None):
     posts = Post.objects.filter(author=user)
     pv = Pv.objects.filter(post__in=posts).aggregate(Sum('accesstimes'))
     return pv["accesstimes__sum"] if pv["accesstimes__sum"] is not None else 0
+
+
+@register.assignment_tag
+def get_years(dates):
+    years = set([date.year for date in dates])
+    years = sorted(list(years),reverse=True)
+    return years
+
+@register.assignment_tag
+def get_months(dates,year):
+    month_post = namedtuple('month_post', ['month', 'post_count'])
+    months = [date.month for date in dates if date.year==year]
+    set_months = sorted(list(set(months)),reverse=True)
+    month_posts = (month_post(month=month,post_count=months.count(month)) for month in set_months)
+    return month_posts
+
+
+@register.assignment_tag
+def is_collected(post,user):
+    try:
+        Collection.objects.get(collect_post=post,user=user)
+    except:
+        return False
+    else:
+        return True
+
+
 
 
 

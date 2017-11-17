@@ -63,19 +63,36 @@
 
 {% block column-bar %}
     <div class="column-bar" id="pd">
-        <a href="javascript:void(0)"><div id="back-top" title="回到顶部">
+        <a href="javascript:void(0)" onclick="to_top()">
+            <div id="back-top" title="回到顶部">
             <img src="{% static "blog/img/tp.png" %}">
-        </div></a>
+            </div>
+        </a>
         {% if auth_user.is_authenticated %}
             {% ifequal auth_user user %}
-            <a href='{% url "blog:edit_post" post.id %}' target="_blank"><div id="edit-post" title="编辑文章">
-                <img src="{% static "blog/img/ed.png" %}">
-            </div></a>
+            <a href='{% url "blog:edit_post" post.id %}' target="_blank">
+                <div id="edit-post" title="编辑文章">
+                    <img src="{% static "blog/img/ed.png" %}">
+                </div>
+            </a>
             {% else %}
-            <a href=""><div id="collect" title="收藏文章"><img src="{% static "blog/img/cl.png" %}"></div></a>
+             {% is_collected post auth_user as collected %}
+             {% if collected %}
+              <a href="{% url "blog:edit_collect" post.id %}" class="collect">
+                <div id="cancel-collect" title="取消收藏">
+                    <img src="{% static "blog/img/cl.png" %}">
+                </div>
+              </a>
+             {% else %}
+              <a href="{% url "blog:edit_collect" post.id %}" class="collect">
+                <div id="collect" title="收藏文章">
+                    <img src="{% static "blog/img/cl.png" %}">
+                </div>
+              </a>
+             {% endif %}
             {% endifequal %}
         {% else %}
-           <a href=""><div id="collect" title="收藏文章"><img src="{% static "blog/img/cl.png" %}"></div></a>
+           <a href="{% url "blog:user_login" %}"><div id="collect" title="收藏文章"><img src="{% static "blog/img/cl.png" %}"></div></a>
         {% endif %}
         <a href="{% url "blog:post_share" post.id %}"><div id="share" title="分享文章"><img src="{% static "blog/img/sh.png" %}"></div></a>
     </div>

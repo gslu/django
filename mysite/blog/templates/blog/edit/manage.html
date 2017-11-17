@@ -30,7 +30,7 @@
         </div>
     </a>
 
-    <div id="new-book-form" hidden="true">
+    <div id="new-book-form" hidden>
         <form action="{% url "blog:post_manage" %}" method="post" id="nbf">
             <!--<input type="text" name="name" id="new-book-input" placeholder="文集名称">-->
             {{ book_form.as_p }}
@@ -58,7 +58,7 @@
         </div>
     </a>
 
-    <div id="new-tag-form" hidden="true">
+    <div id="new-tag-form" hidden>
         <form action="{% url "blog:select_book" point_book.id %}" method="post" id="ntf">
             <!--<input type="text" name="name" id="new-tag-input" placeholder="标签名称">-->
             {{ tag_form.as_p }}

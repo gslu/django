@@ -5,12 +5,6 @@ function init_viewer(){
   };
 
 $(document).ready(function() {
-    $("#back-top").click(function() {
-                      $("body,html").animate({scrollTop:0}, 200);
-                      return false;
-                  });
-
-// 使用 jQuery异步提交表单
 
     $('#write-form').submit(function() {
         jQuery.ajax({
@@ -309,22 +303,84 @@ $(document).ready(function() {
    $("#follow-link").click(function(e){
         e.preventDefault();
         var url = this.href;
-        {
-        $.get(url,function(responseText){
 
+        $.get(url,function(responseText){
+            var item = $("#follow-link").children();
             if(responseText.status == "cancel-follow")
             {
-                $("#follow-link").children().text("+关注");
-                $("#follow-link").children().css("background","#FFFFE0");
+                item.text("+关注");
+                item.css("background","#FFFFE0");
             }
             else
             {
-                $("#follow-link").children().text("+关注 √");
-                $("#follow-link").children().css("background","#BCEE68");
+                item.text("+关注 √");
+                item.css("background","#BCEE68");
             }
         });
-        }
+
+        return false;
     });
+
+   $(".column-bar .collect").click(function(e){
+        e.preventDefault();
+        var url = this.href;
+
+        $.get(url,function(responseText){
+
+            var item = $(".column-bar .collect").children();
+
+            if(responseText.status == "cancel-collect")
+            {
+                item.attr("title","收藏文章");
+                item.removeAttr("style");
+                item.attr("id",'collect');
+            }
+            else
+            {
+                item.attr("title","取消收藏");
+                item.attr("id",'cancel-collect');
+                item.css("background","#C0FF3E");
+            }
+        });
+
+        return false;
+    });
+
+  $("#bar-ctn a").click(function(e){
+        e.preventDefault();
+        var url = this.href;
+
+        $("#bar-ctn div").removeAttr("class");
+        $("#bar-ctn li").removeAttr("class");
+        var sub = $(this).children();
+        sub.addClass("select");
+
+        if(history.pushState){
+            var state=({
+              url: url, title:''
+             });
+             window.history.pushState(state, '', url);
+        }
+        else
+        {
+           window.location.href=url;
+        }
+
+        $.get(url,function(responseText){
+            var dom = $(responseText);
+            $("#posts-ctn").html(dom.find("#posts-ctn").html());
+
+        });
+
+        return false;
+    });
+
+   $("#log-date #year").click(function(){
+        var year = $(this).data('year');
+        $("#log-date #"+year).slideToggle(100);
+     });
+
+
 
 });
 
@@ -359,7 +415,7 @@ function validate_form(thisform)
 
 window.onscroll = function(){
    var t = document.documentElement.scrollTop || document.body.scrollTop;
-   var back_top = document.getElementById( "back-top" );
+   var back_top = document.getElementById("back-top");
    if( t < 300 ) {
         back_top.style.display = "none";
         //$("#tag-bar").removeAttr("style");
@@ -380,4 +436,7 @@ function add_pv(post_id)
     });
 }
 
-
+function to_top() {
+         $("body,html").animate({scrollTop:0}, 200);
+         return false;
+     }

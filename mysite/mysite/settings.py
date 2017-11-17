@@ -152,7 +152,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = "smtp.exmail.qq.com"
 EMAIL_HOST_USER = 'admin@fuwenlueying.com'
-EMAIL_HOST_PASSWORD = ""
+EMAIL_HOST_PASSWORD = "Guang6659219"
 EMAIL_POST = 465
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_USE_SSL = True

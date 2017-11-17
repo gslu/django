@@ -1,0 +1,129 @@
+{% extends "blog/base.html" %}
+
+{% load blog_tags %}
+{% load static %}
+
+{% block title %}{{ user.profile.nickname }} 日志-浮文掠影{% endblock %}
+
+{% block header %}
+<div class="log-page">
+    {% include "blog/header.html" %}
+</div>
+{% endblock %}
+
+{% block bodyclass %}
+<body class="log">
+{% endblock %}
+
+
+{% block content %}
+
+<div id="log-content">
+    <div id="bar-ctn">
+        <h2>日志</h2>
+        <div id="calendar">
+        </div>
+        <div id="cl-ct">
+        {% if auth_user.is_authenticated %}
+            <a href="{% url "blog:my_collection" user.id %}">
+            <div id="my-collection" {% ifequal select "collection" %}class="select"{% endifequal %}>
+                我收藏的文章
+            </div>
+            </a>
+            <a href="{% url "blog:my_follow" user.id %}">
+            <div id="my-follow" {% ifequal select "follow" %}class="select"{% endifequal %}>
+                我的关注
+            </div>
+            </a>
+        {% else %}
+            <a href="{% url "blog:my_collection" user.id %}">
+            <div id="my-collection" {% ifequal select "collection" %}class="select"{% endifequal %}>
+                Ta收藏的文章
+            </div>
+            </a>
+            <a href="{% url "blog:my_follow" user.id %}">
+            <div id="my-follow" {% ifequal select "follow" %}class="select"{% endifequal %}>
+                Ta的关注
+            </div>
+            </a>
+        {% endif %}
+        </div>
+
+        <div id="log-date">
+            {% get_years dates as years %}
+            {% for year in years %}
+
+            <a href="javascript:void(0)" class="year-menu">
+            <div id="year" data-year="{{ year }}">
+                {{ year }}年
+            </div>
+            </a>
+            {% get_months dates year as months %}
+            <ul id="{{ year }}" {% ifnotequal select_y year %}hidden{% endifnotequal %}>
+            {% for month in months %}
+            <a href="{% url "blog:log_by_date" user.id year month.month %}">
+            <li id="month" {% ifequal select_y year %}{% ifequal select_m month.month %}class="select"{% endifequal %}{% endifequal %} >
+                {{ month.month }}月  ({{ month.post_count }})
+            </li>
+            </a>
+            {% endfor %}
+            </ul>
+            {% endfor %}
+
+        </div>
+    </div>
+    <div id="posts-ctn">
+        <div id="posts-ctn-head">
+            {% ifequal select "follow" %}<h2>Ta的关注</h2>{% endifequal %}
+            {% ifequal select "collection" %}<h2>Ta收藏的文章</h2>{% endifequal %}
+            {% if select_y %}<h2>{{ select_y }}年-{{ select_m }}月</h2>{% endif %}
+        </div>
+        <div id="right-content">
+            {% for post in posts%}
+            <a href="{{ post.get_absolute_url }}">
+            <div id="post">
+                <h2>{{ post.title }}</h2>
+                {% autoescape off %}
+                {% get_text post.body as body %}
+                <span>{{ body | slice:"80" }}...</span>
+                {% endautoescape %}
+            </div>
+            </a>
+            {% endfor %}
+
+            {% for collection in collections%}
+            <a href="{{ collection.collect_post.get_absolute_url }}">
+            <div id="post">
+                <h2>{{ collection.collect_post.title }}</h2>
+                {% autoescape off %}
+                {% get_text collection.collect_post.body as body %}
+                <span>{{ body | slice:"80" }}...</span>
+                {% endautoescape %}
+            </div>
+            </a>
+            {% endfor %}
+
+            {% for follow in follows%}
+            <a href='{% url "blog:post_list" follow.user.id %}'>
+                <div id="follow">
+                     <div class="author-img">
+                          {% if follow.user.profile.image %}
+                               <img src="{{ MEDIA_URL }}{{ follow.user.profile.image }}">
+                          {% else %}
+                               <img src='{% static "blog/img/user_default.jpeg" %}'>
+                          {% endif %}
+                     </div>
+                     <div class="author-nickname">
+                         <p>{{ follow.user.profile.nickname | slice:"12" }}</p>
+                     </div>
+                     <div class="motto">
+                         <p>{{ follow.user.profile.motto | slice:"20" }}</p>
+                     </div>
+                </div>
+            </a>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

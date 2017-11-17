@@ -113,8 +113,7 @@ class PostClass(models.Model):
 
     STATUS_CHOICES = (
                     ('self', '原创'),
-                    ('reprint', '转载'),
-                    ('collect', '收藏'))
+                    ('reprint', '转载'))
     post_type = models.CharField(max_length=10, choices=STATUS_CHOICES, default='self')
 
     def __unicode__(self):
@@ -186,4 +185,11 @@ class UserRelation(models.Model):
     user = models.ForeignKey(User,related_name="follower")
     follower = models.ForeignKey(User,related_name="follow")
     follow_time = models.DateTimeField(auto_now_add=True)
+
+class Collection(models.Model):
+    user = models.ForeignKey(User,related_name="collections")
+    collect_post = models.ForeignKey(Post,related_name="be_collect")
+    collect_time = models.DateTimeField(auto_now_add=True)
+    def __unicode__(self):
+        return "{}".format(self.collect_post)
 

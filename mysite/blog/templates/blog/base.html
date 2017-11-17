@@ -3,6 +3,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
+        <meta name="baidu-site-verification" content="k0mSx7lCzo" />
         <link rel="icon" href='{% static "blog/img/icon-title.ico" %}' type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv=”X-UA-Compatible” content="IE=edge,chrome=1">
@@ -37,22 +38,21 @@
 
                     {% block sidebar %}
                     {% endblock %}
+                    {% block column-bar %}
+                        <div class="column-bar">
+                            <a href="javascript:void(0)" onclick="to_top()">
+                                <div id="back-top" title="回到顶部">
+                                    <img src="{% static "blog/img/tp.png" %}">
+                                </div>
+                            </a>
+                        </div>
+                    {% endblock %}
                     </div>
                 </div>
             </div>
 
             {% block footer %}
                 {% include "blog/footer.html" %}
-            {% endblock %}
-
-            {% block column-bar %}
-                <div class="column-bar">
-                    <a href="javascript:void(0)">
-                        <div id="back-top" title="回到顶部">
-                            <img src="{% static "blog/img/tp.png" %}">
-                        </div>
-                    </a>
-                </div>
             {% endblock %}
     </body>
 
