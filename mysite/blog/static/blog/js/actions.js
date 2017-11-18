@@ -55,6 +55,7 @@ $(document).ready(function() {
             return false;
      });
 
+/*
     $('.nav-ul a').on('click', function(e) {
       e.preventDefault();  // 阻止链接跳转
       var url = this.href;  // 保存点击的地址
@@ -94,7 +95,7 @@ $(document).ready(function() {
       });
 
     });
-
+*/
 
     $('#books a').click(function(e){
         e.preventDefault();
