@@ -59,29 +59,17 @@
     <hr/><br/>
 
     <div id="post-class">
-        {% if auth_user.is_authenticated %}
+        {% get_person auth_user user as person %}
             <div id="collection">
                 <a href="{% url "blog:my_collection" user.id %}">
-                <div id="before"><img src='{% static "blog/img/collect.png" %}'></div>我收藏的文章
+                <div id="before"><img src='{% static "blog/img/collect.png" %}'></div>{{ person }}收藏的文章
                 </a>
             </div>
             <div id="care-topic">
                 <a href="{% url "blog:my_follow" user.id %}">
-                <div id="before"><img src='{% static "blog/img/care.png" %}'></div>我的关注
+                <div id="before"><img src='{% static "blog/img/care.png" %}'></div>{{ person }}的关注
                 </a>
             </div>
-        {% else %}
-            <div id="collection">
-                <a href="{% url "blog:my_collection" user.id %}">
-                <p><div id="before"><img src='{% static "blog/img/collect.png" %}'></div>Ta收藏的文章</p>
-                </a>
-            </div>
-            <div id="care-topic">
-                <a href="{% url "blog:my_follow" user.id %}">
-                <p><div id="before"><img src='{% static "blog/img/care.png" %}'></div>Ta的关注</p>
-                </a>
-            </div>
-        {% endif %}
     </div>
 
     <h3>最新文章</h3>

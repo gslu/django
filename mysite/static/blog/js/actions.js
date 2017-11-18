@@ -349,7 +349,6 @@ $(document).ready(function() {
   $("#bar-ctn a").click(function(e){
         e.preventDefault();
         var url = this.href;
-
         $("#bar-ctn div").removeAttr("class");
         $("#bar-ctn li").removeAttr("class");
         var sub = $(this).children();

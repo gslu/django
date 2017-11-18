@@ -24,29 +24,17 @@
         <div id="calendar">
         </div>
         <div id="cl-ct">
-        {% if auth_user.is_authenticated %}
+        {% get_person auth_user user as person %}
             <a href="{% url "blog:my_collection" user.id %}">
             <div id="my-collection" {% ifequal select "collection" %}class="select"{% endifequal %}>
-                我收藏的文章
+                {{ person }}收藏的文章
             </div>
             </a>
             <a href="{% url "blog:my_follow" user.id %}">
             <div id="my-follow" {% ifequal select "follow" %}class="select"{% endifequal %}>
-                我的关注
+                {{ person }}的关注
             </div>
             </a>
-        {% else %}
-            <a href="{% url "blog:my_collection" user.id %}">
-            <div id="my-collection" {% ifequal select "collection" %}class="select"{% endifequal %}>
-                Ta收藏的文章
-            </div>
-            </a>
-            <a href="{% url "blog:my_follow" user.id %}">
-            <div id="my-follow" {% ifequal select "follow" %}class="select"{% endifequal %}>
-                Ta的关注
-            </div>
-            </a>
-        {% endif %}
         </div>
 
         <div id="log-date">

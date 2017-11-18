@@ -119,6 +119,14 @@ def is_collected(post,user):
         return True
 
 
+@register.assignment_tag
+def get_person(auth_user,user):
+    if auth_user.is_authenticated() and user==auth_user:
+        return "我"
+    else:
+        return "Ta"
+
+
 
 
 
