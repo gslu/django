@@ -445,7 +445,7 @@ div.header-nav ul li a
     min-height: 600px;
 }
 
-#content ,#pd-content, #pd-content {
+#content ,#pd-content {
     float:left;
     height:auto;
     width:700px;
@@ -454,7 +454,7 @@ div.header-nav ul li a
 
 }
 
-#pd-content ,#ps-content {
+#pd-content {
     width:1020px;
 }
 
@@ -745,7 +745,9 @@ div.header-nav ul li a
 
 #sidebar .follow{min-width:100px;}
 
-#sidebar #follow,#sidebar #followed{
+#sidebar #follow,#sidebar #followed,
+#about-fl-msg #follow,#about-fl-msg #followed
+{
     display:inline-block;
     width:80px;
     height:25px;
@@ -760,10 +762,13 @@ div.header-nav ul li a
     line-height:25px;
 }
 
-#sidebar #followed{background:#BCEE68;}
+#sidebar #followed,#about-fl-msg #followed
+{background:#BCEE68;}
 
 #sidebar #follow:focus,#sidebar #follow:hover,
-#sidebar #followed:focus,#sidebar #followed:hover
+#sidebar #followed:focus,#sidebar #followed:hover,
+#about-fl-msg #follow:focus,#about-fl-msg #follow:hover,
+#about-fl-msg #followed:focus,#about-fl-msg #followed:hover
 {background:#FFD39B;}
 
 
@@ -1347,6 +1352,7 @@ div.select-tag
 
 #vbar {
     float:left;
+    width: 240px;
     min-height:550px;
     margin-top:15px;
     background:#FCFCFC;
@@ -1358,27 +1364,29 @@ div.select-tag
 }
 
 
-#recent-access,#recent-comment,#message,#personal,
-#send-message,#care
+#recent-access,#recent-comment,#message,#personal
 {
-    width:220px;
+    width:200px;
     padding:5px;
+    margin-bottom:2px;
+    display:inline-block;
     line-height:0px;
-    margin:5px auto;
     background:#CDC673;
     border-radius:5px;
 }
 
-
-#send-message,#care{
-    width:100px;
+#send-message
+{
     display:inline-block;
-    margin-top:0px;
-    background:#BCEE68;
+    padding:6px 30px 6px 30px;
+    background:#CDC673;
+    border-radius:8px;
+    border:1px solid #7CCD7C;
 }
 
-#send-message:focus,#care:focus,
-#send-message:hover,#care:hover
+
+#send-message:focus,
+#send-message:hover
 {
     background:#7CCD7C;
 }
@@ -1386,10 +1394,7 @@ div.select-tag
 #personal{margin-top:10px;}
 
 
-#ra-content #recent-access,
-#rc-content #recent-comment,
-#rm-content #message,
-#ps-content #personal
+#about-menu .select
 {
     background:#FFA54F;
 }

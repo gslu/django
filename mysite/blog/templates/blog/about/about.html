@@ -45,16 +45,40 @@
                 <h3>建立时间:{{ user.date_joined | date:"Y-m-d H:i" }}</h3>
                 <h3>最近登录:{{ user.last_login | date:"Y-m-d H:i" }}</h3>
                 <br/>
-                <div>
-                    <a href=""><div id="send-message"><h2>写信</h2></div></a>
-                    <a href=""><div id="care"><h2>+关注</h2></div></a>
+                <div id="about-fl-msg">
+                    <a href=""><div id="send-message">写信</div></a>
+                    {% if auth_user.is_authenticated %}
+                    {% is_follower auth_user user as IsFollower %}
+                    {% if IsFollower %}
+                    <a id="follow-link" href="{% url "blog:edit_follow" user.id %}">
+                        <div id="followed">
+                            +关注 √
+                        </div>
+                    </a>
+
+                    {% else %}
+                    <a id="follow-link" href="{% url "blog:edit_follow" user.id %}">
+                        <div id="follow">
+                            +关注
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% else %}
+                    <a id="follow-after-login" href="{% url "blog:user_login" %}">
+                        <div id="follow">
+                            +关注
+                        </div>
+                    </a>
+                    {% endif %}
                 </div>
                 <hr/>
             </div>
-            <a href="{% url "blog:about" user.id "ps" %}"><div id="personal"><h2>个人</h2></div></a>
-            <a href="{% url "blog:about" user.id "ra" %}"><div id="recent-access"><h2>来访</h2></div></a>
-            <a href="{% url "blog:about" user.id "rc" %}"><div id="recent-comment"><h2>评论</h2></div></a>
-            <a href="{% url "blog:about" user.id "rm" %}"><div id="message"><h2>留言</h2></div></a>
+            <div id="about-menu">
+            <a href="{% url "blog:about" user.id "ps" %}"><div id="personal" {% ifequal option "ps" %}class="select"{% endifequal %}><h2>个人</h2></div></a>
+            <a href="{% url "blog:about" user.id "ra" %}"><div id="recent-access" {% ifequal option "ra" %}class="select"{% endifequal %}><h2>来访</h2></div></a>
+            <a href="{% url "blog:about" user.id "rc" %}"><div id="recent-comment" {% ifequal option "rc" %}class="select"{% endifequal %}><h2>评论</h2></div></a>
+            <a href="{% url "blog:about" user.id "rm" %}"><div id="message" {% ifequal option "rm" %}class="select"{% endifequal %}><h2>留言</h2></div></a>
+            </div>
         </div>
 
         <div id="about-row">

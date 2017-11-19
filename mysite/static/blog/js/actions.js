@@ -375,6 +375,36 @@ $(document).ready(function() {
         return false;
     });
 
+
+  $("#about-menu a").click(function(e){
+        e.preventDefault();
+        var url = this.href;
+        $("#about-menu div").removeAttr("class");
+        var sub = $(this).children();
+        sub.addClass("select");
+
+        if(history.pushState){
+            var state=({
+              url: url, title:''
+             });
+             window.history.pushState(state, '', url);
+        }
+        else
+        {
+           window.location.href=url;
+        }
+
+        $.get(url,function(responseText){
+            var dom = $(responseText);
+            $("#about-row").html(dom.find("#about-row").html());
+
+        });
+
+        return false;
+    });
+
+
+
    $("#log-date #year").click(function(){
         var year = $(this).data('year');
         $("#log-date #"+year).slideToggle(100);

@@ -373,7 +373,7 @@ def about(request,user_id,option):
         return Http404
     user = get_object_or_404(User, id=user_id)
 
-    def getPageAndObjs(obj,per_page):
+    def getPageAndQuerySet(obj,per_page):
         paginator = Paginator(obj,per_page)
         page = request.GET.get('page')
         try:
@@ -387,20 +387,20 @@ def about(request,user_id,option):
 
     if option == "ra":
         ra = user.access_records.order_by('access_time')
-        page,ra = getPageAndObjs(ra,27)
+        page,ra = getPageAndQuerySet(ra,27)
     else:
         ra = None
 
     if option == "rc":
         posts = Post.objects.filter(author=user)
         rc = Comment.objects.filter(post__in=posts).order_by("updated")
-        page, rc = getPageAndObjs(rc, 10)
+        page, rc = getPageAndQuerySet(rc, 8)
     else:
         rc = None
 
     if option == "rm":
         rm = user.receive_msg.order_by("send_time")
-        page, rm = getPageAndObjs(rm, 15)
+        page, rm = getPageAndQuerySet(rm, 15)
     else:
         rm = None
 
