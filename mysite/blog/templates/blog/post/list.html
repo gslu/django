@@ -10,6 +10,14 @@
     {% endif %}
 {% endblock %}
 
+{% block keyword %}
+    {% if tag %}
+    <meta http-equiv="keywords" content="{{ user.profile.nickname }} {{ tag.name }}-标签-浮文掠影">
+    {% else %}
+    <meta http-equiv="keywords" content="{{ user.profile.nickname }}-浮文掠影">
+    {% endif %}
+{% endblock %}
+
 {% block header %}
 <div class="home-page">
     {% include "blog/header.html"　%}

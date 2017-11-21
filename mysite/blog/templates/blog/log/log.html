@@ -5,6 +5,10 @@
 
 {% block title %}{{ user.profile.nickname }} 日志-浮文掠影{% endblock %}
 
+{% block keyword %}
+    <meta http-equiv="keywords" content="{{ user.profile.nickname }} 日志-浮文掠影">
+{% endblock %}
+
 {% block header %}
 <div class="log-page">
     {% include "blog/header.html" %}

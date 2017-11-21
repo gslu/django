@@ -3,6 +3,10 @@
 {% load static %}
 {% block title %}{{ post.title }}-浮文掠影{% endblock %}
 
+{% block keyword %}
+    <meta http-equiv="keywords" content="{{ post.title }}-浮文掠影">
+{% endblock %}
+
 {% block header %}
 <div class="detail-page">
     {% include "blog/header.html" %}
