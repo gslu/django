@@ -5,34 +5,19 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import  get_object_or_404
-from django.conf import settings
 from blog.models import PictureRecord
 from .forms import *
-import json
-import datetime
-import os,uuid
-
-def handle_uploaded_file(file,dest_path):
-    with open(dest_path,'wb+') as destination:
-        for chunk in file.chunks():
-            destination.write(chunk)
+import json,os
 
 @login_required
 @csrf_exempt
 def uploadImage(request):
 
     file = request.FILES.get('fileData')  # 得到文件对象
-    if file:
-        today = datetime.datetime.today()
-        dest_dir = settings.MEDIA_ROOT + 'article_image/'
-        ext = os.path.splitext(file.name)[1]
-        file_name = "{}-{}-{}-{}{}".format(today.year, today.month, today.day, uuid.uuid1(), ext)
-        #绝对路径
-        dest_path = "{}{}".format(dest_dir, file_name)
-        handle_uploaded_file(file,dest_path)  # 上传文件
-        PictureRecord.objects.create(user=request.user,picture='article_image/{}'.format(file_name))
-        # 得到JSON格式的返回值
-        upload_info = {"success": True, 'file_path': settings.MEDIA_URL + 'article_image/'+ file_name}
+    form = ArticleImageForm(request.POST,{"picture":file})
+    if form.is_valid():
+        pic = PictureRecord.objects.create(user=request.user, picture=form.cleaned_data["picture"])
+        upload_info = {"success": True, 'file_path': pic.picture.url}
     else:
         upload_info = {"success": False, 'file_path': None,"msg":"文件上传失败"}
     upload_info = json.dumps(upload_info)
@@ -48,7 +33,7 @@ def addImage(request):
         if form.is_valid():
             upf.image = form.cleaned_data["image"]
             upf.save()
-        ret = json.dumps({"path":"{}{}".format(settings.MEDIA_URL,upf.image)})
+        ret = json.dumps({"path":"{}".format(upf.image.url)})
     else:
         ret = json.dumps({"path":"error"})
     return HttpResponse(ret, content_type="application/json")
@@ -62,7 +47,7 @@ def addBgimg(request):
         if form.is_valid():
             upf.bgimg = form.cleaned_data["bgimg"]
             upf.save()
-        ret = json.dumps({"path":"{}{}".format(settings.MEDIA_URL,upf.bgimg)})
+        ret = json.dumps({"path":"{}".format(upf.bgimg.url)})
     else:
         ret = json.dumps({"path":"error"})
     return HttpResponse(ret, content_type="application/json")

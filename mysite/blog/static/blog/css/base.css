@@ -689,22 +689,21 @@ div.header-nav ul li a
     height: auto;
     padding:30px;
     min-height:500px;
-    background:#FCFCFC;
+    background:#454545;
     border-radius:12px;
+    font-size:0;
 }
 
 #img-thumb
 {
     display:inline-block;
-    width:236px;
-    height:200px;
-    border-radius:12px;
+    width:120px;
+    height:120px;
 }
 
 #img-thumb img{
     width: 100%;
     height:100%;
-    border-radius:12px;
 }
 
 #dowebok

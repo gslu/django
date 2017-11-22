@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'taggit',
+    'easy_thumbnails',
 ]
 
 
@@ -164,3 +165,11 @@ MEDIA_URL = "/media/"
 
 #login url
 LOGIN_URL = '/login/'
+
+THUMBNAIL_ALIASES = {
+  '': {
+    '60x60' : {'size': (60,60), 'crop':True},
+    '120x120' : {'size': (120,120), 'crop':True},
+    '250x250' : {'size': (250,250), 'crop':True},
+  },
+}

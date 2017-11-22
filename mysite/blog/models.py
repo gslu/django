@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
+from easy_thumbnails.fields import ThumbnailerImageField
 from django.utils import timezone
 from taggit.managers import TaggableManager
 from uuslug import slugify
@@ -174,11 +175,12 @@ class MessageRecord(models.Model):
 
 class PictureRecord(models.Model):
     user = models.ForeignKey(User,related_name="pictures")
-    picture = models.CharField(max_length=300,verbose_name="图片")
+    picture = models.ImageField(verbose_name=u"图片", upload_to="article_image",
+                      blank=True, storage=ImageStorage())
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     def __unicode__(self):
-        return self.picture
+        return self.picture.url
 
 
 class UserRelation(models.Model):

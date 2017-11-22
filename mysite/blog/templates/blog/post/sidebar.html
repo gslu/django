@@ -1,10 +1,11 @@
 {% load blog_tags %}
+{% load thumbnail %}
 {% load static %}
 <div id="sidebar">
     <div class="owner-img">
         <a href='{% url "blog:post_list" user.id %}'>
     {% if user.profile.image %}
-        <img src="{{ MEDIA_URL }}{{ user.profile.image }}">
+        <img src="{{ user.profile.image|thumbnail_url:'250x250' }}"/>
     {% else %}
         <img src='{% static "blog/img/user_default.jpeg" %}'>
     {% endif %}

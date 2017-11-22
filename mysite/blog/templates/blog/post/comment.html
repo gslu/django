@@ -1,4 +1,5 @@
 {% load static %}
+{% load thumbnail %}
 <div class="comment-form">
 
     {% for comment in comments %}
@@ -7,7 +8,7 @@
          <div class="author-img">
               <a href='{% url "blog:post_list" comment.user.id %}'>
               {% if comment.user.profile.image %}
-                   <img src="{{ MEDIA_URL }}{{ comment.user.profile.image }}">
+                   <img src="{{ comment.user.profile.image|thumbnail_url:'60x60'  }}">
               {% else %}
                    <img src='{% static "blog/img/user_default.jpeg" %}'>
               {% endif %}

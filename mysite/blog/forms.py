@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.contrib.auth.forms import PasswordResetForm
-from .models import Comment,Profile
+from .models import Comment,Profile,PictureRecord
 from django.contrib.auth.models import User
 
 class EmailPostForm(forms.Form):
@@ -23,6 +23,10 @@ class BgimgForm(forms.ModelForm):
         model = Profile
         fields = ("bgimg",)
 
+class ArticleImageForm(forms.ModelForm):
+    class Meta:
+        model = PictureRecord
+        fields = ("picture",)
 
 class BasicForm(forms.ModelForm):
     class Meta:

@@ -1,5 +1,6 @@
 {% extends "blog/base.html" %}
 {% load blog_tags %}
+{% load thumbnail %}
 {% load static %}
 
 {% block addhead %}
@@ -25,7 +26,7 @@
         {% for p in pictures %}
             <li>
                 <div id="img-thumb">
-                    <img data-original="{{ MEDIA_URL }}{{ p.picture }}" src="{{ MEDIA_URL }}{{ p.picture }}" alt="图片{{ forloop.counter }}">
+                    <img data-original="{{ p.picture.url }}" src="{{ p.picture|thumbnail_url:'120x120'  }}" alt="图片{{ forloop.counter }}">
                 </div>
             </li>
         {% endfor %}

@@ -39,16 +39,9 @@ def save_postclass(sender, instance, **kwargs):
 @receiver(post_delete, sender=PictureRecord)
 def remove_image(sender, instance, **kwargs):
     try:
-        os.remove(os.path.join(settings.MEDIA_ROOT,instance.picture))
+        os.remove(os.path.join(settings.MEDIA_ROOT,str(instance.picture)))
     except:
         pass
-
-@receiver(post_save, sender=Profile)
-def create_picture_record(sender, instance, **kwargs):
-    if instance.image and os.path.exists(os.path.join(settings.MEDIA_ROOT,instance.image.url)):
-        PictureRecord.objects.get_or_create(user=instance.user,picture=instance.image.url)
-    if instance.bgimg and os.path.exists(os.path.join(settings.MEDIA_ROOT,instance.bgimg.url)):
-        PictureRecord.objects.get_or_create(user=instance.user, picture=instance.bgimg.url)
 
 #@receiver(post_save,sender=Profile,dispatch_uid="profile_post_save")
 #def on_delete(sender,**kwargs):
