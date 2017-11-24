@@ -1,4 +1,5 @@
 {% load blog_tags %}
+{% load thumbnail %}
 {% load static %}
 
 <div id="ra-page">
@@ -7,7 +8,7 @@
         <div id="simgle">
              <div class="author-img">
                   {% if access.guest.profile.image %}
-                       <img src="{{ MEDIA_URL }}{{ access.guest.profile.image }}">
+                       <img src="{{ access.guest.profile.image|thumbnail_url:'60x60'  }}">
                   {% else %}
                        <img src='{% static "blog/img/user_default.jpeg" %}'>
                   {% endif %}

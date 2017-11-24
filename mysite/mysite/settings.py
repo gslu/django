@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8j%d%#b^ijs$g#t^71(2ubzz6g23-lh9tpu!b5gs!d@s2gsq31'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'taggit',
+    'easy_thumbnails',
 ]
 
 
@@ -88,8 +89,8 @@ DATABASES = {
         'NAME': 'mysite',
         'USER': 'lsg01',
         'PASSWORD': '',
-        #'HOST': '127.0.0.1',
-        'HOST':'rm-wz9o52bgc2bbytake.mysql.rds.aliyuncs.com',
+        'HOST': '127.0.0.1',
+        #'HOST':'rm-wz9o52bgc2bbytake.mysql.rds.aliyuncs.com',
         'PORT': 3306,
 		'OPTIONS':{'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
 					'charset':'utf8',
@@ -164,3 +165,11 @@ MEDIA_URL = "/media/"
 
 #login url
 LOGIN_URL = '/login/'
+
+THUMBNAIL_ALIASES = {
+  '': {
+    '60x60' : {'size': (60,60), 'crop':True},
+    '120x120' : {'size': (120,120), 'crop':True},
+    '250x250' : {'size': (250,250), 'crop':True},
+  },
+}

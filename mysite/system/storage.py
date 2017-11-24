@@ -14,7 +14,7 @@ class ImageStorage(FileSystemStorage):
     def _save(self, name, content):
 
         # 文件扩展名
-        ext = os.path.splitext(name)[1]
+        ext = ".JPEG"
         # 文件目录
         d = os.path.dirname(name)
         # 定义文件名，年月日时分秒随机数

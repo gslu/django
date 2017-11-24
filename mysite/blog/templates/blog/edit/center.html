@@ -1,5 +1,6 @@
 {% extends "blog/base.html" %}
 {% load blog_tags %}
+{% load thumbnail %}
 {% load static %}
 
 {% block addhead %}
@@ -29,7 +30,7 @@
                     <div class="owner-img">
                         <a href='{% url "blog:post_list" auth_user.id %}'>
                     {% if user.profile.image %}
-                        <img src="{{ MEDIA_URL }}{{ auth_user.profile.image }}">
+                        <img src="{{ auth_user.profile.image|thumbnail_url:'250x250'  }}">
                     {% else %}
                         <img src='{% static "blog/img/user_default.jpeg" %}'>
                     {% endif %}
@@ -57,7 +58,7 @@
                     <div class="owner-img">
                         <a href='{% url "blog:post_list" auth_user.id %}'>
                     {% if auth_user.profile.bgimg %}
-                        <img src="{{ MEDIA_URL }}{{ auth_user.profile.bgimg }}">
+                        <img src="{{ auth_user.profile.bgimg.url }}">
                     {% else %}
                         <img src='{% static "blog/img/user_default.jpeg" %}'>
                     {% endif %}
@@ -96,6 +97,8 @@
         <input id="save-setting" type="button" value="保存修改">
     </form>
 </div>
-
+<a href="{% url 'blog:post_list' auth_user.id %}">
+<div id="back-home">返回首页</div>
+</a>
 <div id="save-status">成功变更头像</div>
 {% endblock %}

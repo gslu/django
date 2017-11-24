@@ -1,9 +1,10 @@
 {% load static %}
+{% load thumbnail %}
 <div class="post-author">
      <div class="author-img">
           <a href='{% url "blog:post_list" post.author.id %}'>
           {% if post.author.profile.image %}
-               <img src="{{ MEDIA_URL }}{{ post.author.profile.image }}">
+               <img src="{{ post.author.profile.image|thumbnail_url:'60x60'  }}">
           {% else %}
                <img src='{% static "blog/img/user_default.jpeg" %}'>
           {% endif %}

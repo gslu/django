@@ -1,4 +1,5 @@
 {% load static %}
+{% load thumbnail %}
 <div id="nav">
     <div id="logo">
         <!--未鉴权的个人首页暂时充当网站首页-->
@@ -20,7 +21,7 @@
              <div class="author-img">
                   <a id="user" href='{% url "blog:post_list" auth_user.id %}'>
                   {% if auth_user.profile.image %}
-                       <img src="{{ MEDIA_URL }}{{ auth_user.profile.image }}">
+                       <img src="{{ auth_user.profile.image|thumbnail_url:'60x60' }}">
                   {% else %}
                        <img src='{% static "blog/img/user_default.jpeg" %}'>
                   {% endif %}
