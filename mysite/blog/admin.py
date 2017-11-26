@@ -56,6 +56,9 @@ class PictureRecordAdmin(admin.ModelAdmin):
 class UserRelationAdmin(admin.ModelAdmin):
     list_display = ("user","follower","follow_time")
 
+class CollectionAdmin(admin.ModelAdmin):
+    list_display = ("user","collect_post","collect_time")
+
 admin.site.register(Post,PostAdmin)
 admin.site.register(Comment,CommentAdmin)
 admin.site.register(EmailVerifyRecord,EmailVerifyRecordAdmin)
@@ -66,6 +69,7 @@ admin.site.register(PostClass,PostClassAdmin)
 admin.site.register(Book,BookAdmin)
 admin.site.register(PictureRecord,PictureRecordAdmin)
 admin.site.register(UserRelation,UserRelationAdmin)
+admin.site.register(Collection,CollectionAdmin)
 admin.site.register(Pv)
 
 
