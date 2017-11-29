@@ -237,7 +237,7 @@ def postList(request,user_id, tag_name=None):
                                                  'user':user,
                                                  'auth_user':request.user})
 
-@cache_page(60*10)
+
 def postDetail(request,year,month,day,slug,id):
     post = get_object_or_404(Post, slug=slug,status='published',publish__year=year,
                                     publish__month=month, #要setting设置USE_TZ=False,否则不识别month,day
