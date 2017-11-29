@@ -47,13 +47,15 @@
                 {% endautoescape %}
             </p>
             <p class="tags">
-                 <div id="pl-tag"><img src="{% static "blog/img/tag.png" %}"></div>
+                 <!--<div id="pl-tag"><img src="{% static "blog/img/tag.png" %}"></div>-->
+                <span>
                 {% for tag in post.tags.all %}
                     <a href="{% url "blog:post_list_by_tag" user.id tag.name %}">
                     {{ tag.name }}
                     </a>
                     {% if not forloop.last %}, {% endif %}
                 {% endfor %}
+                </span>
                 {% get_accesstimes post as accesstimes %}
                 &nbsp;&nbsp;|&nbsp;&nbsp;阅读({{ accesstimes }})
                 {% get_comments_count post as total_comments %}

@@ -63,12 +63,12 @@
         {% get_person auth_user user as person %}
             <div id="collection">
                 <a href="{% url "blog:my_collection" user.id %}">
-                <div id="before"><img src='{% static "blog/img/collect.png" %}'></div>{{ person }}收藏的文章
+                <span>{{ person }}收藏的文章</span>
                 </a>
             </div>
             <div id="care-topic">
                 <a href="{% url "blog:my_follow" user.id %}">
-                <div id="before"><img src='{% static "blog/img/care.png" %}'></div>{{ person }}的关注
+                <span>{{ person }}的关注</span>
                 </a>
             </div>
     </div>
@@ -78,7 +78,9 @@
     <ul class="last-post">
         {% for post in latest_posts %}
         <li>
-            <a href="{{ post.get_absolute_url }}"><div id="before"><img src='{% static "blog/img/post.png" %}'></div>{{ post.title }}</a>
+            <a href="{{ post.get_absolute_url }}">
+                <span>{{ post.title }}</span>
+            </a>
         </li>
         {% endfor %}
     </ul>

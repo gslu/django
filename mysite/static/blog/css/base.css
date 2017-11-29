@@ -869,19 +869,31 @@ div.column-bar p
     line-height:20px;
 }
 
-
-#before{
-    width:15px;
-    height:16px;
-    margin:7px;
-    display:inline-block;
+#sidebar span
+{
+    line-height:30px;
 }
 
-#before img{
-    width:100%;
-    height:100%;
-    vertical-align: -2px;
-    }
+#collection span:before
+{
+    content:url(../img/collect.svg);
+    vertical-align:-3px;
+    margin-right:5px;
+}
+
+#care-topic span:before
+{
+    content:url(../img/care.svg);
+    vertical-align:-3px;
+    margin-right:5px;
+}
+
+.last-post span:before
+{
+    content:url(../img/post.svg);
+    vertical-align:-3px;
+    margin-right:5px;
+}
 
 
 div.introduce{
@@ -1080,19 +1092,11 @@ div.post-list h2, div.post-detail h2, div.post-share h2
     color:#262626;
 }
 
-#pl-tag
+div.post-list .tags span:before
 {
-    display:inline-block;
-    width:20px;
-    height:18px;
-    vertical-align: middle;
-    margin-right: 5px;
-}
-
-#pl-tag img
-{
-    width:100%;
-    height:100%;
+    content:url(../img/tag.svg);
+    vertical-align:-5px;
+    margin-right:5px;
 }
 
 div.post-detail h1, div.post-share h1
