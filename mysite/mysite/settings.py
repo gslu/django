@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog',
     'api',
     'taggit',
+    'rest_framework',
     'easy_thumbnails',
 ]
 

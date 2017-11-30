@@ -5,8 +5,8 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import  get_object_or_404
-from blog.models import PictureRecord
-from .forms import *
+from .models import PictureRecord,Profile
+from .forms import ArticleImageForm,ImageForm,BgimgForm
 import json,os
 
 @login_required

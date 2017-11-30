@@ -3,7 +3,7 @@
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from blog.models import EmailVerifyRecord
+from ..models import EmailVerifyRecord
 from email.mime.text import MIMEText
 from email.header import Header
 import smtplib
