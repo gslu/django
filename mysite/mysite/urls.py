@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin10086/', admin.site.urls),
     #url(r'^blog/$',RedirectView.as_view(url="/"),name="index"),
     url(r'^', include('blog.urls',namespace='blog',app_name='blog')),
+    url(r'^api/', include('api.urls',namespace='api',app_name='api')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+\
