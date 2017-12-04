@@ -6,7 +6,7 @@ from blog.models import Post ,Comment,Profile
 
 class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(required=True,allow_blank=False,min_length=5,max_length=50)
-    password = serializers.CharField(required=True,allow_blank=False,min_length=6,max_length=100)
+    password = serializers.CharField(required=True,allow_blank=False,min_length=6,max_length=100,write_only=True)
     email = serializers.EmailField(required=True,allow_blank=False,max_length=50)
     is_active = serializers.BooleanField(default=False,read_only=True)
 
@@ -32,11 +32,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     #author = serializers.SlugRelatedField(slug_field='username', read_only=True)
     #author = UserSerializer()
+
     author = serializers.HyperlinkedRelatedField(view_name='api:user-detail',
                                                  lookup_field='id',read_only=True)
+    body = serializers.CharField(allow_blank=True)
     class Meta:
         model = Post
         fields = '__all__'
+        #read_only_fields = ('publish','slug')
+
 
 
 class CommentSerializer(serializers.ModelSerializer):

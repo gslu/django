@@ -13,6 +13,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from django.utils import timezone
 from taggit.models import Tag
 from .models import Post,Comment,EmailVerifyRecord,Book,PictureRecord,UserRelation,Collection,Pv
 from .forms import *
@@ -48,7 +49,6 @@ def userLogin(request):
     else:
         # 获取不到,则跳转到个人中心，用/user/1/暂时充当
         referer = request.META.get('HTTP_REFERER','/')
-        print referer
         if 'register' in referer or 'login' in referer:
             request.session['login_from'] = '/'
         else:
@@ -109,7 +109,6 @@ def userRegister(request):
 
 
 def verifyRegister(request,email=None,username=None,code=None):
-    print code,username
     import datetime
     #验证链接一天过期
     now = datetime.datetime.now()
@@ -168,7 +167,6 @@ def pswdForget(request):
 
 
 def pswdReset(request,username,code):
-    print code
     import datetime
     #重置密码链接一天过期
     now = datetime.datetime.now()
@@ -207,6 +205,7 @@ def updateAccessRecord(request,user):
 
 
 def postList(request,user_id, tag_name=None):
+
     user = get_object_or_404(User,id=user_id)
     updateAccessRecord(request, user)
     object_list = Post.published.filter(author=user).annotate(
@@ -437,6 +436,7 @@ def editPost(request,post_id=None,opt=None):
             post.postclass.post_type = post_type
             if opt == "publish":
                 post.status="published"
+                post.publish = timezone.now()
             else:
                 post.status = "draft"
             post.body = cd["body"]

@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '8j%d%#b^ijs$g#t^71(2ubzz6g23-lh9tpu!b5gs!d@s2gsq31'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -54,6 +54,8 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
 
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
 
     ),
@@ -111,8 +113,8 @@ DATABASES = {
         'NAME': 'mysite',
         'USER': 'lsg01',
         'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        #'HOST':'rm-wz9o52bgc2bbytake.mysql.rds.aliyuncs.com',
+        #'HOST': '127.0.0.1',
+        'HOST':'rm-wz9o52bgc2bbytake.mysql.rds.aliyuncs.com',
         'PORT': 3306,
 		'OPTIONS':{'init_command':"SET sql_mode='STRICT_TRANS_TABLES'",
 					'charset':'utf8',

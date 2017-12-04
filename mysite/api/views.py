@@ -2,78 +2,118 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
-from serializers import PostSerializer,UserSerializer,CommentSerializer,ProfileSerializer
-from blog.models import User,Profile,Post,Comment
 from django.contrib.auth.hashers import  make_password
+from django.utils import timezone
 from rest_framework import generics
 from rest_framework import mixins
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticatedOrReadOnly,IsAdminUser,IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly,IsAdminUser,IsAuthenticated,AllowAny
 from permissions import IsOwnerOrReadOnly
+from serializers import *
+from blog.models import User,Profile,Post,Comment
+from blog.utils import email_send
 
 # Create your views here.
 
 class PostList(generics.ListCreateAPIView):
+    '''post list'''
     serializer_class = PostSerializer
-    queryset = Post.objects.filter(status='published')
+    queryset = Post.objects.all()
 
 
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
-    queryset = Post.objects.filter(status='published')
+    queryset = Post.objects.all()
     lookup_field = 'id'
     permission_classes = (IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly)
 
+    def put(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', True)
+        data = request.data.copy()
+        instance = self.get_object()
+        ret = {"status": "success", "msg": ""}
+
+        if data.get("status",'') == 'published':
+            data.update({"publish":timezone.now()})
+        else:
+            data.update({"publish": instance.publish})
+
+        serializer = self.get_serializer(instance, data=data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        ret.update({"data": dict(list(serializer.data.items()))})
+
+        return Response(ret, status=status.HTTP_201_CREATED)
+
 
 class UserList(generics.ListCreateAPIView):
+    '''user list only access to admin'''
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,IsAdminUser)
 
 
-class UserCreate(mixins.CreateModelMixin,generics.GenericAPIView):
+class UserCreate(generics.CreateAPIView):
+    '''new user'''
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    permission_classes = ()
+    permission_classes = (AllowAny,)
+
 
     def post(self, request, *args, **kwargs):
         data = request.data.copy()
         username = data.get("username", None)
-        try:
-            User.objects.get(username=username)
-        except:
+        ret = {"status": "success", "msg": ""}
+
+        if User.objects.filter(username=username).exists():
+            ret = {"status":"error",
+                   "msg":"username '{}' is exists!".format(username)}
+            return Response(ret, status=status.HTTP_201_CREATED)
+        else:
             data.update({u"password":make_password(data.get("password"))})
             serializer = self.get_serializer(data=data)
             serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
-            headers = self.get_success_headers(serializer.data)
-            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-        else:
-            ret = {"status":"1",
-                   "msg":"username '{}' is exists!".format(username)}
-            return Response(ret, status=status.HTTP_201_CREATED)
+
+            try:
+                email_send.sendVerifyEmail(data.get("email"), data.get("username"),
+                                            send_type="register", request=request)
+            except:
+                ret = {"status":"error","msg":"Sending mail failure!"}
+            else:
+                self.perform_create(serializer)
+                headers = self.get_success_headers(serializer.data)
+            ret.update({"data":dict(list(serializer.data.items()))})
+            return Response(ret, status=status.HTTP_201_CREATED, headers=headers)
 
 
-class UserDetail(mixins.RetrieveModelMixin,
-                 mixins.UpdateModelMixin,
-                 mixins.DestroyModelMixin,
-                 generics.GenericAPIView):
-
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = 'id'
     permission_classes = (IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly)
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
     def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
+        partial = kwargs.pop('partial', True)
+        data = request.data.copy()
+        username = data.get("username", None)
+        instance = self.get_object()
+        ret = {"status": "success", "msg": ""}
 
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+        if username <> instance.username and User.objects.filter(username=username).exists():
+            ret = {"status": "error",
+                       "msg": "username '{}' is exists!".format(username)}
+        else:
+            data.update({u"password": make_password(data.get("password"))})
+            serializer = self.get_serializer(instance,data=data,partial=partial)
+            serializer.is_valid(raise_exception=True)
+            self.perform_update(serializer)
+            ret.update({"data": dict(list(serializer.data.items()))})
+
+        return Response(ret, status=status.HTTP_201_CREATED)
+
+
 
 
 
@@ -86,7 +126,7 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):
 
 class CommentList(generics.ListCreateAPIView):
     serializer_class = CommentSerializer
-    queryset = Comment.objects.filter(active=True)
+    queryset = Comment.objects.all()
 
 
 
