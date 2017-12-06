@@ -10,6 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True,allow_blank=False,max_length=50)
     is_active = serializers.BooleanField(default=False,read_only=True)
 
+
     class Meta:
         model = User
         fields = '__all__'

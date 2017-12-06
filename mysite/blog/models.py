@@ -137,7 +137,7 @@ class Comment(models.Model):
         return '{} 对 {} 的评论'.format(self.user,self.post)
 
 
-class EmailVerifyRecord(models.Model):
+class VerifyRecord(models.Model):
     # 验证码
     code = models.CharField(max_length=60, verbose_name=u"验证码")
     email = models.EmailField(max_length=50, verbose_name=u"邮箱")

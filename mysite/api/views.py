@@ -33,7 +33,7 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
         partial = kwargs.pop('partial', True)
         data = request.data.copy()
         instance = self.get_object()
-        ret = {"status": "success", "msg": ""}
+        ret = {"success":True,"status": 0, "msg": ""}
 
         if data.get("status",'') == 'published':
             data.update({"publish":timezone.now()})
@@ -64,11 +64,12 @@ class UserCreate(generics.CreateAPIView):
 
     def post(self, request, *args, **kwargs):
         data = request.data.copy()
+
         username = data.get("username", None)
-        ret = {"status": "success", "msg": ""}
+        ret = {"success":True,"status": 0, "msg": ""}
 
         if User.objects.filter(username=username).exists():
-            ret = {"status":"error",
+            ret = {"success":False,"status":1,
                    "msg":"username '{}' is exists!".format(username)}
             return Response(ret, status=status.HTTP_201_CREATED)
         else:
@@ -80,7 +81,7 @@ class UserCreate(generics.CreateAPIView):
                 email_send.sendVerifyEmail(data.get("email"), data.get("username"),
                                             send_type="register", request=request)
             except:
-                ret = {"status":"error","msg":"Sending mail failure!"}
+                ret = {"success":False,"status":2,"msg":"Sending mail failure!"}
             else:
                 self.perform_create(serializer)
                 headers = self.get_success_headers(serializer.data)

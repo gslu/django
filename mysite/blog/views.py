@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.utils import timezone
 from taggit.models import Tag
-from .models import Post,Comment,EmailVerifyRecord,Book,PictureRecord,UserRelation,Collection,Pv
+from .models import Post,Comment,VerifyRecord,Book,PictureRecord,UserRelation,Collection,Pv
 from .forms import *
 from utils import email_send
 from django.db.models import Q
@@ -120,7 +120,7 @@ def verifyRegister(request,email=None,username=None,code=None):
         status = False
 
     if code is not None:
-        record = get_object_or_404(EmailVerifyRecord,code=code,send_time__gte=one_day_ago)
+        record = get_object_or_404(VerifyRecord,code=code,send_time__gte=one_day_ago)
         user = get_object_or_404(User,email=record.email,username=username)
         user.is_active = True
         user.save()
@@ -171,7 +171,7 @@ def pswdReset(request,username,code):
     #重置密码链接一天过期
     now = datetime.datetime.now()
     one_day_ago = now - datetime.timedelta(days=1)
-    record = get_object_or_404(EmailVerifyRecord,code=code,send_time__gte=one_day_ago)
+    record = get_object_or_404(VerifyRecord,code=code,send_time__gte=one_day_ago)
     if request.method == 'POST':
         form = ResetForm(request.POST)
         if form.is_valid():

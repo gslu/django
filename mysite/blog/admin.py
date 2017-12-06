@@ -61,7 +61,7 @@ class CollectionAdmin(admin.ModelAdmin):
 
 admin.site.register(Post,PostAdmin)
 admin.site.register(Comment,CommentAdmin)
-admin.site.register(EmailVerifyRecord,EmailVerifyRecordAdmin)
+admin.site.register(VerifyRecord,EmailVerifyRecordAdmin)
 admin.site.register(Profile,ProfileAdmin)
 admin.site.register(AccessRecord,AccessRecordAdmin)
 admin.site.register(MessageRecord,MessageRecordAdmin)

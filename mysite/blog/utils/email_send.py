@@ -3,11 +3,12 @@
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from ..models import EmailVerifyRecord
+from ..models import VerifyRecord
 from email.mime.text import MIMEText
 from email.header import Header
 import smtplib
 import uuid
+import random
 
 def sendEmail(subject, message, email_from, to):
     HOST = settings.EMAIL_HOST
@@ -31,8 +32,8 @@ def sendEmail(subject, message, email_from, to):
 
 
 def sendVerifyEmail(email, name, send_type="register", request=None):
-
-    code = unicode(uuid.uuid1())
+    code = ''.join(random.sample('0123456789', 5))
+    #code = unicode(uuid.uuid1())
     if send_type == "register":
         subject = u"浮文掠影帐号－注册激活"
         link = request.build_absolute_uri(reverse("blog:verify_register_after",
@@ -51,7 +52,7 @@ def sendVerifyEmail(email, name, send_type="register", request=None):
     #msg.content_subtype = "html"
     #send_status = msg.send()
     ret = sendEmail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
-    EmailVerifyRecord.objects.create(code=code, email=email, send_type=send_type)
+    VerifyRecord.objects.create(code=code, email=email, send_type=send_type)
     return ret
 
 

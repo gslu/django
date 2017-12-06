@@ -76,17 +76,18 @@ class RegisterForm(forms.Form):
     email = forms.EmailField(label=u"邮箱")
     password = forms.CharField(widget=forms.PasswordInput,label=u"密码")
 
-    code = forms.CharField(max_length=10,label=u"序列")
-    def clean_code(self):
-        code = self.cleaned_data['code']
-        if code <> "l14789632":
-            raise forms.ValidationError("注册序列错误,暂不支持注册")
+    #code = forms.CharField(max_length=10,label=u"序列")
+    #def clean_code(self):
+    #    code = self.cleaned_data['code']
+    #    if code <> "l14789632":
+    #        raise forms.ValidationError("注册序列错误,暂不支持注册")
 
     def clean_password(self):
         import re
         password = self.cleaned_data['password']
         if len(password) < 6:
             raise forms.ValidationError("密码强度须大于6")
+        # 密码复杂度
         #elif not re.match(r'([0-9]+(\W+|\_+|[A-Za-z]+))+|([A-Za-z]+(\W+|\_+|\d+))+|((\W+|\_+)+(\d+|\w+))+',password):
         #    raise forms.ValidationError("密码至少包含字母,数字,符号其中两样")
         else:
