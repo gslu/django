@@ -143,10 +143,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 CACHE = {
     'default':{
-        'BACKEND':'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION':'fwlycache',
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS':'django_redis.client.DefaultClient',
+            "PICKLE_VERSION": -1,
+            #"COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
+            "IGNORE_EXCEPTIONS": True,
+            'SOCKET_TIMEOUT': 60,
+        }
     }
 }
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
