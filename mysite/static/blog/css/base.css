@@ -3,6 +3,19 @@
 */
 
 @import url(fonts.css);
+
+/*
+@media(max-width:960px)
+{
+    body {width:100%;}
+    #tail #content {
+        width:100%;
+    }
+    #sidebar {display:none;}
+    .column-bar {display:none;}
+    #footer {display:none;}
+}
+*/
 body {
     margin: 0;
     padding: 0;
@@ -1637,7 +1650,7 @@ div.select-tag
 .post-mng #posts
 {
     display:inline-block;
-    height:660px;
+    height:735px;
     width: 250px;
     overflow-y:auto;
     overflow-x:hidden;

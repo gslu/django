@@ -312,7 +312,7 @@ def postShare(request,post_id):
 
 def log(request,user_id,year=None,month=None):
     user = get_object_or_404(User, id=user_id)
-    dates = Post.published.filter(author=user.id).order_by('-publish').values_list("publish")
+    dates = Post.published.filter(author=user.id).order_by('-created').values_list("created")
     dates = [date[0] for date in dates]
     if dates == []:
         posts = None
@@ -321,7 +321,7 @@ def log(request,user_id,year=None,month=None):
     else:
         y = year if year else dates[0].year
         m = month if month  else dates[0].month
-        posts = Post.published.filter(author=user,publish__year=y,publish__month=m)
+        posts = Post.published.filter(author=user,created__year=y,created__month=m)
     return render(request,'blog/log/log.html',{'user': user,
                                                'auth_user': request.user,
                                                'dates':dates,
