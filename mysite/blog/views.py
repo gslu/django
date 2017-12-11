@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import cache_page
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
+from django.core.cache import cache
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
@@ -236,12 +237,19 @@ def postList(request,user_id, tag_name=None):
                                                  'user':user,
                                                  'auth_user':request.user})
 
-@cache_page(60*5)
+
 def postDetail(request,year,month,day,slug,id):
-    post = get_object_or_404(Post, slug=slug,status='published',publish__year=year,
+
+    # get cache
+    cache_key = "post:{}".format(id)
+    if cache.has_key(cache_key):
+        post = cache.get(cache_key)
+    else:
+        post = get_object_or_404(Post, slug=slug,status='published',publish__year=year,
                                     publish__month=month, #要setting设置USE_TZ=False,否则不识别month,day
                                     publish__day=day,
                                     id=id)
+        cache.set(cache_key,post,3600)
 
     comments = post.comments.filter(active=True).order_by("created")
     new_comment = None
@@ -441,6 +449,14 @@ def editPost(request,post_id=None,opt=None):
                 post.status = "draft"
             post.body = cd["body"]
             post.save()
+
+            # 更新cache
+            cache_key = "post:{}".format(post_id)
+            if post.status == "published":
+                cache.set(cache_key,post,3600)
+            else:
+                cache.delete_pattern(cache_key)
+
     else:
         form = WriteForm(initial={"title":post.title,"body": post.body,})
 

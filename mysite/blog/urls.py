@@ -16,6 +16,7 @@ urlpatterns = [
 
     url(r'^blog/(?P<year>\d{4})/(?P<month>\d{1,2})/(?P<day>\d{1,2})/(?P<slug>[-\w]+)/(?P<id>\d+)/$',
                     views.postDetail,name='post_detail'),
+
     url(r'^blog/(?P<post_id>\d+)/share/$',views.postShare,name='post_share'),
     url(r'^user/(?P<user_id>\d+)/log/$', views.log, name='log'),
     url(r'^user/(?P<user_id>\d+)/log/follow/$', views.follow, name='my_follow'),
