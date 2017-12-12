@@ -32,8 +32,8 @@ def sendEmail(subject, message, email_from, to):
 
 
 def sendVerifyEmail(email, name, send_type="register", request=None):
-    code = ''.join(random.sample('0123456789', 5))
-    #code = unicode(uuid.uuid1())
+    #code = ''.join(random.sample('0123456789', 5))
+    code = unicode(uuid.uuid1())
     if send_type == "register":
         subject = u"浮文掠影帐号－注册激活"
         link = request.build_absolute_uri(reverse("blog:verify_register_after",
