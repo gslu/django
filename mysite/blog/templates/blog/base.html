@@ -29,20 +29,16 @@
             {% block nav %}
                 {% include "blog/nav.html" %}
             {% endblock %}
-
             <div class="body">
                 {% block header %}
                 <div class="home-page">
                     {% include "blog/header.html" %}
                 </div>
                 {% endblock %}
-
                 <div id="tail">
                     <div id="container">
                     {% block content %}
                     {% endblock %}
-
-
                     {% block sidebar %}
                     {% endblock %}
                     {% block column-bar %}
@@ -57,10 +53,8 @@
                     </div>
                 </div>
             </div>
-
             {% block footer %}
                 {% include "blog/footer.html" %}
             {% endblock %}
     </body>
-
 </html>

@@ -1,6 +1,14 @@
 {% extends "blog/post/base.html" %}
 {% load blog_tags %}
 {% load static %}
+{% block keyword %}
+        {% if tag %}
+        <meta http-equiv="keywords" content="{{ user.profile.nickname }} {{ tag.name }}-标签-浮文掠影">
+        {% else %}
+        <meta http-equiv="keywords" content="{{ user.profile.nickname }}-浮文掠影">
+        {% endif %}
+        <meta http-equiv="description" content="{{ user.profile.motto }} {{ user.profile.introduce }}">
+{% endblock %}
 
 {% block title %}
     {% if tag %}
@@ -10,19 +18,10 @@
     {% endif %}
 {% endblock %}
 
-{% block keyword %}
-    {% if tag %}
-    <meta http-equiv="keywords" content="{{ user.profile.nickname }} {{ tag.name }}-标签-浮文掠影">
-    {% else %}
-    <meta http-equiv="keywords" content="{{ user.profile.nickname }}-浮文掠影">
-    {% endif %}
-    <meta http-equiv="description" content="{{ user.profile.motto }} {{ user.profile.introduce }}">
-{% endblock %}
-
 {% block header %}
-<div class="home-page">
-    {% include "blog/header.html"　%}
-</div>
+    <div class="home-page">
+        {% include "blog/header.html"　%}
+    </div>
 {% endblock %}
 
 {% block content %}
@@ -48,7 +47,6 @@
                 {% endautoescape %}
             </p>
             <p class="tags">
-                 <!--<div id="pl-tag"><img src="{% static "blog/img/tag.png" %}"></div>-->
                 <span>
                 {% for tag in post.tags.all %}
                     <a href="{% url "blog:post_list_by_tag" user.id tag.name %}">

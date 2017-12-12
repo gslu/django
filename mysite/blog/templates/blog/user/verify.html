@@ -8,15 +8,8 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes" />
         <link rel="icon" href='{% static "blog/img/icon-title.ico" %}' type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta http-equiv=”X-UA-Compatible” content=”IE=edge,chrome=1″/>
-
-        <title>
-        {% ifequal send_type "register" %}
-        注册激活-浮文掠影
-        {% else %}
-        密码找回-浮文掠影
-        {% endifequal %}
-        </title>
+        <meta http-equiv=”X-UA-Compatible” content="IE=edge,chrome=1"/>
+        <title>{% ifequal send_type "register" %}注册激活-浮文掠影{% else %}密码找回-浮文掠影{% endifequal %}</title>
         <link href= '{% static "blog/css/login.css" %}' rel="stylesheet">
         <link href= '{% static "blog/css/base.css" %}' rel="stylesheet">
     </head>
@@ -26,7 +19,6 @@
             <div id="text">
                 <a id="tohome" href='{% url "blog:post_list" 1 %}'>浮文掠影</a>
             </div>
-
             {% ifequal send_type "register" %}
             <div id="register-active">
                 {% ifequal status "error "%}
@@ -69,7 +61,6 @@
             </div>
             {% endifequal %}
         </div>
-
         {% include "blog/footer.html" %}
     </body>
 </html>
