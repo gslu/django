@@ -9,6 +9,28 @@ import copy
 
 register = template.Library()
 
+@register.assignment_tag
+def get_pagination(page_data):
+    pageObj = namedtuple("pageObj",['page','part_one','part_two','part_three','part_four','part_five'])
+    part_one,part_two,part_three,part_four,part_five = None,"...",None,"...",None
+    if page_data.paginator.num_pages <= 6:
+        part_one = range(1,page_data.paginator.num_pages+1)
+    else:
+        if page_data.number < 5:
+            part_one = range(1,page_data.paginator.num_pages+1)[:5]
+            part_three = [page_data.paginator.num_pages]
+        elif page_data.number > page_data.paginator.num_pages-3:
+            part_one = [1]
+            part_three = range(1,page_data.paginator.num_pages+1)[-3:]
+        else:
+            part_one = [1]
+            part_three = [page_data.number-1,page_data.number,page_data.number+1]
+            part_five = [page_data.paginator.num_pages]
+
+    page = pageObj(page=page_data,part_one=part_one,
+                   part_two=part_two,part_three=part_three,part_four=part_four,part_five=part_five,)
+    return page
+
 @register.simple_tag
 def total_posts(user=None):
     return Post.published.filter(author=user).count()

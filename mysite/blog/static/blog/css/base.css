@@ -1194,9 +1194,6 @@ div.author-img img{
     margin-top:20px;
 }
 
-.previous a,.next a{
-    color:#FF4500;
-}
 
 div.comment-form{
     background-color:#FCFCFC;
@@ -1274,10 +1271,47 @@ div.owner-img img {
 }
 
 
-div.pagination{
-    margin:0 0 20px 0;
-    font-size:16px;
+/*pagination*/
+
+
+
+.pagination ul
+{
+    display:inline-block;
+    list-style: none;
+    border-radius: 4px;
+    font-size:0;
+    margin:0px;
+    padding:0px;
 }
+
+.pagination ul li
+{
+    font-size:16px;
+    list-style: none;
+    display:inline;
+}
+
+.pagination ul li a{
+    text-align: center;
+    display:inline;
+    padding: 6px 14px;
+    border:1px solid #9babbb;
+    margin-left:-1px;
+}
+
+.previous a,.next a{border-radius:4px;}
+
+.pagination ul li a:focus,.pagination ul li a:hover
+{
+    background:#a7b8c8;
+    color:#3a6ea1;
+}
+
+.current a{
+    background:#28619a;
+    color:#f8fafb;
+    }
 
 
 .tags {
@@ -1966,3 +2000,7 @@ div.select-tag
 {
     background:#EAEAEA;
 }
+
+
+
+

@@ -220,7 +220,7 @@ def postList(request,user_id, tag_name=None):
         tags = tags.filter(~Q(name=tag))
         object_list = object_list.filter(tags__in=[tag])
 
-    paginator = Paginator(object_list, 10)  # 10 posts in each page
+    paginator = Paginator(object_list, 8)  # 8 posts in each page
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)

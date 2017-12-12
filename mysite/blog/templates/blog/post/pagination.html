@@ -1,35 +1,46 @@
+{% load blog_tags %}
 <div class="pagination">
-
-    <span class="step-links">
-        {% if page.has_previous %}
-            <span class="previous">
-                <a href="?page={{ page.previous_page_number }}"><<上一页&nbsp;</a>
-            </span>
+        <ul class="pages">
+        {% get_pagination page as p %}
+        {% if p.page.has_previous %}
+            <li class="previous"><a href="?page={{ p.page.previous_page_number }}"><</a></li>
         {% else %}
-            {% if page.has_next %}
-            <span class="previous">
-                <<上一页
-            </span>
+            {% if p.page.has_next %}
+            <li class="previous"><a href="javascript:void(0)"><</a></li>
             {% endif %}
         {% endif %}
 
-        {% if page.has_previous or page.has_next %}
-        <span class="current">
-            Page {{ page.number }} of {{ page.paginator.num_pages }}
-        </span>
+        {% if p.page.has_previous or p.page.has_next %}
+        {% for i in p.part_one %}
+        <li {% ifequal i p.page.number %}class="current"{% endifequal %}>
+            <a href="?page={{ i }}">{{ i }}</a></li>
+        {% endfor %}
+
+        {% if p.part_three %}
+        <li>{{ p.part_two }}</li>
         {% endif %}
 
-        {% if page.has_next %}
-            <span class="next">
-                <a href="?page={{ page.next_page_number }}">&nbsp;下一页>></a>
-            </span>
+        {% for i in p.part_three %}
+        <li {% ifequal i p.page.number %}class="current"{% endifequal %}>
+            <a href="?page={{ i }}">{{ i }}</a></li>
+        {% endfor %}
+
+        {% if p.part_five %}
+        <li>{{ p.part_four }}</li>
+        {% endif %}
+
+        {% for i in p.part_five %}
+        <li {% ifequal i p.page.number %}class="current"{% endifequal %}>
+            <a href="?page={{ i }}">{{ i }}</a></li>
+        {% endfor %}
+        {% endif %}
+
+        {% if p.page.has_next %}
+            <li class="next"><a href="?page={{ p.page.next_page_number }}">></a></li>
         {% else %}
-            {% if page.has_previous %}
-            <span class="next">
-                下一页>>
-            </span>
+            {% if p.page.has_previous %}
+            <li class="next"><a href="javascript:void(0)">></a></li>
             {% endif %}
         {% endif %}
-    </span>
-
+        </ul>
 </div>
