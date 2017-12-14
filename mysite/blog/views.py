@@ -401,7 +401,7 @@ def about(request,user_id,option):
     if option == "rc":
         posts = Post.objects.filter(author=user)
         rc = Comment.objects.filter(post__in=posts).order_by("updated")
-        page, rc = getPageAndQuerySet(rc, 8)
+        page, rc = getPageAndQuerySet(rc, 4)
     else:
         rc = None
 

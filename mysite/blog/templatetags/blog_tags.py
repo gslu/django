@@ -21,10 +21,11 @@ def get_pagination(page_data):
             part_three = [page_data.paginator.num_pages]
         elif page_data.number > page_data.paginator.num_pages-3:
             part_one = [1]
-            part_three = range(1,page_data.paginator.num_pages+1)[-3:]
+            part_three = range(1,page_data.paginator.num_pages+1)[-5:]
         else:
             part_one = [1]
-            part_three = [page_data.number-1,page_data.number,page_data.number+1]
+            part_three = [page_data.number-2,page_data.number-1,\
+                          page_data.number,page_data.number+1,page_data.number+2]
             part_five = [page_data.paginator.num_pages]
 
     page = pageObj(page=page_data,part_one=part_one,
