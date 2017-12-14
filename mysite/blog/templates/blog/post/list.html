@@ -40,10 +40,11 @@
                 </a>
             </h2>
             <hr/>
+
             <p class="post_body">
                 {% get_text post.body as body %}
                 {% autoescape off %}
-                {{ body | slice:"100" | linebreaks}}...
+                {{ body | slice:"100" | add:"..." }}
                 {% endautoescape %}
             </p>
             <p class="tags">

@@ -220,7 +220,8 @@ def postList(request,user_id, tag_name=None):
         tags = tags.filter(~Q(name=tag))
         object_list = object_list.filter(tags__in=[tag])
 
-    paginator = Paginator(object_list, 8)  # 8 posts in each page
+    # 8 posts in each page
+    paginator = Paginator(object_list, 8)
     page = request.GET.get('page')
     try:
         posts = paginator.page(page)
@@ -401,7 +402,7 @@ def about(request,user_id,option):
     if option == "rc":
         posts = Post.objects.filter(author=user)
         rc = Comment.objects.filter(post__in=posts).order_by("updated")
-        page, rc = getPageAndQuerySet(rc, 4)
+        page, rc = getPageAndQuerySet(rc, 8)
     else:
         rc = None
 

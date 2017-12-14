@@ -1,0 +1,16 @@
+
+<div class="pagination">
+    <span>
+        {% if p.page.has_previous %}
+            <a href="?page={{ p.page.previous_page_number }}">上一页</a>
+        {% endif %}
+
+        {% if p.page.has_previous or p.page.has_next %}
+        　　　Post {{ page.number }} of {{ page.paginator.num_pages }}
+        {% endif %}
+
+        {% if p.page.has_next %}
+            <a href="?page={{ p.page.next_page_number }}">下一页</a>
+        {% endif %}
+    </span>
+</div>
