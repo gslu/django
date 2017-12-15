@@ -11,16 +11,20 @@ register = template.Library()
 
 @register.assignment_tag
 def get_pagination(page_data):
+    # part_one_len = 1
+    # part_three_len = 5
+    # part_five_len = 1
+    # so total len must >7 if not ,show all
     pageObj = namedtuple("pageObj",['page','part_one','part_two',
                                     'part_three','part_four','part_five'])
     part_one,part_two,part_three,part_four,part_five = None,"...",None,"...",None
-    if page_data.paginator.num_pages <= 6:
+    if page_data.paginator.num_pages <= 7:
         part_one = range(1,page_data.paginator.num_pages+1)
     else:
-        if page_data.number <= 3:
+        if page_data.number <= 4:
             part_one = range(1,page_data.paginator.num_pages+1)[:5]
             part_three = [page_data.paginator.num_pages]
-        elif page_data.paginator.num_pages-page_data.number <= 2:
+        elif page_data.paginator.num_pages-page_data.number <= 3:
             part_one = [1]
             part_three = range(1,page_data.paginator.num_pages+1)[-5:]
         else:
