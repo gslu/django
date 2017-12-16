@@ -6,8 +6,20 @@
             "/book/rename/",
              { book_id: book_id, new_name: new_name }
              ).success(function(data) {
-                    elem.text(new_name);
-                    });
+                    if(data.status == "exist")
+                    {
+                        alert("名称已经存在!");
+                    }
+                    else if(data.status == "success")
+                    {
+                         elem.text(new_name);
+                    }
+                    else
+                    {
+                        alert("未知错误");
+                    }
+
+               });
           }
 
           function tag_rename(tag_name, book_id, new_name,elem)
@@ -16,17 +28,30 @@
             "/tag/rename/",
              { tag_name: tag_name, new_name: new_name,book_id:book_id}
 
-             ).success(function() {
-                    elem.text(new_name);
-                    var new_url = "/blog/manage/books/"+book_id+"/tags/"+new_name+"/";
-                    elem.parent().attr("href",new_url);
-                    if(history.pushState){
-                        var state=({
-                          url: new_url, title:''
-                         });
-                         window.history.pushState(state, '', new_url);
+             ).success(function(data) {
+                    if(data.status == "exist")
+                    {
+                        alert("名称已经存在!");
+                        elem.text(tag_name);
                     }
-                    });
+                    else if(data.status == "success")
+                    {
+                        elem.text(new_name);
+                        var new_url = "/blog/manage/books/"+book_id+"/tags/"+new_name+"/";
+                        elem.parent().attr("href",new_url);
+                        if(history.pushState){
+                            var state=({
+                              url: new_url, title:''
+                             });
+                             window.history.pushState(state, '', new_url);
+                        }
+                    }
+                    else
+                    {
+                        alert("未知错误");
+                        elem.text(tag_name);
+                    }
+               });
           }
 
           function book_delete(book_id)

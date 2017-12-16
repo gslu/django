@@ -470,11 +470,11 @@ def newBook(request):
         book_f = NewBookForm(request.POST)
         if book_f.is_valid():
             name = book_f.cleaned_data["book_name"]
-            return Book.objects.create(name=name,user=request.user)
+            return Book.objects.get_or_create(name=name,user=request.user)
         else:
-            return False
+            return False,False
     else:
-        return False
+        return False,False
 
 @login_required
 def addTag(request,book_id):
@@ -483,12 +483,15 @@ def addTag(request,book_id):
         tag_f = NewTagForm(request.POST)
         if tag_f.is_valid():
             name = tag_f.cleaned_data["tag_name"]
-            book.tags.add(name)
-            return name
+            if book.tags.filter(name=name).exists():
+                return get_object_or_404(book.tags,name=name),False
+            else:
+                book.tags.add(name)
+            return get_object_or_404(book.tags,name=name),True
         else:
-            return False
+            return False,False
     else:
-        return False
+        return False,False
 
 
 
@@ -496,9 +499,20 @@ def addTag(request,book_id):
 def postManage(request,book_id=None,tag_name=None):
 
     context = {}
-    point_book = newBook(request)
-    add_tag_name = addTag(request, book_id)
+    point_book,new_book = newBook(request)
+    point_tag,new_tag = addTag(request, book_id)
+    if point_book and new_book == False:
+        context["newbook_error"] = "book is exist!"
+    else:
+        context["newbook_error"] = ""
+
+    if point_tag and new_tag == False:
+        context["newtag_error"] = "tag is exist!"
+    else:
+        context["newtag_error"] = ""
+
     books = Book.objects.filter(user=request.user).order_by('-updated')
+
     if not books:
         point_book = Book.objects.create(user=request.user,name="默认")
         books = [point_book]
@@ -512,9 +526,8 @@ def postManage(request,book_id=None,tag_name=None):
         point_book.tags.add("杂记")
 
     tags = point_book.tags.all()
-    if add_tag_name:
-        point_tag = get_object_or_404(tags,name=add_tag_name)
-    else:
+
+    if not point_tag:
         if tag_name is None:
             point_tag = tags[0]
         else:
@@ -587,10 +600,14 @@ def bookReName(request):
     if request.method == "POST":
         book_id = request.POST.get("book_id")
         new_name = request.POST.get("new_name")
-        book = get_object_or_404(Book,id=book_id,user=request.user)
-        book.name = new_name
-        book.save()
-        ret = json.dumps({"status": "success"})
+
+        if Book.objects.filter(name=new_name,user=request.user).exists():
+            ret = json.dumps({"status": "exist","msg":"new name is exists"})
+        else:
+            book = get_object_or_404(Book,id=book_id,user=request.user)
+            book.name = new_name
+            book.save()
+            ret = json.dumps({"status": "success"})
     return HttpResponse(ret, content_type="application/json")
 
 
@@ -603,20 +620,26 @@ def tagReName(request):
         book_id = request.POST.get("book_id")
         new_name = request.POST.get("new_name")
 
+        #if Book.objects.filter(tags__name__in=[new_name],id=book_id).exists():
+        #    ret = json.dumps({"status": "exist", "msg": "new name is exists"})
+        #else:
         book = get_object_or_404(Book,id=book_id,user=request.user)
-        post = book.posts.all()
-        post_by_tag = post.filter(tags__name__in=[tag_name])
+        if new_name in book.tags.names():
+            ret = json.dumps({"status": "exist", "msg": "new name is exists"})
+        else:
+            post = book.posts.all()
+            post_by_tag = post.filter(tags__name__in=[tag_name])
 
-        book.tags.remove(tag_name)
-        book.tags.add(new_name)
-        book.save()
+            book.tags.remove(tag_name)
+            book.tags.add(new_name)
+            book.save()
 
-        #没找到批量update tags的方法
-        map((lambda post:post.tags.remove(tag_name)),post_by_tag)
-        map((lambda post:post.tags.add(new_name)), post_by_tag)
-        [post.save() for post in post_by_tag]
+            #没找到批量update tags的方法
+            map((lambda post:post.tags.remove(tag_name)),post_by_tag)
+            map((lambda post:post.tags.add(new_name)), post_by_tag)
+            [post.save() for post in post_by_tag]
 
-        ret = json.dumps({"status": "success"})
+            ret = json.dumps({"status": "success"})
     return HttpResponse(ret, content_type="application/json")
 
 
