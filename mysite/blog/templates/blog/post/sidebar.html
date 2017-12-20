@@ -84,5 +84,7 @@
         </li>
         {% endfor %}
     </ul>
-    <!--<script type="text/javascript" src="//ra.revolvermaps.com/0/0/1.js?i=0flcjgtk9n9&amp;s=240&amp;m=0&amp;v=true&amp;r=false&amp;b=000000&amp;n=false&amp;c=ff0000" async="async"></script>-->
+    <div {% ifnotequal user auth_user %}hidden{% endifnotequal %}>
+    <script type="text/javascript" src="//ra.revolvermaps.com/0/0/1.js?i=0flcjgtk9n9&amp;s=240&amp;m=0&amp;v=true&amp;r=false&amp;b=000000&amp;n=false&amp;c=ff0000" async="async"></script>
+    </div>
 </div>

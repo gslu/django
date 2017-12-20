@@ -1950,6 +1950,7 @@ div.select-tag
     padding: 0px;
     opacity: 0;
     width: 90px;
+    height:35px;
     display: block !important;
 }
 
