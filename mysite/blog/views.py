@@ -6,13 +6,13 @@ from django.http import HttpResponseRedirect,Http404,HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.cache import cache_page
-from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.core.cache import cache
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.db.models import Count
 from django.utils import timezone
 from taggit.models import Tag
@@ -187,7 +187,23 @@ def pswdReset(request,username,code):
                 form = ResetForm(initial={"username": username})
     else:
         form = ResetForm(initial={"username":username})
-    return render(request,"blog/user/reset.html",{"form":form})
+    return render(request,"blog/user/reset.html",{"form":form,"type":"reset"})
+
+
+@login_required
+def pswdChange(request):
+    if request.method == 'POST':
+        form = PswdChangeForm(request.user,request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            new_password = cd["password_confirm"]
+            request.user.set_password(new_password)
+            request.user.save()
+            form = None
+    else:
+        form = PswdChangeForm(request.user)
+    return render(request,"blog/user/reset.html",{"form":form,"type":"change"})
+
 
 
 def updateAccessRecord(request,user):

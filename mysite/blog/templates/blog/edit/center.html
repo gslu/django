@@ -96,6 +96,10 @@
         </div>
         <input id="save-setting" type="button" value="保存修改">
     </form>
+    <div class="account">
+        <h3>帐号</h3>
+        <span>{{ user.username }}　<a href='{% url "blog:pswd_change" %}'>修改密码</a></span>
+    </div>
 </div>
 <a href="{% url 'blog:post_list' auth_user.id %}">
 <div id="back-home">返回首页</div>

@@ -103,11 +103,13 @@ class ResetForm(forms.Form):
 
     def __init__(self,*args,**kwargs):
         super(ResetForm,self).__init__(*args,**kwargs)
-        self.fields['username'].widget.attrs['readonly'] = True
+        #self.fields['username'].widget.attrs['readonly'] = True
 
-    username = forms.CharField(max_length=40,min_length=3,label=u"帐号")
-    password = forms.CharField(widget=forms.PasswordInput,label=u"密码")
-    password_confirm = forms.CharField(widget=forms.PasswordInput,label=u"确认")
+    username = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}),
+                               max_length=40,min_length=3,label=u"帐号")
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'autofocus': True}),
+                               label=u"新密码",strip=False)
+    password_confirm = forms.CharField(widget=forms.PasswordInput,label=u"再一次",strip=False)
 
     def clean_password(self):
         import re
@@ -126,6 +128,25 @@ class ResetForm(forms.Form):
             raise forms.ValidationError("前后密码不一致")
         else:
             return password_confirm
+
+
+class PswdChangeForm(ResetForm):
+    old_password = forms.CharField(widget=forms.PasswordInput,label="原密码",strip=False,)
+    username = None
+
+    def __init__(self,user,*args,**kwargs):
+        self.user = user
+        super(PswdChangeForm, self).__init__(*args, **kwargs)
+
+    def clean_old_password(self):
+        """
+        Validates that the old_password field is correct.
+        """
+        old_password = self.cleaned_data["old_password"]
+        if not self.user.check_password(old_password):
+            raise forms.ValidationError('原密码错误，请重新输入')
+        return old_password
+
 
 
 class UploadFileForm(forms.Form):

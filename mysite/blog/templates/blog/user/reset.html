@@ -5,15 +5,13 @@
     <head>
         <meta http-equiv="Cache-Control" content="no-transform" />
         <meta http-equiv="Cache-Control" content="no-siteapp" />
-        <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes" />
         <link rel="icon" href='{% static "blog/img/icon-title.ico" %}' type="image/x-icon"/>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv=”X-UA-Compatible” content="IE=edge,chrome=1"/>
-        <title>密码重置-浮文掠影</title>
+        <title>{% ifequal type "reset" %}密码重置{% else %}修改密码{% endifequal %}-浮文掠影</title>
         <link href= '{% static "blog/css/login.css" %}' rel="stylesheet">
         <link href= '{% static "blog/css/base.css" %}' rel="stylesheet">
     </head>
-
     <body class="verify">
         <div id="content">
             <div id="text">
@@ -23,7 +21,7 @@
                 {% if form %}
                 <div id="forget-form">
                     <div id="form-desc">
-                        <p>密码重置</p>
+                        <p>{% ifequal type "reset" %}密码重置{% else %}修改密码{% endifequal %}</p>
                     </div>
                     <div id="form-row">
                         <form action="." method="post">
@@ -35,7 +33,7 @@
                 </div>
                 {% else %}
                     <div id="success-reset">
-                    <p>密码已重置</p>
+                    <p>{% ifequal type "reset" %}成功重置密码{% else %}成功修改密码{% endifequal %}</p>
                     </div>
                 {% endif %}
             </div>

@@ -1885,7 +1885,8 @@ div.select-tag
 .center .bg-image,
 .center .basic,
 .center .person-msg,
-.center .contact
+.center .contact,
+.center .account
 {
     width:760px;
     height:auto;
@@ -2002,6 +2003,9 @@ div.select-tag
     background:#EAEAEA;
 }
 
-
+.center .account span{
+    color:gray;
+    margin: 5px 0 0 30px;
+}
 
 

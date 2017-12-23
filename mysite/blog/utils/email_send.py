@@ -8,7 +8,6 @@ from email.mime.text import MIMEText
 from email.header import Header
 import smtplib
 import uuid
-import random
 
 def sendEmail(subject, message, email_from, to):
     HOST = settings.EMAIL_HOST
