@@ -109,8 +109,8 @@ body.login,body.verify{
 #forget-form label
 {
     font-size:15px;
-    display:inline-block;
-    width:55px;
+    /*display:inline-block;
+    width:55px;*/
 }
 
 #forget-form #form-desc{
