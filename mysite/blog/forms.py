@@ -106,7 +106,7 @@ class ResetForm(forms.Form):
         #self.fields['username'].widget.attrs['readonly'] = True
 
     username = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}),
-                               max_length=40,min_length=3,label=u"帐 号")
+                               max_length=40,min_length=3,label=u"帐　号")
     password = forms.CharField(widget=forms.PasswordInput(attrs={'autofocus': True}),
                                label=u"新密码",strip=False)
     password_confirm = forms.CharField(widget=forms.PasswordInput,label=u"再一次",strip=False)
