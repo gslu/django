@@ -161,12 +161,12 @@ class WriteForm(forms.Form):
 
 
 class NewBookForm(forms.Form):
-    book_name = forms.CharField(max_length=20,label="",
+    book_name = forms.CharField(max_length=14,label="",
                             widget=forms.TextInput(attrs={'placeholder':'文集名称'}))
 
 
 class NewTagForm(forms.Form):
-    tag_name = forms.CharField(max_length=20,label="",
+    tag_name = forms.CharField(max_length=14,label="",
                             widget=forms.TextInput(attrs={'placeholder':'标签名称'}))
 
 

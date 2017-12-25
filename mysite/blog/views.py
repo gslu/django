@@ -435,6 +435,11 @@ def about(request,user_id,option):
 
 @login_required
 def writePost(request,book_id,tag_name):
+    GUEST_POST_LIMIT = 5
+    if not request.user.is_superuser:
+        post_count = Post.objects.filter(author=request.user).count()
+        if post_count >= GUEST_POST_LIMIT:
+            return HttpResponse("访客文章数量限制,敬请谅解！")
     book = get_object_or_404(Book,id=book_id)
     post = Post.objects.create(title="无标题文章",book=book,
                                status="draft", body="",author=request.user)
