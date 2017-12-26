@@ -47,24 +47,19 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
 
     'DEFAULT_PERMISSION_CLASSES': (
-
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-
     ),
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
-
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-
     ),
 
     'PAGE_SIZE': 5,
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
-
     ),
 }
 

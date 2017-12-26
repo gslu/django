@@ -14,6 +14,6 @@
           <a href='{% url "blog:post_list" post.author.id %}'>
           {{ post.author.profile.nickname }}　
           </a>
-          <span class="date">{{ post.publish | date:"Y-m-d H:i" }}</span>
+          <span class="date">{{ post.created | date:"Y-m-d H:i" }}</span>
      </div>
 </div>

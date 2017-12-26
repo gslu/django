@@ -5,6 +5,7 @@ from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
 
 urlpatterns = [
     url(r'login/$',obtain_jwt_token),
+    url(r'api-token-verify/$', verify_jwt_token),
     url(r'users/$', UserList.as_view(), name='user-list'),
     url(r'user/(?P<id>\d+)/$', UserDetail.as_view(), name='user-detail'),
     url(r'register/$',UserCreate.as_view(),name="register"),
