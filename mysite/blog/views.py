@@ -262,9 +262,9 @@ def postDetail(request,year,month,day,slug,id):
     if cache.has_key(cache_key):
         post = cache.get(cache_key)
     else:
-        post = get_object_or_404(Post, slug=slug,status='published',publish__year=year,
-                                    publish__month=month, #要setting设置USE_TZ=False,否则不识别month,day
-                                    publish__day=day,
+        post = get_object_or_404(Post, slug=slug,status='published',created__year=year,
+                                    created__month=month, #要setting设置USE_TZ=False,否则不识别month,day
+                                    created__day=day,
                                     id=id)
         cache.set(cache_key,post,3600)
 

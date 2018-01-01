@@ -9,6 +9,8 @@ from email.header import Header
 import smtplib
 import uuid
 
+
+
 def sendEmail(subject, message, email_from, to):
     HOST = settings.EMAIL_HOST
     msg=MIMEText(message,'html',"utf-8")
