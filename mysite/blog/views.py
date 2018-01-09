@@ -75,12 +75,11 @@ def userRegister(request):
             email = cd["email"]
             password = cd["password"]
 
-            try:
-                user = User.objects.get(username=username)
-            except:
-                user = None
-
-            if user is None:
+            if User.objects.filter(username=username).exists():
+                register_msg = "该帐号已被使用"
+            elif User.objects.filter(email=email).exists():
+                register_msg = "该邮箱已注册"
+            else:
                 try:
                     email_send.sendVerifyEmail(email, username,
                                                send_type="register", request=request)
@@ -97,11 +96,6 @@ def userRegister(request):
                     return HttpResponseRedirect(reverse("blog:verify_register_before",
                                                         kwargs={"email":email,
                                                                 "username":username}))
-            else:
-                register_msg="该帐号已被注册"
-                form = RegisterForm(initial={"username": cd["username"],
-                                                "email":cd["email"],
-                                                "password":""})
     else:
         form = RegisterForm()
     return render(request,"blog/user/login.html",{"form":form,
