@@ -587,13 +587,15 @@ def center(request):
 
 @login_required
 def settingSave(request):
-
     ret = json.dumps({"status": "error"})
+    image_form = ImageForm()
+    bgimg_form = BgimgForm()
+
     if request.method == "POST":
         basic_form = BasicForm(request.POST)
         person_form = PersonForm(request.POST)
         phone_form = PhoneForm(request.POST)
-        email_form = EmailForm(request.POST)
+        email_form = EmailForm(request.POST,instance=request.user)
         if basic_form.is_valid() and person_form.is_valid() and\
             phone_form.is_valid() and email_form.is_valid():
             request.user.profile.__dict__.update(basic_form.cleaned_data)
@@ -602,8 +604,19 @@ def settingSave(request):
             request.user.email = email_form.cleaned_data["email"]
             request.user.save()
             ret = json.dumps({"status": "success"})
-    return HttpResponse(ret, content_type="application/json")
-
+            return HttpResponse(ret, content_type="application/json")
+        else:
+            context = {}
+            context["image_form"] = image_form
+            context["bgimg_form"] = bgimg_form
+            context["auth_user"] = request.user
+            context["basic_form"] = basic_form
+            context["person_form"] = person_form
+            context["phone_form"] = phone_form
+            context["email_form"] = email_form
+            return render(request, "blog/edit/center.html", context)
+    else:
+        return HttpResponseRedirect(reverse("blog:center"))
 
 # post manage
 

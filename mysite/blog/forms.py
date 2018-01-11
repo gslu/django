@@ -59,12 +59,27 @@ class PhoneForm(forms.ModelForm):
         fields = ("phone",)
 
 class EmailForm(forms.ModelForm):
+
+    def __init__(self,*args,**kwargs):
+        self.owner = kwargs.get('instance',None)
+        super(EmailForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = User
         fields = ("email",)
         labels = {
             'email':'邮箱'
         }
+
+    def clean_email(self):
+        new_email = self.cleaned_data['email']
+
+        if User.objects.filter(email=new_email).exclude(email=self.owner.email).exists():
+            raise forms.ValidationError('该邮箱已被使用')
+        else:
+            return new_email
+
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=40,min_length=3,label=u"帐号")

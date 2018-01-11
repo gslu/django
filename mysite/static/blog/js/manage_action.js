@@ -193,6 +193,10 @@
                     {
                         alert("文集名称不能为空");
                     }
+                    else if(new_name.length > 14)
+                    {
+                       　 alert("文集名称过长");
+                    }
                     else
                     {
                         book_rename(book_id,new_name,rowElem);
@@ -234,6 +238,10 @@
                       {
                          alert("标签名称不能为空");
                       }
+                      else if(new_name.length > 14)
+                    　{
+                       　 alert("标签名称过长");
+                    　}
                       else
                       {
                           rowElem.text("正在同步文章..请稍等");
@@ -258,6 +266,10 @@
                       {
                          alert("文集名称不能为空");
                       }
+                      else if(new_book_name.length > 14)
+                    　{
+                        alert("文集名称过长");
+                    　}
                       else
                       {
                           change_book(tag_name,book_id,new_book_name);
@@ -300,6 +312,10 @@
                     if(new_tag == "")
                     {
                         alert("标签名称不能为空");
+                    }
+                    else if(new_tag.length > 14)
+                    {
+                        alert("标签名称过长");
                     }
                     else
                     {

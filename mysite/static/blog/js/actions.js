@@ -5,7 +5,12 @@ function init_viewer(){
   };
 
 $(document).ready(function() {
-
+        /*定位到错误的位置*/
+        try{
+            $("html,body").animate({scrollTop:$(".errorlist").offset().top},1);
+        }
+        catch(err)
+        {}
     $('#write-form').submit(function() {
         jQuery.ajax({
         url:this.action,
@@ -278,22 +283,34 @@ $(document).ready(function() {
     });
 
 
-    $("#save-setting").click(function(){
+    $("#save-setting").click(function(e){
+
+        var url = $(this).parent().attr("action");
         $("#bpc-form").ajaxSubmit({
-            dataType :'json',//返回数据类型
+            dataType :'html',//返回数据类型
             beforeSend:function(){
 
             },
             success:function(data){
-
-                if(data.path != "error")
+                try {
+                    var data=$.parseJSON(data);
+                    }
+                catch(err)
                 {
-                    $("#save-status").text("成功保存设置")
+                    var data = $(data);
+                }
+                if(data.status == "success")
+                {
+                    $(".errorlist").remove();
+                    $("#save-status").text("成功保存设置");
                     $("#save-status").slideToggle(800);
                     $("#save-status").slideToggle(1200);
+
                 }
                 else
-                {alert("系统异常！");}
+                {
+                    $("#bpc-form").submit();
+                }
             },
             error:function(xhr){
                 alert("上传失败！");

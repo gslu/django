@@ -115,6 +115,8 @@ h5 {
     letter-spacing: 1px;
 }
 
+.errorlist{color:red;}
+
 div.post-detail #post-body{
     font-size:16px;
 }
