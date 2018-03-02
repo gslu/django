@@ -487,3 +487,10 @@ function to_top() {
          $("body,html").animate({scrollTop:0}, 200);
          return false;
      }
+
+
+function to_point_page() {
+         var page_number = $(".page-number input").val();
+         window.location.href = "?page=" + page_number;
+         return true;
+     }

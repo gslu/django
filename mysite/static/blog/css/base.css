@@ -1304,11 +1304,29 @@ div.owner-img img {
 
 .previous a,.next a{border-radius:4px;}
 
+
+
 .pagination ul li a:focus,.pagination ul li a:hover
 {
     background:#a7b8c8;
     color:#3a6ea1;
 }
+
+
+.pagination input[type="number"]
+{
+    font-size:15px;
+    width:40px;
+    height:22px;
+    margin-left:5px;
+}
+
+.pagination input[type="button"]
+{
+    font-size:16px;
+    padding: 6px 12px;
+}
+
 
 .current a{
     background:#28619a;
