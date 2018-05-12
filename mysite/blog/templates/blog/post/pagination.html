@@ -45,7 +45,7 @@
 
         {% if p.page.has_previous or p.page.has_next %}
             <li class="page-number"><input type="number" value="{{ p.page.number }}" name="page_number" min="0" max="{{ p.page.paginator.num_pages }}"></li>
-            <li class="to-point-page"><input type="button" value="TO" name="to_point_page" onclick="to_point_page()"></li>
+            <li class="to-point-page"><input type="button" value="GO" name="to_point_page" onclick="to_point_page()"></li>
         {% endif %}
         </ul>
 </div>
